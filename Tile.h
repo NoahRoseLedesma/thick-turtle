@@ -13,7 +13,7 @@ class AxialCoordinate;
 class Tile {
 public:
   Tile( const Map* const map, const AxialCoordinate&& position );
-  Tile( const Map* const map, const AxialCorrdiante& position );
+  Tile( const Map* const map, const AxialCoordiante& position );
 
 private:
   // The position of this tile in the map.
