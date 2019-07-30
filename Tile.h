@@ -4,7 +4,7 @@
  *
  * Tiles are what the game map is made up of. A tile may be occupied by a game piece.
  */
-
+#pragma once
 #include "Map.h"
 
 class Map;

@@ -17,6 +17,7 @@
  * arbitrary. 
  * This map will be using columns `q` as the X axis and rows `r` as the Z axis.
  */
+#pragma once
 #include <cstdint>
 #include "Tile.h"
 
