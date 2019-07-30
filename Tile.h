@@ -8,6 +8,7 @@
 #include "Map.h"
 
 class Map;
+class AxialCoordinate;
 
 class Tile {
 public:
