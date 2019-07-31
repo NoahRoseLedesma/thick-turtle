@@ -25,7 +25,7 @@
 class Tile;
 
 // Coordinate types and associated utilities
-typedef CoordComponentType int32_t
+typedef int32_t CoordComponentType;
 
 class AxialCoordinate {
  public:
