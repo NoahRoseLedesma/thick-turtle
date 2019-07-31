@@ -5,7 +5,7 @@
  * Tiles are what the game map is made up of. A tile may be occupied by a game piece.
  */
 #pragma once
-#include "Map.h"
+#include "map.h"
 
 class Map;
 class AxialCoordinate;
@@ -17,10 +17,15 @@ class Tile {
   virtual ~Tile();
 
   /*
+   * Gets the position of the tile within the map
+   */
+  const AxialCoordinate* GetPosition() const { return position; };
+  const AxialCoordinate* GetPosition() { return position; };
+
+  /*
    * Returns the number of movement points this tile de/buffs from the piece
    * which occupies it.
    */
-
   virtual int GetMovementModifier() = 0;
  protected:
   // The map of which this tile belongs to
