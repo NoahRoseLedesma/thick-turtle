@@ -19,6 +19,7 @@
  */
 #pragma once
 #include <cstdint>
+#include <vector>
 #include "Tile.h"
 
 class Tile;
