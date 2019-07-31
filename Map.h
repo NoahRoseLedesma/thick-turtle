@@ -35,7 +35,7 @@ class AxialCoordinate {
 
  CoordComponentType q, r; 
  private:
-}
+};
 
 class CubicCoordinate;
 
