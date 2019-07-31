@@ -52,7 +52,9 @@ class Map {
   * If the specified coordinate is invalid, this returns nullptr.
   * Otherwise, a pointer to the tile is returned.
   */
- Tile* GetTile( const AxialCoordinate* coord );
+ Tile* GetTile( const AxialCoordinate* const coord );
+ Tile* GetTile( const AxialCoordinate& coord );
+ Tile* GetTile( const Axialcoordinate&& coord );
 
  /*
   * Get an unordered list of the tiles within a radius of a given tile.
