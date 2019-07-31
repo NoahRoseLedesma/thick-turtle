@@ -11,20 +11,22 @@
 #include <map>
 
 #include "piece.h"
+#include "tile.h"
 
 class PlayerInput;
+class Piece;
 class Tile;
 
 class Player {
  public:
     virtual void HandleUserInput(const PlayerInput &p_input) = 0;
-    void MovePieces(const Piece &p_target_piece, const Tile &p_target_tile);
-    void AddPieces(const Piece &p_new_piece, const Tile &p_target_tile);
+    void AddPieces(const Piece* p_new_piece,
+                   const Tile*  p_target_tile);
     int GetNumTilesOccupied();
 
  private:
     std::string m_name;
-    std::map<Tile, Piece> m_pieces;
+    std::map<const Tile*, const Piece*> m_pieces;
 };
 
 
