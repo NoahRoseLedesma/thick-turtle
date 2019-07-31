@@ -3,18 +3,17 @@
 // Copyright 2019 Stephen Ott
 
 
-#ifndef PROGRAMMING_THICK_TURTLE_PIECE_H_
-#define PROGRAMMING_THICK_TURTLE_PIECE_H_
+#pragma once
 
 #include "player.h"
 
 class Piece {
  public:
-    void Move(const Tile& p_target_tile);
+    virtual void Move(const Tile& p_target_tile) = 0;
+    virtual void TakeDamage(const int& damage);
+
 
  private:
     Tile m_tile;
+    int m_hp;
 };
-
-
-#endif  // PROGRAMMING_THICK_TURTLE_PIECE_H_
