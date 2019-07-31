@@ -54,7 +54,7 @@ class Map {
   */
  Tile* GetTile( const AxialCoordinate* const coord );
  Tile* GetTile( const AxialCoordinate& coord );
- Tile* GetTile( const Axialcoordinate&& coord );
+ Tile* GetTile( const AxialCoordinate&& coord );
 
  /*
   * Get an unordered list of the tiles within a radius of a given tile.
