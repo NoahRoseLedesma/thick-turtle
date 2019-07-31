@@ -61,6 +61,13 @@ class Map {
   */
  std::vector<Tile*> GetTilesInRange(const Tile* const source, size_t radius);
 
+ /*
+  * Returns true if the specified coordinate is within the bounds of the map
+  */
+ bool IsCoordinateInBounds( const AxialCoordinate* const coord );
+ bool IsCoordinateInBounds( const AxialCoordinate& coord );
+ bool IsCoordinateInBounds( const AxialCoordinate&& coord );
+
  private:
  // Represent the map using a 2D matrix
  // This approach is simple to implement but will have space overhead
