@@ -16,6 +16,22 @@ AxialCoordinate::AxialCoordinate(const AxialCoordinate& copy):
     q(copy.q), r(copy.r) {}
 
 /*
+ * AxialCoordinate::operator+
+ */
+
+AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate&& rhs) const {
+  return {q + rhs.q, r + rhs.r};
+}
+
+AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate& rhs) const {
+  return {q + rhs.q, r + rhs.r};
+}
+
+AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
+  return {q + rhs->q, r + rhs->r};
+}
+
+/*
  * Map
  */
 
@@ -58,12 +74,14 @@ size_t HexNumbers( const size_t n ) {
 
 std::vector<Tile*> Map::GetTilesInRange(const Tile* const source, size_t radius) {
   std::vector<Tile*> tiles(HexNumbers(radius));
+  auto sourcePosition = source->GetPosition();
   size_t tileVectorIndex = 0;
   for(int x = -radius; x <= (signed)radius; x++) {
     for( int y = std::max(-(signed)radius, -x-(signed)radius);
              y <= std::min((signed)radius, -x+(signed)radius);
              y++ ) {
-      tiles[tileVectorIndex++] = GetTile({ .q = x, .r = y });
+      tiles[tileVectorIndex++] = GetTile(*sourcePosition +
+            AxialCoordinate({ .q = x , .r = y }));
     }
   }
   return tiles;
