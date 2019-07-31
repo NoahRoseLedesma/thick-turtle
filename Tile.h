@@ -14,6 +14,7 @@ class Tile {
 public:
   Tile( const Map* const map, const AxialCoordinate&& position );
   Tile( const Map* const map, const AxialCoordinate& position );
+  virtual ~Tile();
 
 private:
   // The position of this tile in the map.
