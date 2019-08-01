@@ -21,6 +21,7 @@
 #include <cstdint>
 #include <vector>
 #include "tile.h"
+#include "utility.h"
 
 class Tile;
 

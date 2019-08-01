@@ -61,16 +61,6 @@ Tile* Map::GetTile( const AxialCoordinate&& coord ) {
  * Map::GetTilesInRange
  */
 
-/*
- * Helper function for GetTilesInRange
- * Returns the number of hexagons in range of radius n.
- * Courtesy of The On-Line Encyclopedia of Integer Sequences
- * https://oeis.org/A003215
- */
-
-size_t HexNumbers( const size_t n ) {
-  return 3*n*(n+1)+1;
-}
 
 std::vector<Tile*> Map::GetTilesInRange(const Tile* const source, size_t radius) {
   std::vector<Tile*> tiles(HexNumbers(radius));

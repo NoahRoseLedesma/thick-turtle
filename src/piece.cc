@@ -50,3 +50,7 @@ size_t Piece::GetStartingHP() const {
 void Piece::Kill() {
   m_hp = 0;
 }
+
+std::vector<const Tile *> Piece::GetAvailibleMoves(const Tile *p_tartget_tile) {
+    std::vector<const Tile*> availible_tiles(HexNumbers(this->m_movement_range));
+}

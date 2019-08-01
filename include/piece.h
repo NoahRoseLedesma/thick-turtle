@@ -7,6 +7,7 @@
 
 #include "player.h"
 #include "tile.h"
+#include "utility.h"
 
 class Piece {
  public:
