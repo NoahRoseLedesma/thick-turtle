@@ -12,6 +12,17 @@ Piece::Piece(const Tile* position) {
 void Piece::Move(const Tile* p_target_tile) {
   // TODO: Notify the tile we are currently on that we are leaving
   // and notify the tile we have landed on that we have arrived
+
+  /* A tile is valid to move to if
+   * 1) It is in bounds
+   * 2) It is not occupied by another piece
+   * 3) It is within the movement range of the piece
+   * TODO: methods for the above three conditions
+   * An invalid tile should produce a non-fatal error.
+   * i.e if( !Valid() ) return;
+   */
+
+
   m_tile = p_target_tile;
 }
 

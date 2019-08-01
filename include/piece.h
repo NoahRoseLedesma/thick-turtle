@@ -25,7 +25,7 @@ class Piece {
      */
     virtual void TakeDamage(size_t damage);
     /*
-     * gets the HP this unit should have when constructed
+     * Gets the HP this unit should have when constructed
      */
     virtual size_t GetStartingHP() const;
     /*
@@ -37,7 +37,20 @@ class Piece {
      * Returns true if this unit has been killed.
      */
     bool IsDead() const { return m_hp == 0; }
+    /*
+     *  Returns a vector of pointers to tiles the piece could move to
+     */
+    virtual std::vector<const Tile *> GetAvailibleMoves(const Tile *p_tartget_tile);
+    /*
+     *  Performs an attack on a piece wherein a calculation must be performed
+     */
+    virtual void Attack(Piece* p_target_piece) = 0;
+    /*
+     *  TODO: Need to implement defend function, but am unsure of what args it takes
+     */
+    virtual void Defend();
  protected:
     const Tile* m_tile;
     size_t m_hp;
+    size_t m_movement_range;
 };
