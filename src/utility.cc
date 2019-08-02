@@ -14,15 +14,11 @@ size_t HexNumbers( const size_t n ) {
     return 3*n*(n+1)+1;
 }
 /*
- * Utility function to determine if a vector contains a given element
+ * Utility function to determine if a vector has a given element
+ * Returns true if element is in container, else returns false
  */
 template <typename T>
 bool VectorContains(const std::vector<T> &p_search_target, const T &element){
     auto result = std::find(p_search_target.begin(), p_search_target.end(), element);
-    if( result == p_search_target.end() ){
-        return false;
-    }
-    else{
-        return true;
-    }
+    result != p_search_target.end() ? return true : return false;
 }
