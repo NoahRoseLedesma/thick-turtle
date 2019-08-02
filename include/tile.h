@@ -21,7 +21,11 @@ class Tile {
    */
   const AxialCoordinate* GetPosition() const { return position; };
   const AxialCoordinate* GetPosition() { return position; };
-
+  /*
+   * Gets the pointer to the map
+   */
+  const Map* GetMap() const { return this->map; };
+  const Map* GetMap() { return this->map; };
   /*
    * Returns the number of movement points this tile de/buffs from the piece
    * which occupies it.

@@ -53,5 +53,5 @@ void Piece::Kill() {
 
 std::vector<const Tile *> Piece::GetAvailibleMoves(const Tile *p_tartget_tile) {
     std::vector<const Tile*> availible_tiles(HexNumbers(this->m_movement_range));
-
+    p_tartget_tile.
 }
