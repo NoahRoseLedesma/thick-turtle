@@ -1,6 +1,7 @@
 //
 // Created by stott on 7/31/19.
 //
+#pragma once
 
 #include "utility.h"
 
@@ -10,7 +11,7 @@
  * Courtesy of The On-Line Encyclopedia of Integer Sequences
  * https://oeis.org/A003215
  */
-size_t HexNumbers( const size_t n ) {
+size_t HexNumbers(const size_t n) {
     return 3*n*(n+1)+1;
 }
 /*
@@ -18,7 +19,9 @@ size_t HexNumbers( const size_t n ) {
  * Returns true if element is in container, else returns false
  */
 template <typename T>
-bool VectorContains(const std::vector<T> &p_search_target, const T &element){
-    auto result = std::find(p_search_target.begin(), p_search_target.end(), element);
+bool VectorContains(const std::vector<T> &p_search_target, const T &element) {
+    auto result = std::find(p_search_target.begin(),
+            p_search_target.end(),
+            element);
     result != p_search_target.end() ? return true : return false;
 }

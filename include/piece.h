@@ -41,7 +41,7 @@ class Piece {
     /*
      *  Returns a vector of pointers to tiles the piece could move to
      */
-    virtual std::vector<const Tile *> GetAvailableMoves(const Tile *p_tartget_tile);
+    virtual std::vector<Tile *> GetAvailableMoves(const Tile *p_target_tile);
     /*
      *  Performs an attack on a piece wherein a calculation must be performed
      */

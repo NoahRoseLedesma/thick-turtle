@@ -69,9 +69,9 @@ class Map {
  /*
   * Returns true if the specified coordinate is within the bounds of the map
   */
- bool IsCoordinateInBounds( const AxialCoordinate* const coord );
- bool IsCoordinateInBounds( const AxialCoordinate& coord );
- bool IsCoordinateInBounds( const AxialCoordinate&& coord );
+ bool IsCoordinateInBounds( const AxialCoordinate* const coord ) const;
+ bool IsCoordinateInBounds( const AxialCoordinate& coord ) const;
+ bool IsCoordinateInBounds( const AxialCoordinate&& coord ) const;
 
  private:
  // Represent the map using a 2D matrix

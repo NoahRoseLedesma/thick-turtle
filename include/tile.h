@@ -31,11 +31,17 @@ class Tile {
    * which occupies it.
    */
   virtual int GetMovementModifier() = 0;
+  /*
+   * Returns true if this tile can accept a piece moving to it
+   */
+  bool CanBeMovedTo() const;
  protected:
   // The map of which this tile belongs to
   const Map* const map;
   // The position of this tile in the map.
   const AxialCoordinate* position;
+
+
 };
 
 class DebugTile : public Tile {

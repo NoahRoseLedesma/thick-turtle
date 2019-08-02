@@ -82,17 +82,17 @@ std::vector<Tile*> Map::GetTilesInRange(const Tile* const source, size_t radius)
  * Map::IsCoordinateInBounds
  */
 
-bool Map::IsCoordinateInBounds( const AxialCoordinate* const coord ) {
+bool Map::IsCoordinateInBounds( const AxialCoordinate* const coord ) const {
   return std::abs(coord->r) > tiles.size() / 2
       && std::abs(coord->q) > tiles.size() / 2;
 }
 
-bool Map::IsCoordinateInBounds( const AxialCoordinate& coord ) {
+bool Map::IsCoordinateInBounds( const AxialCoordinate& coord ) const {
   return std::abs(coord.r) > tiles.size() / 2
       && std::abs(coord.q) > tiles.size() / 2;
 }
 
-bool Map::IsCoordinateInBounds( const AxialCoordinate&& coord ) {
+bool Map::IsCoordinateInBounds( const AxialCoordinate&& coord ) const {
   return std::abs(coord.r) > tiles.size() / 2
       && std::abs(coord.q) > tiles.size() / 2;
 }
