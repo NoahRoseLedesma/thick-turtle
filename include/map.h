@@ -64,7 +64,7 @@ class Map {
  /*
   * Get an unordered list of the tiles within a radius of a given tile.
   */
- std::vector<Tile*> GetTilesInRange(const Tile* const source, size_t radius);
+ std::vector<Tile*> GetTilesInRange(const Tile* const source, size_t radius) const;
 
  /*
   * Returns true if the specified coordinate is within the bounds of the map

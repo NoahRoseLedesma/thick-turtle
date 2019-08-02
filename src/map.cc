@@ -62,7 +62,7 @@ Tile* Map::GetTile( const AxialCoordinate&& coord ) {
  */
 
 
-std::vector<Tile*> Map::GetTilesInRange(const Tile* const source, size_t radius) {
+std::vector<Tile*> Map::GetTilesInRange(const Tile* const source, size_t radius) const {
   std::vector<Tile*> tiles(HexNumbers(radius));
   auto sourcePosition = source->GetPosition();
   size_t tileVectorIndex = 0;

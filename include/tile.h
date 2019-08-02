@@ -1,5 +1,5 @@
 /*
- * Heagonal Game Tile
+ * Hexagonal Game Tile
  * Created by Noah Rose Ledesma
  *
  * Tiles are what the game map is made up of. A tile may be occupied by a game piece.

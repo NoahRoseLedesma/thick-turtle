@@ -51,7 +51,7 @@ void Piece::Kill() {
   m_hp = 0;
 }
 
-std::vector<const Tile *> Piece::GetAvailibleMoves(const Tile *p_tartget_tile) {
-    std::vector<const Tile*> availible_tiles(HexNumbers(this->m_movement_range));
-    p_tartget_tile.
+std::vector<const Tile *> Piece::GetAvailableMoves(const Tile *p_tartget_tile) {
+    auto l_available_moves = p_tartget_tile->GetMap()->GetTilesInRange(p_tartget_tile, this->m_movement_range);
 }
+
