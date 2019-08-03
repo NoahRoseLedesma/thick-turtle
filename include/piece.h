@@ -9,12 +9,14 @@
 #include "tile.h"
 #include "utility.h"
 
+
+
 class Piece {
  public:
     /*
      * Construct a piece and place it on the specified tile
      */
-    Piece(const Tile* position);
+    explicit Piece(const Tile* position);
     /*
      * Change which tile this piece is occuping
      * TODO: What is the behavior of this method if the tile is invalid
@@ -50,6 +52,7 @@ class Piece {
      *  TODO: Need to implement defend function, but am unsure of what args it takes
      */
     virtual void Defend();
+
  protected:
     const Tile* m_tile;
     size_t m_hp;

@@ -13,9 +13,11 @@ void Piece::Move(const Tile* p_target_tile) {
   // TODO: Notify the tile we are currently on that we are leaving
   // and notify the tile we have landed on that we have arrived
 
-  // a tile can be moved to if the coordinate is in bounds, is not occupied, and can be moved to
-  if( p_target_tile->GetMap()->IsCoordinateInBounds(p_target_tile->GetPosition()) &&
-        p_target_tile->CanBeMovedTo()){
+  // a tile can be moved to if the coordinate is in bounds,
+  // is not occupied, and can be moved to
+  bool l_is_in_bounds = p_target_tile->GetMap()
+          ->IsCoordinateInBounds(p_target_tile->GetPosition());
+  if ( l_is_in_bounds && p_target_tile->CanBeMovedTo() ) {
       return;
   }
 
@@ -23,13 +25,13 @@ void Piece::Move(const Tile* p_target_tile) {
 }
 
 void Piece::TakeDamage(size_t damage) {
-  if( IsDead() ) {
-    // TODO: If this unit is dead and we apply damage to it, we should log this as
-    // a non-critical error.
+  if ( IsDead() ) {
+    // TODO: If this unit is dead and we apply damage to it,
+    // we should log this as a non-critical error.
     return;
   }
 
-  if( damage >= m_hp ) {
+  if ( damage >= m_hp ) {
     Kill();
     return;
   }
@@ -52,13 +54,13 @@ std::vector<Tile *> Piece::GetAvailableMoves(const Tile *p_target_tile) {
             ->GetTilesInRange(p_target_tile,
                     this->m_movement_range);
 
-    //lambda which checks if a tile is valid to move to
+    // lambda which checks if a tile is valid to move to
     auto filter = [&] (Tile* cur_tile) -> bool {
         return !(cur_tile->CanBeMovedTo() &&
             cur_tile->GetMap()->IsCoordinateInBounds(cur_tile->GetPosition()));
     };
+    // removes all values that satisfy the lambda
 
-    //removes all values that satisfy the lambda
     std::remove_if(l_available_moves.begin(), l_available_moves.end(), filter);
     return l_available_moves;
 }

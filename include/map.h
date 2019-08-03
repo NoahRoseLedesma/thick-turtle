@@ -49,35 +49,35 @@ class Map {
  /*
   * Create a map in the shape of a hexagon with the specified radius.
   */
-  Map( size_t radius );
+    explicit Map(size_t radius);
 
- /*
-  * Get a tile in the map from a coordinate.
-  * If there is no tile at the specified coordinate, this returns nullptr.
-  * If the specified coordinate is invalid, this returns nullptr.
-  * Otherwise, a pointer to the tile is returned.
-  */
- Tile* GetTile( const AxialCoordinate* const coord );
- Tile* GetTile( const AxialCoordinate& coord );
- Tile* GetTile( const AxialCoordinate&& coord );
+    /*
+    * Get a tile in the map from a coordinate.
+    * If there is no tile at the specified coordinate, this returns nullptr.
+    * If the specified coordinate is invalid, this returns nullptr.
+    * Otherwise, a pointer to the tile is returned.
+    */
+    Tile* GetTile(const AxialCoordinate* const coord);
+    Tile* GetTile(const AxialCoordinate& coord);
+    Tile* GetTile(const AxialCoordinate&& coord);
 
- /*
-  * Get an unordered list of the tiles within a radius of a given tile.
-  */
- std::vector<Tile*> GetTilesInRange(const Tile* const source, size_t radius) const;
+    /*
+    * Get an unordered list of the tiles within a radius of a given tile.
+    */
+    std::vector<Tile*> GetTilesInRange(const Tile* source, size_t radius) const;
 
- /*
-  * Returns true if the specified coordinate is within the bounds of the map
-  */
- bool IsCoordinateInBounds( const AxialCoordinate* const coord ) const;
- bool IsCoordinateInBounds( const AxialCoordinate& coord ) const;
- bool IsCoordinateInBounds( const AxialCoordinate&& coord ) const;
+    /*
+    * Returns true if the specified coordinate is within the bounds of the map
+    */
+    bool IsCoordinateInBounds(const AxialCoordinate* const coord) const;
+    bool IsCoordinateInBounds(const AxialCoordinate& coord) const;
+    bool IsCoordinateInBounds(const AxialCoordinate&& coord) const;
 
  private:
- // Represent the map using a 2D matrix
- // This approach is simple to implement but will have space overhead
- // especially in the case of maps with distant 'islands' and empty space
- // between them. In this scenerio it may be better to use a hash table.
- // This vector is indexed by AxialCoordinates
- std::vector<std::vector<Tile*>> tiles;
+    // Represent the map using a 2D matrix
+    // This approach is simple to implement but will have space overhead
+    // especially in the case of maps with distant 'islands' and empty space
+    // between them. In this scenerio it may be better to use a hash table.
+    // This vector is indexed by AxialCoordinates
+    std::vector<std::vector<Tile*>> tiles;
 };

@@ -45,15 +45,15 @@ Map::Map(size_t radius): tiles(radius * 2) {
  * Map::GetTile
  */
 
-Tile* Map::GetTile( const AxialCoordinate* const coord ) {
+Tile* Map::GetTile(const AxialCoordinate* const coord) {
   return IsCoordinateInBounds(coord) ? tiles[coord->r][coord->q] : nullptr;
 }
 
-Tile* Map::GetTile( const AxialCoordinate& coord ) {
+Tile* Map::GetTile(const AxialCoordinate& coord) {
   return IsCoordinateInBounds(coord) ? tiles[coord.r][coord.q] : nullptr;
 }
 
-Tile* Map::GetTile( const AxialCoordinate&& coord ) {
+Tile* Map::GetTile(const AxialCoordinate&& coord) {
   return IsCoordinateInBounds(coord) ? tiles[coord.r][coord.q] : nullptr;
 }
 
@@ -62,12 +62,13 @@ Tile* Map::GetTile( const AxialCoordinate&& coord ) {
  */
 
 
-std::vector<Tile*> Map::GetTilesInRange(const Tile* const source, size_t radius) const {
+std::vector<Tile*> Map::GetTilesInRange(const Tile* const source,
+        size_t radius) const {
   std::vector<Tile*> tiles(HexNumbers(radius));
   auto sourcePosition = source->GetPosition();
   size_t tileVectorIndex = 0;
-  for(int x = -radius; x <= (signed)radius; x++) {
-    for( int y = std::max(-(signed)radius, -x-(signed)radius);
+  for (int x = -radius; x <= (signed)radius; x++) {
+    for ( int y = std::max(-(signed)radius, -x-(signed)radius);
              y <= std::min((signed)radius, -x+(signed)radius);
              y++ ) {
       tiles[tileVectorIndex++] = GetTile(*sourcePosition +
@@ -82,17 +83,17 @@ std::vector<Tile*> Map::GetTilesInRange(const Tile* const source, size_t radius)
  * Map::IsCoordinateInBounds
  */
 
-bool Map::IsCoordinateInBounds( const AxialCoordinate* const coord ) const {
+bool Map::IsCoordinateInBounds(const AxialCoordinate* const coord) const {
   return std::abs(coord->r) > tiles.size() / 2
       && std::abs(coord->q) > tiles.size() / 2;
 }
 
-bool Map::IsCoordinateInBounds( const AxialCoordinate& coord ) const {
+bool Map::IsCoordinateInBounds(const AxialCoordinate& coord) const {
   return std::abs(coord.r) > tiles.size() / 2
       && std::abs(coord.q) > tiles.size() / 2;
 }
 
-bool Map::IsCoordinateInBounds( const AxialCoordinate&& coord ) const {
+bool Map::IsCoordinateInBounds(const AxialCoordinate&& coord) const {
   return std::abs(coord.r) > tiles.size() / 2
       && std::abs(coord.q) > tiles.size() / 2;
 }

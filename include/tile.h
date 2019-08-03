@@ -12,20 +12,20 @@ class AxialCoordinate;
 
 class Tile {
  public:
-  Tile( const Map* const map, const AxialCoordinate&& position );
-  Tile( const Map* const map, const AxialCoordinate& position );
+  Tile(const Map* const map, const AxialCoordinate&& position);
+  Tile(const Map* const map, const AxialCoordinate& position);
   virtual ~Tile();
 
   /*
    * Gets the position of the tile within the map
    */
-  const AxialCoordinate* GetPosition() const { return position; };
-  const AxialCoordinate* GetPosition() { return position; };
+  const AxialCoordinate* GetPosition() const { return position; }
+  const AxialCoordinate* GetPosition() { return position; }
   /*
    * Gets the pointer to the map
    */
-  const Map* GetMap() const { return this->map; };
-  const Map* GetMap() { return this->map; };
+  const Map* GetMap() const { return this->map; }
+  const Map* GetMap() { return this->map; }
   /*
    * Returns the number of movement points this tile de/buffs from the piece
    * which occupies it.
@@ -35,22 +35,21 @@ class Tile {
    * Returns true if this tile can accept a piece moving to it
    */
   bool CanBeMovedTo() const;
+
  protected:
   // The map of which this tile belongs to
   const Map* const map;
   // The position of this tile in the map.
   const AxialCoordinate* position;
-
-
 };
 
 class DebugTile : public Tile {
  public:
-  DebugTile( const Map* const map, const AxialCoordinate&& position );
-  DebugTile( const Map* const map, const AxialCoordinate& position );
+  DebugTile(const Map* const map, const AxialCoordinate&& position);
+  DebugTile(const Map* const map, const AxialCoordinate& position);
 
   int GetMovementModifier() override { return movementBonus; }
 
-protected:
-  const static int movementBonus = 4;
+ protected:
+    static const int movementBonus = 4;
 };
