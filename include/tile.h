@@ -6,6 +6,7 @@
  */
 #pragma once
 #include "map.h"
+#include <SFML/Graphics/ConvexShape.hpp>
 
 class Map;
 class AxialCoordinate;
