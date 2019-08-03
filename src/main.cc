@@ -5,7 +5,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics.hpp>
 
-#define SIN60 0.866
+#define SIN60 0.8660254038
+#define ROOT3 1.732050808
 
 sf::ConvexShape generateHex(double x, double y, double r){
     sf::ConvexShape hex;
@@ -20,6 +21,26 @@ sf::ConvexShape generateHex(double x, double y, double r){
     return hex;
 }
 
+std::vector<sf::ConvexShape> GenerateHexGrid(double radius, double screen_width, double screen_height){
+    sf::ConvexShape hex;
+    std::vector<sf::ConvexShape> grid;
+
+    for (double y = 0; y < screen_height+radius; y+=(radius*ROOT3)) {
+        double inverter = 1;
+        double offset = 0;
+        for (double x = 0; x < screen_width+radius; x+=(1.5 * radius)) {
+            hex = generateHex(x, y+offset, radius);
+            hex.setFillColor(sf::Color::Red);
+            hex.setOutlineColor(sf::Color::Cyan);
+            hex.setOutlineThickness(4);
+            grid.push_back(hex);
+            offset += (inverter * (radius * (ROOT3/2)));
+            inverter *= -1;
+        }
+    }
+    return grid;
+}
+
 int main(){
     /*auto hex1 = generateHex(50, 43.3, 50);
     hex1.setFillColor(sf::Color::Red);
@@ -30,7 +51,7 @@ int main(){
     auto hex3 = generateHex(200, 43.3, 50);
     hex2.setFillColor(sf::Color::Blue);*/
 
-    sf::ConvexShape hex;
+    /*sf::ConvexShape hex;
     std::vector<sf::ConvexShape> grid;
 
 
@@ -46,10 +67,11 @@ int main(){
             offset += (inverter * 43.3);
             inverter *= -1;
         }
-    }
+    }*/
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML OpenGL");
     window.clear();
+    auto grid = GenerateHexGrid(75, 800, 600);
     for (const sf::ConvexShape& iter : grid){
         window.draw(iter);
     }
