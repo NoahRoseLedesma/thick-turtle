@@ -1,8 +1,6 @@
 //
 // Created by stott on 7/31/19.
 //
-#pragma once
-
 #include "utility.h"
 
 /*
@@ -23,5 +21,5 @@ bool VectorContains(const std::vector<T> &p_search_target, const T &element) {
     auto result = std::find(p_search_target.begin(),
             p_search_target.end(),
             element);
-    result != p_search_target.end() ? return true : return false;
+    return result == p_search_target.end();
 }

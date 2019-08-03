@@ -64,18 +64,18 @@ Tile* Map::GetTile(const AxialCoordinate&& coord) {
 
 std::vector<Tile*> Map::GetTilesInRange(const Tile* const source,
         size_t radius) const {
-  std::vector<Tile*> tiles(HexNumbers(radius));
+  std::vector<Tile*> l_tiles(HexNumbers(radius));
   auto sourcePosition = source->GetPosition();
   size_t tileVectorIndex = 0;
   for (int x = -radius; x <= (signed)radius; x++) {
     for ( int y = std::max(-(signed)radius, -x-(signed)radius);
              y <= std::min((signed)radius, -x+(signed)radius);
              y++ ) {
-      tiles[tileVectorIndex++] = GetTile(*sourcePosition +
+      l_tiles[tileVectorIndex++] = GetTile(*sourcePosition +
             AxialCoordinate({ .q = x , .r = y }));
     }
   }
-  return tiles;
+  return l_tiles;
 }
 
 

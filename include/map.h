@@ -31,8 +31,8 @@ typedef int32_t CoordComponentType;
 class AxialCoordinate {
  public:
   AxialCoordinate(CoordComponentType q, CoordComponentType r);
-  explicit AxialCoordinate(const AxialCoordinate&& copy);
-  explicit AxialCoordinate(const AxialCoordinate& copy);
+  AxialCoordinate(const AxialCoordinate&& copy);
+  AxialCoordinate(const AxialCoordinate& copy);
 
   AxialCoordinate operator+(const AxialCoordinate&& rhs) const;
   AxialCoordinate operator+(const AxialCoordinate& rhs) const;
