@@ -19,8 +19,6 @@ class Piece {
     explicit Piece(const Tile* position);
     /*
      * Change which tile this piece is occuping
-     * TODO: What is the behavior of this method if the tile is invalid
-     * or the tile is already occupied?
      */
     virtual void Move(const Tile* p_target_tile);
     /*
