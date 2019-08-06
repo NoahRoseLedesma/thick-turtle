@@ -35,10 +35,23 @@ AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
  * Map
  */
 
-Map::Map(size_t radius): tiles(radius * 2) {
-  for (auto& column : tiles) {
-    column.resize(radius * 2, nullptr);
-  }
+Map::Map() {
+
+    for (double y = 0; y < SCREEN_HEIGHT + HEX_RADIUS; y += (HEX_RADIUS * ROOT3)) {
+        double inverter = 1;
+        double offset = 0;
+        for (double x = 0; x < SCREEN_WIDTH + HEX_RADIUS; x += (1.5 * HEX_RADIUS)) {
+            auto l_new_tile = new Tile(this, PixelToAxial(x, y));
+            l_new_tile->setFillColor(sf::Color::Red);
+            l_new_tile->setOutlineColor(sf::Color::Cyan);
+            l_new_tile->setOutlineThickness(4);
+
+            this->tiles[y][x] = l_new_tile;
+
+            offset += (inverter * (HEX_RADIUS * (ROOT3 / 2)));
+            inverter *= -1;
+        }
+    }
 }
 
 /*
@@ -96,5 +109,9 @@ bool Map::IsCoordinateInBounds(const AxialCoordinate& coord) const {
 bool Map::IsCoordinateInBounds(const AxialCoordinate&& coord) const {
   return std::abs(coord.r) > tiles.size() / 2
       && std::abs(coord.q) > tiles.size() / 2;
+}
+
+const std::vector<std::vector<Tile *>> &Map::getTiles() const {
+    return tiles;
 }
 

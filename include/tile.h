@@ -5,13 +5,10 @@
  * Tiles are what the game map is made up of. A tile may be occupied by a game piece.
  */
 #pragma once
-#include "map.h"
 #include <SFML/Graphics/ConvexShape.hpp>
+#include "map.h"
 
-class Map;
-class AxialCoordinate;
-
-class Tile {
+class Tile : public sf::ConvexShape {
  public:
   Tile(const Map* const map, const AxialCoordinate&& position);
   Tile(const Map* const map, const AxialCoordinate& position);

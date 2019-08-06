@@ -5,6 +5,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "map.h"
+
 #define SIN60 0.8660254038
 #define ROOT3 1.732050808
 
@@ -42,38 +44,15 @@ std::vector<sf::ConvexShape> GenerateHexGrid(double radius, double screen_width,
 }
 
 int main(){
-    /*auto hex1 = generateHex(50, 43.3, 50);
-    hex1.setFillColor(sf::Color::Red);
 
-    auto hex2 = generateHex(125, 86.6, 50);
-    hex2.setFillColor(sf::Color::Blue);
-
-    auto hex3 = generateHex(200, 43.3, 50);
-    hex2.setFillColor(sf::Color::Blue);*/
-
-    /*sf::ConvexShape hex;
-    std::vector<sf::ConvexShape> grid;
-
-
-    for (double y = 0; y < 650; y+=86.6025) {
-        double inverter = 1;
-        double offset = 0;
-        for (double x = 0; x < 850; x+=75) {
-            hex = generateHex(x, y+offset, 50);
-            hex.setFillColor(sf::Color::Red);
-            hex.setOutlineColor(sf::Color::Cyan);
-            hex.setOutlineThickness(4);
-            grid.push_back(hex);
-            offset += (inverter * 43.3);
-            inverter *= -1;
-        }
-    }*/
+    Map gameMap;
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML OpenGL");
     window.clear();
+
     auto grid = GenerateHexGrid(75, 800, 600);
-    for (const sf::ConvexShape& iter : grid){
-        window.draw(iter);
+    for (const auto tile : gameMap.getTiles()){
+        window.draw(tile);
     }
     /*window.draw(hex1);
     window.draw(hex2);

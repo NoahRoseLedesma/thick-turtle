@@ -23,6 +23,13 @@
 #include "tile.h"
 #include "utility.h"
 
+// This defines the distance from center to side of
+// any of the tiles
+#define HEX_RADIUS 25
+#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 800
+
+
 class Tile;
 
 // Coordinate types and associated utilities
@@ -49,8 +56,7 @@ class Map {
  /*
   * Create a map in the shape of a hexagon with the specified radius.
   */
-    explicit Map(size_t radius);
-
+    explicit Map();
     /*
     * Get a tile in the map from a coordinate.
     * If there is no tile at the specified coordinate, this returns nullptr.
@@ -80,4 +86,6 @@ class Map {
     // between them. In this scenerio it may be better to use a hash table.
     // This vector is indexed by AxialCoordinates
     std::vector<std::vector<Tile*>> tiles;
+public:
+    const std::vector<std::vector<Tile *>> &getTiles() const;
 };
