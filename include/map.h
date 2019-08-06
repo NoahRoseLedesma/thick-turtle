@@ -20,7 +20,6 @@
 #pragma once
 #include <cstdint>
 #include <vector>
-#include "tile.h"
 #include "utility.h"
 
 // This defines the distance from center to side of
@@ -28,7 +27,6 @@
 #define HEX_RADIUS 25
 #define SCREEN_HEIGHT 600
 #define SCREEN_WIDTH 800
-
 
 class Tile;
 
@@ -56,7 +54,7 @@ class Map {
  /*
   * Create a map in the shape of a hexagon with the specified radius.
   */
-    explicit Map();
+    Map();
     /*
     * Get a tile in the map from a coordinate.
     * If there is no tile at the specified coordinate, this returns nullptr.
@@ -89,3 +87,23 @@ class Map {
 public:
     const std::vector<std::vector<Tile *>> &getTiles() const;
 };
+/*
+ * Set of utility functions for converting from the x-y pixel plane
+ * to the q-r axial plane
+ */
+sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate) {
+    double x = HEX_RADIUS * (1.5 * p_coordinate.q);
+    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q) + (ROOT3 * p_coordinate.r));
+    return sf::Vector2f(x, y);
+}
+sf::Vector2f AxialToPixel(const AxialCoordinate&& p_coordinate) {
+    double x = HEX_RADIUS * (1.5 * p_coordinate.q);
+    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q) + (ROOT3 * p_coordinate.r));
+    return sf::Vector2f(x, y);
+}
+
+AxialCoordinate PixelToAxial(size_t x, size_t y) {
+    double q = (2/3 * double(x)) / HEX_RADIUS;
+    double r = (-1/3 * double(x) + ROOT3/3 * double(y)) / HEX_RADIUS;
+    return AxialCoordinate(q, r);
+}

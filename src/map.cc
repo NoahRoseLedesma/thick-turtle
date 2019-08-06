@@ -1,7 +1,6 @@
 #include "map.h"
 
 #include <cmath>
-
 /*
  * Axial Coordinate
  */
