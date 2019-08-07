@@ -30,7 +30,7 @@ class Tile : public sf::ConvexShape {
    * Returns the number of movement points this tile de/buffs from the piece
    * which occupies it.
    */
-  virtual int GetMovementModifier() = 0;
+  virtual int GetMovementModifier();
   /*
    * Returns true if this tile can accept a piece moving to it
    */

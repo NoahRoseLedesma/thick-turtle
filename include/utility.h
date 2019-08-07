@@ -19,7 +19,3 @@ template <typename T>
 bool VectorContains(const std::vector<T> &p_search_target, const T &element);
 
 sf::ConvexShape generateHex(double x, double y, double r);
-
-sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate);
-sf::Vector2f AxialToPixel(const AxialCoordinate&& p_coordinate);
-AxialCoordinate PixelToAxial(size_t x, size_t y);

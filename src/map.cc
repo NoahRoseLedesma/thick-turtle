@@ -57,16 +57,28 @@ Map::Map() {
  * Map::GetTile
  */
 
-Tile* Map::GetTile(const AxialCoordinate* const coord) {
+Tile* Map::GetTile(const AxialCoordinate* const coord) const {
   return IsCoordinateInBounds(coord) ? tiles[coord->r][coord->q] : nullptr;
 }
 
-Tile* Map::GetTile(const AxialCoordinate& coord) {
+Tile* Map::GetTile(const AxialCoordinate& coord) const {
   return IsCoordinateInBounds(coord) ? tiles[coord.r][coord.q] : nullptr;
 }
 
-Tile* Map::GetTile(const AxialCoordinate&& coord) {
+Tile* Map::GetTile(const AxialCoordinate&& coord) const {
   return IsCoordinateInBounds(coord) ? tiles[coord.r][coord.q] : nullptr;
+}
+
+Tile* Map::GetTile(const AxialCoordinate* const coord)  {
+    return IsCoordinateInBounds(coord) ? tiles[coord->r][coord->q] : nullptr;
+}
+
+Tile* Map::GetTile(const AxialCoordinate& coord) {
+    return IsCoordinateInBounds(coord) ? tiles[coord.r][coord.q] : nullptr;
+}
+
+Tile* Map::GetTile(const AxialCoordinate&& coord) {
+    return IsCoordinateInBounds(coord) ? tiles[coord.r][coord.q] : nullptr;
 }
 
 /*
@@ -83,7 +95,7 @@ std::vector<Tile*> Map::GetTilesInRange(const Tile* const source,
     for ( int y = std::max(-(signed)radius, -x-(signed)radius);
              y <= std::min((signed)radius, -x+(signed)radius);
              y++ ) {
-      l_tiles[tileVectorIndex++] = GetTile(*sourcePosition +
+      l_tiles[tileVectorIndex++] = this->GetTile(*sourcePosition +
             AxialCoordinate({ .q = x , .r = y }));
     }
   }
@@ -96,21 +108,42 @@ std::vector<Tile*> Map::GetTilesInRange(const Tile* const source,
  */
 
 bool Map::IsCoordinateInBounds(const AxialCoordinate* const coord) const {
-  return std::abs(coord->r) > tiles.size() / 2
-      && std::abs(coord->q) > tiles.size() / 2;
+  return std::abs(coord->r) > (signed) tiles.size() / 2
+      && std::abs(coord->q) > (signed) tiles.size() / 2;
 }
 
 bool Map::IsCoordinateInBounds(const AxialCoordinate& coord) const {
-  return std::abs(coord.r) > tiles.size() / 2
-      && std::abs(coord.q) > tiles.size() / 2;
+  return std::abs(coord.r) > (signed) tiles.size() / 2
+      && std::abs(coord.q) > (signed) tiles.size() / 2;
 }
 
 bool Map::IsCoordinateInBounds(const AxialCoordinate&& coord) const {
-  return std::abs(coord.r) > tiles.size() / 2
-      && std::abs(coord.q) > tiles.size() / 2;
+  return std::abs(coord.r) > (signed) tiles.size() / 2
+      && std::abs(coord.q) > (signed) tiles.size() / 2;
 }
 
 const std::vector<std::vector<Tile *>> &Map::getTiles() const {
     return tiles;
 }
+
+/* Set of utility functions for converting from the x-y pixel plane
+ * to the q-r axial plane
+ */
+sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate) {
+    double x = HEX_RADIUS * (1.5 * p_coordinate.q);
+    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q) + (ROOT3 * p_coordinate.r));
+    return sf::Vector2f(x, y);
+}
+sf::Vector2f AxialToPixel(const AxialCoordinate&& p_coordinate) {
+    double x = HEX_RADIUS * (1.5 * p_coordinate.q);
+    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q) + (ROOT3 * p_coordinate.r));
+    return sf::Vector2f(x, y);
+}
+
+AxialCoordinate PixelToAxial(size_t x, size_t y) {
+    double q = (2/3 * double(x)) / HEX_RADIUS;
+    double r = (-1/3 * double(x) + ROOT3/3 * double(y)) / HEX_RADIUS;
+    return AxialCoordinate(q, r);
+}
+
 

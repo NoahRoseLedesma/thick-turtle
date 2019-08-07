@@ -61,15 +61,16 @@ class Map {
     * If the specified coordinate is invalid, this returns nullptr.
     * Otherwise, a pointer to the tile is returned.
     */
+    Tile* GetTile(const AxialCoordinate* const coord) const;
+    Tile* GetTile(const AxialCoordinate& coord) const;
+    Tile* GetTile(const AxialCoordinate&& coord) const;
     Tile* GetTile(const AxialCoordinate* const coord);
     Tile* GetTile(const AxialCoordinate& coord);
     Tile* GetTile(const AxialCoordinate&& coord);
-
     /*
     * Get an unordered list of the tiles within a radius of a given tile.
     */
     std::vector<Tile*> GetTilesInRange(const Tile* source, size_t radius) const;
-
     /*
     * Returns true if the specified coordinate is within the bounds of the map
     */
@@ -87,3 +88,9 @@ class Map {
 public:
     const std::vector<std::vector<Tile *>> &getTiles() const;
 };
+/*
+ * Set of utility functions to convert between q-r and x-y planes
+ */
+sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate);
+sf::Vector2f AxialToPixel(const AxialCoordinate&& p_coordinate);
+AxialCoordinate PixelToAxial(size_t x, size_t y);

@@ -17,7 +17,7 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "SFML OpenGL");
     window.clear();
 
-    for (const auto tile : gameMap.getTiles()){
+    for (const auto& tile : gameMap.getTiles()){
         window.draw(tile);
     }
 
