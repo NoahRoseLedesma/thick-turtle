@@ -1,7 +1,6 @@
 //
 // Created by stott on 7/31/19.
 //
-#include <SFML/Window.hpp>
 #include "utility.h"
 
 /*
@@ -38,4 +37,24 @@ sf::ConvexShape generateHex(double x, double y, double r) {
     hex.setPoint(5, sf::Vector2f(x-(r/2), y-(r*SIN60)));
 
     return hex;
+}
+/*
+ * Set of utility functions for converting from the x-y pixel plane
+ * to the q-r axial plane
+ */
+sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate) {
+    double x = HEX_RADIUS * (1.5 * p_coordinate.q);
+    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q) + (ROOT3 * p_coordinate.r));
+    return sf::Vector2f(x, y);
+}
+sf::Vector2f AxialToPixel(const AxialCoordinate&& p_coordinate) {
+    double x = HEX_RADIUS * (1.5 * p_coordinate.q);
+    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q) + (ROOT3 * p_coordinate.r));
+    return sf::Vector2f(x, y);
+}
+
+AxialCoordinate PixelToAxial(size_t x, size_t y) {
+    double q = (2/3 * double(x)) / HEX_RADIUS;
+    double r = (-1/3 * double(x) + ROOT3/3 * double(y)) / HEX_RADIUS;
+    return AxialCoordinate(q, r);
 }

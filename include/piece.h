@@ -10,7 +10,6 @@
 #include "utility.h"
 
 
-
 class Piece {
  public:
     /*

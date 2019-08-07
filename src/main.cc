@@ -5,7 +5,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "tile.h"
+#include "map.h"
 
 #define SIN60 0.8660254038
 #define ROOT3 1.732050808
@@ -20,7 +20,7 @@ int main(){
     for (const auto tile : gameMap.getTiles()){
         window.draw(tile);
     }
-  
+
     window.display();
     while(window.isOpen()) {
         sf::Event event;

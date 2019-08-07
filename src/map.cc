@@ -40,7 +40,7 @@ Map::Map() {
         double inverter = 1;
         double offset = 0;
         for (double x = 0; x < SCREEN_WIDTH + HEX_RADIUS; x += (1.5 * HEX_RADIUS)) {
-            auto l_new_tile = new Tile(this, PixelToAxial(x, y));
+            Tile* l_new_tile = new Tile(this, PixelToAxial(x, y));
             l_new_tile->setFillColor(sf::Color::Red);
             l_new_tile->setOutlineColor(sf::Color::Cyan);
             l_new_tile->setOutlineThickness(4);

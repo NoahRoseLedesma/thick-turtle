@@ -8,12 +8,14 @@
 #include <SFML/Graphics/ConvexShape.hpp>
 #include "map.h"
 
+class Map;
+class AxialCoordinate;
+
 class Tile : public sf::ConvexShape {
  public:
   Tile(const Map* const map, const AxialCoordinate&& position);
   Tile(const Map* const map, const AxialCoordinate& position);
   virtual ~Tile();
-
   /*
    * Gets the position of the tile within the map
    */
