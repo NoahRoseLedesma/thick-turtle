@@ -85,7 +85,8 @@ class Map {
     // between them. In this scenerio it may be better to use a hash table.
     // This vector is indexed by AxialCoordinates
     std::vector<std::vector<Tile*>> tiles;
-public:
+
+ public:
     const std::vector<std::vector<Tile *>> &getTiles() const;
 };
 /*

@@ -30,7 +30,7 @@ class Tile : public sf::ConvexShape {
    * Returns the number of movement points this tile de/buffs from the piece
    * which occupies it.
    */
-  //virtual int GetMovementModifier() = 0;
+  // virtual int GetMovementModifier() = 0;
   /*
    * Returns true if this tile can accept a piece moving to it
    */
@@ -48,7 +48,7 @@ class DebugTile : public Tile {
   DebugTile(const Map* const map, const AxialCoordinate&& position);
   DebugTile(const Map* const map, const AxialCoordinate& position);
 
-  //int GetMovementModifier() override { return movementBonus; }
+  // int GetMovementModifier() override { return movementBonus; }
 
  protected:
     static const int movementBonus = 4;

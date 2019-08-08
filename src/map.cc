@@ -35,7 +35,6 @@ AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
  */
 
 Map::Map(size_t radius) {
-
     this->tiles.resize(std::floor(SCREEN_HEIGHT / (3 * radius)));
     for (double y = 0; y < SCREEN_HEIGHT + radius; y += (radius * ROOT3)) {
         double inverter = 1;
@@ -135,18 +134,21 @@ const std::vector<std::vector<Tile *>> &Map::getTiles() const {
  */
 sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate) {
     double x = HEX_RADIUS * (1.5 * p_coordinate.q);
-    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q) + (ROOT3 * p_coordinate.r));
+    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q)
+            + (ROOT3 * p_coordinate.r));
     return sf::Vector2f(x, y);
 }
 sf::Vector2f AxialToPixel(const AxialCoordinate&& p_coordinate) {
     double x = HEX_RADIUS * (1.5 * p_coordinate.q);
-    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q) + (ROOT3 * p_coordinate.r));
+    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q)
+            + (ROOT3 * p_coordinate.r));
     return sf::Vector2f(x, y);
 }
 
 AxialCoordinate PixelToAxial(size_t x, size_t y) {
-    double q = (2/3 * double(x)) / HEX_RADIUS;
-    double r = (-1/3 * double(x) + ROOT3/3 * double(y)) / HEX_RADIUS;
+    int q = static_cast<int>((2/3 * static_cast<double>(x)) / HEX_RADIUS);
+    int r = static_cast<int>((-1/3 * static_cast<double>(x)
+            + ROOT3/3 * static_cast<double>(y)) / HEX_RADIUS);
     return AxialCoordinate(q, r);
 }
 

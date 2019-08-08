@@ -10,7 +10,7 @@ Piece::Piece(const Tile* position) {
 }
 
 void Piece::Move(const Tile* p_target_tile) {
-  // TODO: Notify the tile we are currently on that we are leaving
+  // TODO(stott): Notify the tile we are currently on that we are leaving
   // and notify the tile we have landed on that we have arrived
 
   // a tile can be moved to if the coordinate is in bounds,
@@ -26,7 +26,7 @@ void Piece::Move(const Tile* p_target_tile) {
 
 void Piece::TakeDamage(size_t damage) {
   if ( IsDead() ) {
-    // TODO: If this unit is dead and we apply damage to it,
+    // TODO(stott): If this unit is dead and we apply damage to it,
     // we should log this as a non-critical error.
     return;
   }

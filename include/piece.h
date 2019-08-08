@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include "player.h"
 #include "tile.h"
 #include "utility.h"
