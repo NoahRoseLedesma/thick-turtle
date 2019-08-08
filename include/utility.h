@@ -18,4 +18,4 @@ size_t HexNumbers(const size_t n);
 template <typename T>
 bool VectorContains(const std::vector<T> &p_search_target, const T &element);
 
-sf::ConvexShape generateHex(double x, double y, double r);
+void generateHex(sf::ConvexShape *hex, double x, double y, double r);

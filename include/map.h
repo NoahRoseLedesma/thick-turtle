@@ -24,7 +24,7 @@
 #include "tile.h"
 // This defines the distance from center to side of
 // any of the tiles
-#define HEX_RADIUS 25
+#define HEX_RADIUS 50
 #define SCREEN_HEIGHT 600
 #define SCREEN_WIDTH 800
 

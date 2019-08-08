@@ -26,15 +26,14 @@ bool VectorContains(const std::vector<T> &p_search_target, const T &element) {
 /*
  * Function that returns a drawable hexagon
  */
-sf::ConvexShape generateHex(double x, double y, double r) {
-    sf::ConvexShape hex;
-    hex.setPointCount(6);
-    hex.setPoint(0, sf::Vector2f(x-r, y));
-    hex.setPoint(1, sf::Vector2f(x-(r/2), y+(r*SIN60)));
-    hex.setPoint(2, sf::Vector2f(x+(r/2), y+(r*SIN60)));
-    hex.setPoint(3, sf::Vector2f(x+r, y));
-    hex.setPoint(4, sf::Vector2f(x+(r/2), y-(r*SIN60)));
-    hex.setPoint(5, sf::Vector2f(x-(r/2), y-(r*SIN60)));
-
-    return hex;
+void generateHex(sf::ConvexShape *hex, double x, double y, double r) {
+    hex->setPointCount(6);
+    hex->setPoint(0, sf::Vector2f(x-r, y));
+    hex->setPoint(1, sf::Vector2f(x-(r/2), y+(r*SIN60)));
+    hex->setPoint(2, sf::Vector2f(x+(r/2), y+(r*SIN60)));
+    hex->setPoint(3, sf::Vector2f(x+r, y));
+    hex->setPoint(4, sf::Vector2f(x+(r/2), y-(r*SIN60)));
+    hex->setPoint(5, sf::Vector2f(x-(r/2), y-(r*SIN60)));
+    hex->setOutlineColor(sf::Color::Red);
+    hex->setOutlineThickness(5);
 }
