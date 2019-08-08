@@ -54,7 +54,7 @@ class Map {
  /*
   * Create a map in the shape of a hexagon with the specified radius.
   */
-    Map();
+    explicit Map(size_t radius);
     /*
     * Get a tile in the map from a coordinate.
     * If there is no tile at the specified coordinate, this returns nullptr.

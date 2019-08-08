@@ -12,13 +12,15 @@
 
 int main(){
 
-    Map gameMap;
+    auto gameMap = new Map(50);
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "SFML OpenGL");
     window.clear();
 
-    for (const auto& tile : gameMap.getTiles()){
-        window.draw(tile);
+    for (const auto& row : gameMap->getTiles()) {
+        for (const auto& column : row) {
+            window.draw(*column);
+        }
     }
 
     window.display();

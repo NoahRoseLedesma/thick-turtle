@@ -48,7 +48,7 @@ class Piece {
     /*
      *  TODO: Need to implement defend function, but am unsure of what args it takes
      */
-    virtual void Defend();
+    virtual void Defend() = 0;
 
  protected:
     const Tile* m_tile;

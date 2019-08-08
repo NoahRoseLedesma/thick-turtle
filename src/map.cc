@@ -34,20 +34,24 @@ AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
  * Map
  */
 
-Map::Map() {
+Map::Map(size_t radius) {
 
-    for (double y = 0; y < SCREEN_HEIGHT + HEX_RADIUS; y += (HEX_RADIUS * ROOT3)) {
+    this->tiles.resize(std::floor(SCREEN_HEIGHT / (3 * radius)));
+    for (double y = 0; y < SCREEN_HEIGHT + radius; y += (radius * ROOT3)) {
         double inverter = 1;
         double offset = 0;
-        for (double x = 0; x < SCREEN_WIDTH + HEX_RADIUS; x += (1.5 * HEX_RADIUS)) {
+        int n = (ROOT3/3 * y) / radius;
+        this->tiles[n].resize(std::floor(SCREEN_WIDTH / (3 * radius)));
+        for (double x = 0; x < SCREEN_WIDTH + radius; x += (1.5 * radius)) {
             Tile* l_new_tile = new Tile(this, PixelToAxial(x, y));
             l_new_tile->setFillColor(sf::Color::Red);
             l_new_tile->setOutlineColor(sf::Color::Cyan);
             l_new_tile->setOutlineThickness(4);
 
-            this->tiles[y][x] = l_new_tile;
+            auto coordinates = PixelToAxial(x, y);
+            this->tiles[coordinates.q][coordinates.r] = l_new_tile;
 
-            offset += (inverter * (HEX_RADIUS * (ROOT3 / 2)));
+            offset += (inverter * (radius * (ROOT3 / 2)));
             inverter *= -1;
         }
     }
