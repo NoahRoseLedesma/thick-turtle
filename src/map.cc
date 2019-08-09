@@ -133,9 +133,9 @@ const std::vector<std::vector<Tile *>> &Map::getTiles() const {
  * to the q-r axial plane
  */
 sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate) {
-    double x = HEX_RADIUS * (1.5 * p_coordinate.q);
+    double x = HEX_RADIUS * (1.5 * p_coordinate.q) + SCREEN_WIDTH/2;
     double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q)
-            + (ROOT3 * p_coordinate.r));
+            + (ROOT3 * p_coordinate.r))+ SCREEN_HEIGHT/2;
     return sf::Vector2f(x, y);
 }
 sf::Vector2f AxialToPixel(const AxialCoordinate&& p_coordinate) {

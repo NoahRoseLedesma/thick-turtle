@@ -17,10 +17,10 @@ int main() {
             "SFML OpenGL");
     window.clear();
 
-    auto coord1 = AxialCoordinate(2, -1);
+    auto coord1 = AxialCoordinate(1, 0);
     auto tile1 = Tile(gameMap, coord1);
     window.draw(tile1);
-    auto coord = AxialCoordinate(4, 0);
+    auto coord = AxialCoordinate(0, 0);
     auto tile = new Tile(gameMap, coord);
     window.draw(*tile);
 
