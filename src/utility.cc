@@ -3,6 +3,8 @@
 //
 #include "utility.h"
 
+#include <cmath>
+
 /*
  * Helper function for GetTilesInRange
  * Returns the number of hexagons in range of radius n.
@@ -28,12 +30,11 @@ bool VectorContains(const std::vector<T> &p_search_target, const T &element) {
  */
 void generateHex(sf::ConvexShape *hex, double x, double y, double r) {
     hex->setPointCount(6);
-    hex->setPoint(0, sf::Vector2f(x-r, y));
-    hex->setPoint(1, sf::Vector2f(x-(r/2), y+(r*SIN60)));
-    hex->setPoint(2, sf::Vector2f(x+(r/2), y+(r*SIN60)));
-    hex->setPoint(3, sf::Vector2f(x+r, y));
-    hex->setPoint(4, sf::Vector2f(x+(r/2), y-(r*SIN60)));
-    hex->setPoint(5, sf::Vector2f(x-(r/2), y-(r*SIN60)));
+    for( size_t i = 0; i < 6; i++ ) {
+      const float angle = 3.14 * i / 3;
+      hex->setPoint(i, sf::Vector2f(x + r * std::cos(angle), 
+                                    y + r * std::sin(angle)));
+    }
     hex->setOutlineColor(sf::Color::Red);
     hex->setOutlineThickness(5);
 }

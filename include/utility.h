@@ -9,10 +9,6 @@
 #include <SFML/Graphics/ConvexShape.hpp>
 #include "map.h"
 
-// Just a couple of mathematical constants
-#define SIN60 0.8660254038
-#define ROOT3 1.732050808
-
 size_t HexNumbers(const size_t n);
 
 template <typename T>
