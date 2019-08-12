@@ -17,6 +17,7 @@ Game::~Game() {
 
 // TODO: Asset managment system
 Game::Game() {
+  // Create debug resources
   debugFont.loadFromFile("assets/fonts/FiraCode-Regular.ttf");
 }
 
@@ -57,4 +58,8 @@ void Game::Run() {
 
 void Game::Think() {
   window->draw(*map);
+}
+
+void Game::InitRenderTexture() {
+  renderTexture.create(50, 50);
 }

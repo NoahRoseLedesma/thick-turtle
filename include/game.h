@@ -27,6 +27,8 @@ class Game {
   void Run();
 
   const sf::Font& GetDebugFont() const { return debugFont; }
+  void InitRenderTexture();
+  sf::RenderTexture& GetRenderTexture() const { return renderTexture; }
 
  private:
   /*
@@ -48,4 +50,8 @@ class Game {
    * A font resource which can be used for debugging purposes.
    */
   sf::Font debugFont;
+  /*
+   * A shared render texture resource used for debugging purposes.
+   */
+  mutable sf::RenderTexture renderTexture;
 };
