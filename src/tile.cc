@@ -11,14 +11,16 @@
  */
 Tile::Tile(const Map* const map, const AxialCoordinate&& position):
     map(map), position(new AxialCoordinate(position)) {
-    sf::Vector2f l_coord = AxialToPixel(position);
-    generateHex(this, l_coord.x, l_coord.y, HEX_RADIUS);
+    sf::Vector2f l_coord = map->GetGameObject()->AxialToPixel(position);
+    generateHex(this, l_coord.x, l_coord.y,
+                map->GetGameObject()->GetTileRadius());
 }
 
 Tile::Tile(const Map* const map, const AxialCoordinate& position):
     map(map), position(new AxialCoordinate(position)) {
-    sf::Vector2f l_coord = AxialToPixel(position);
-    generateHex(this, l_coord.x, l_coord.y, HEX_RADIUS);
+    sf::Vector2f l_coord = map->GetGameObject()->AxialToPixel(position);
+    generateHex(this, l_coord.x, l_coord.y,
+                map->GetGameObject()->GetTileRadius());
 }
 /*
  * ~Tile

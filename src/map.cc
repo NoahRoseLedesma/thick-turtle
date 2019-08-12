@@ -141,31 +141,3 @@ void Map::draw( sf::RenderTarget& target, sf::RenderStates ) const {
     target.draw(*tile);
   }
 }
-
-/* 
- * Set of utility functions for converting from the x-y pixel plane
- * to the q-r axial plane
- */
-constexpr float ROOT3 = 1.73205081;
-
-sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate) {
-    double x = HEX_RADIUS * (1.5 * p_coordinate.q) + SCREEN_WIDTH/2;
-    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q)
-            + (ROOT3 * p_coordinate.r))+ SCREEN_HEIGHT/2;
-    return sf::Vector2f(x, y);
-}
-sf::Vector2f AxialToPixel(const AxialCoordinate&& p_coordinate) {
-    double x = HEX_RADIUS * (1.5 * p_coordinate.q);
-    double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q)
-            + (ROOT3 * p_coordinate.r));
-    return sf::Vector2f(x, y);
-}
-
-AxialCoordinate PixelToAxial(size_t x, size_t y) {
-    int q = static_cast<int>((2/3 * static_cast<double>(x)) / HEX_RADIUS);
-    int r = static_cast<int>((-1/3 * static_cast<double>(x)
-            + ROOT3/3 * static_cast<double>(y)) / HEX_RADIUS);
-    return AxialCoordinate(q, r);
-}
-
-
