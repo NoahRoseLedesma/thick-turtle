@@ -38,7 +38,8 @@ void Game::InitMap( size_t radius ) {
     return new DebugTile(map, coord);
   };
 
-  map = new Map(radius, DebugTileProducer, this);
+  mapRadius = radius;
+  map = new Map(mapRadius, DebugTileProducer, this);
 }
 
 /*
@@ -88,10 +89,12 @@ void Game::Think() {
  * Game::AxialToPixel
  */
 sf::Vector2f Game::AxialToPixel(const AxialCoordinate& coordinate) const {
-  float x = GetTileRadius() * (1.5 * (float)coordinate.q) +
+  AxialCoordinate transformed = {coordinate.q + (signed)mapRadius,
+                                 coordinate.r + (signed)mapRadius};
+  float x = GetTileRadius() * (1.5 * (float)transformed.q) +
             (float)GetWindowHeight()/2;
-  float y = GetTileRadius() * (((ROOT3 / 2) * coordinate.q)
-                               + (ROOT3 * coordinate.r));
+  float y = GetTileRadius() * (((ROOT3 / 2) * transformed.q)
+                               + (ROOT3 * transformed.r));
   return {x, y};
 }
 
@@ -104,7 +107,7 @@ AxialCoordinate Game::PixelToAxial(size_t x, size_t y) const {
   int q = (2/3) * (float)x / (float)GetTileRadius();
   int r = (-1/3) * (float)x + (float)ROOT3/3 *
                      (float)y / (float)GetTileRadius();
-  return  {q, r};
+  return {q, r};
 }
 
 size_t Game::GetTileRadius() const {

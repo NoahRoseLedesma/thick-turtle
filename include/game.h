@@ -55,6 +55,7 @@ class Game {
    * Game map object
    */
   Map* map;
+  size_t mapRadius;
 
   /*
    * We use a pointer to a window because RenderWindows follows RAII.
