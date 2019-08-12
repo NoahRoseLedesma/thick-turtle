@@ -20,8 +20,12 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include <functional>
 #include "utility.h"
 #include "tile.h"
+
+class Game;
+
 // This defines the distance from center to side of
 // any of the tiles
 #define HEX_RADIUS 50
@@ -49,12 +53,14 @@ class AxialCoordinate {
 
 class CubicCoordinate;
 
-class Map {
+class Map : public sf::Drawable {
  public:
  /*
   * Create a map in the shape of a hexagon with the specified radius.
   */
-    explicit Map(size_t radius);
+    explicit Map(size_t radius,
+                 std::function<Tile*(Map*,AxialCoordinate&&)> initilizer,
+		 Game* gameObject);
     /*
     * Get a tile in the map from a coordinate.
     * If there is no tile at the specified coordinate, this returns nullptr.
@@ -78,6 +84,17 @@ class Map {
     bool IsCoordinateInBounds(const AxialCoordinate& coord) const;
     bool IsCoordinateInBounds(const AxialCoordinate&& coord) const;
 
+    /*
+     * Get the game object
+     */
+    const Game* GetGameObject() const { return game; }
+
+    /*
+     * Draw the map to the specified render target by drawing all of it's tiles
+     */
+    virtual void draw( sf::RenderTarget& target, sf::RenderStates states)
+                       const;
+
  private:
     // Represent the map using a 2D matrix
     // This approach is simple to implement but will have space overhead
@@ -85,6 +102,9 @@ class Map {
     // between them. In this scenerio it may be better to use a hash table.
     // This vector is indexed by AxialCoordinates
     std::vector<std::vector<Tile*>> tiles;
+
+    // The game which this map belongs to
+    Game* game;
 
  public:
     const std::vector<std::vector<Tile *>> &getTiles() const;

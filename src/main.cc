@@ -5,32 +5,12 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "map.h"
-
-#define SIN60 0.8660254038
-#define ROOT3 1.732050808
+#include "game.h"
 
 int main() {
-    auto gameMap = new Map(50);
-
-    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT),
-            "SFML OpenGL");
-    window.clear();
-
-    auto coord1 = AxialCoordinate(1, 0);
-    auto tile1 = Tile(gameMap, coord1);
-    window.draw(tile1);
-    auto coord = AxialCoordinate(0, 0);
-    auto tile = new Tile(gameMap, coord);
-    window.draw(*tile);
-
-    window.display();
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-    }
-    return 0;
+  Game game;
+  game.InitMap(4);
+  game.InitWindow( 800, 600 );
+  game.Run();
+  return 0;
 }

@@ -1,6 +1,7 @@
 #include "map.h"
 
 #include <cmath>
+#include <SFML/Graphics/RenderTarget.hpp>
 /*
  * Axial Coordinate
  */
@@ -34,26 +35,22 @@ AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
  * Map
  */
 
-Map::Map(size_t radius) {
-    this->tiles.resize(std::floor(SCREEN_HEIGHT / (3 * radius)));
-    for (double y = 0; y < SCREEN_HEIGHT + radius; y += (radius * ROOT3)) {
-        double inverter = 1;
-        double offset = 0;
-        int n = (ROOT3/3 * y) / radius;
-        this->tiles[n].resize(std::floor(SCREEN_WIDTH / (3 * radius)));
-        for (double x = 0; x < SCREEN_WIDTH + radius; x += (1.5 * radius)) {
-            Tile* l_new_tile = new Tile(this, PixelToAxial(x, y));
-            l_new_tile->setFillColor(sf::Color::Red);
-            l_new_tile->setOutlineColor(sf::Color::Cyan);
-            l_new_tile->setOutlineThickness(4);
+Map::Map(size_t radius,
+         std::function<Tile*(Map*,AxialCoordinate&&)> initilizer,
+	 Game* game):
+         tiles(radius * 2), game(game) {
 
-            auto coordinates = PixelToAxial(x, y);
-            this->tiles[coordinates.q][coordinates.r] = l_new_tile;
+  for( auto& column : tiles ) {
+    column.resize(2 * radius);
+  }
 
-            offset += (inverter * (radius * (ROOT3 / 2)));
-            inverter *= -1;
-        }
+  for (int x = -radius; x < (signed)radius; x++) {
+    for ( int y = std::max(-(signed)radius, -x-(signed)radius);
+              y < std::min((signed)radius, -x+(signed)radius);
+              y++ ) {
+      tiles[y + radius][x + radius] = initilizer(this, {x, y}); 
     }
+  } 
 }
 
 /*
@@ -129,9 +126,26 @@ const std::vector<std::vector<Tile *>> &Map::getTiles() const {
     return tiles;
 }
 
-/* Set of utility functions for converting from the x-y pixel plane
+/*
+ * Map::draw
+ */
+void Map::draw( sf::RenderTarget& target, sf::RenderStates ) const {
+  size_t radius = tiles.size() / 2;
+  for (int x = -radius; x < (signed)radius; x++) {
+    for ( int y = std::max(-(signed)radius, -x-(signed)radius);
+             y < std::min((signed)radius, -x+(signed)radius);
+             y++ ) {
+      target.draw(*(tiles[y + radius][x + radius]));
+    }
+  }
+}
+
+/* 
+ * Set of utility functions for converting from the x-y pixel plane
  * to the q-r axial plane
  */
+constexpr float ROOT3 = 1.73205081;
+
 sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate) {
     double x = HEX_RADIUS * (1.5 * p_coordinate.q) + SCREEN_WIDTH/2;
     double y = HEX_RADIUS * (((ROOT3 / 2) * p_coordinate.q)

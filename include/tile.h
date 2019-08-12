@@ -6,6 +6,7 @@
  */
 #pragma once
 #include <SFML/Graphics/ConvexShape.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include "map.h"
 
 class Map;
@@ -52,4 +53,5 @@ class DebugTile : public Tile {
 
  protected:
     static const int movementBonus = 4;
+    sf::Texture texture;
 };
