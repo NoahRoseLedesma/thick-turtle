@@ -68,5 +68,3 @@ DebugTile::DebugTile(const Map* const map, const AxialCoordinate& position):
   texture = renderTexture.getTexture();
   setTexture(&texture);
 }
-
-
