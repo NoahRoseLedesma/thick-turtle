@@ -1,6 +1,6 @@
 CXX		:= g++
 CXXFLAGS	:= -Wall -Werror -Wextra -Werror
-LDFLAGS		:=
+LDFLAGS		:= -lsfml-system -lsfml-window -lsfml-graphics
 BUILD_DIR	:= ./bin
 OBJ_DIR		:= $(BUILD_DIR)/obj
 TARGET		:= thick_turtle
@@ -31,4 +31,3 @@ release: all
 
 clean:
 	-@rm -rvf $(OBJ_DIR)
-	-@rm -v $(BUILD_DIR)/*
