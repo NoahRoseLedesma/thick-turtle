@@ -9,8 +9,9 @@
 
 int main() {
   Game game;
-  game.InitMap(4);
   game.InitWindow( 800, 600 );
+  game.InitRenderTexture();
+  game.InitMap(4);
   game.Run();
   return 0;
 }
