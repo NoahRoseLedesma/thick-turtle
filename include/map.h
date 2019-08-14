@@ -20,14 +20,11 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include <functional>
 #include "utility.h"
 #include "tile.h"
-// This defines the distance from center to side of
-// any of the tiles
-#define HEX_RADIUS 50
-#define SCREEN_HEIGHT 600
-#define SCREEN_WIDTH 800
 
+class Game;
 class Tile;
 
 // Coordinate types and associated utilities
@@ -49,12 +46,14 @@ class AxialCoordinate {
 
 class CubicCoordinate;
 
-class Map {
+class Map : public sf::Drawable {
  public:
  /*
   * Create a map in the shape of a hexagon with the specified radius.
   */
-    explicit Map(size_t radius);
+    explicit Map(size_t radius,
+                 std::function<Tile*(Map*,AxialCoordinate&&)> initilizer,
+		 Game* gameObject);
     /*
     * Get a tile in the map from a coordinate.
     * If there is no tile at the specified coordinate, this returns nullptr.
@@ -78,6 +77,21 @@ class Map {
     bool IsCoordinateInBounds(const AxialCoordinate& coord) const;
     bool IsCoordinateInBounds(const AxialCoordinate&& coord) const;
 
+    /*
+     * Get the game object
+     */
+    const Game* GetGameObject() const { return game; }
+
+    /*
+     * Draw the map to the specified render target by drawing all of it's tiles
+     */
+    virtual void draw( sf::RenderTarget& target, sf::RenderStates states)
+                       const;
+
+    /*
+     * Invoked when the display changes size
+     */
+    void OnDisplayResize();
  private:
     // Represent the map using a 2D matrix
     // This approach is simple to implement but will have space overhead
@@ -86,12 +100,9 @@ class Map {
     // This vector is indexed by AxialCoordinates
     std::vector<std::vector<Tile*>> tiles;
 
+    // The game which this map belongs to
+    Game* game;
+
  public:
     const std::vector<std::vector<Tile *>> &getTiles() const;
 };
-/*
- * Set of utility functions to convert between q-r and x-y planes
- */
-sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate);
-sf::Vector2f AxialToPixel(const AxialCoordinate&& p_coordinate);
-AxialCoordinate PixelToAxial(size_t x, size_t y);

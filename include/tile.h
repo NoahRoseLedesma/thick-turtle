@@ -6,6 +6,7 @@
  */
 #pragma once
 #include <SFML/Graphics/ConvexShape.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include "map.h"
 
 class Map;
@@ -35,6 +36,10 @@ class Tile : public sf::ConvexShape {
    * Returns true if this tile can accept a piece moving to it
    */
   bool CanBeMovedTo() const;
+  /*
+   * Invoked when the display window changes size 
+   */
+  void OnDisplayResize();
 
  protected:
   // The map of which this tile belongs to
@@ -52,4 +57,5 @@ class DebugTile : public Tile {
 
  protected:
     static const int movementBonus = 4;
+    sf::Texture texture;
 };
