@@ -40,6 +40,11 @@ class Game {
    */
   size_t GetTileRadius() const;
 
+  /*
+   * Handle the resizing of the main window
+   */
+  void OnDisplayResize();
+
   // Debug resources
   const sf::Font& GetDebugFont() const { return debugFont; }
   void InitRenderTexture();

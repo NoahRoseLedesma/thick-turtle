@@ -36,6 +36,10 @@ class Tile : public sf::ConvexShape {
    * Returns true if this tile can accept a piece moving to it
    */
   bool CanBeMovedTo() const;
+  /*
+   * Invoked when the display window changes size 
+   */
+  void OnDisplayResize();
 
  protected:
   // The map of which this tile belongs to

@@ -141,3 +141,15 @@ void Map::draw( sf::RenderTarget& target, sf::RenderStates ) const {
     target.draw(*tile);
   }
 }
+
+/*
+ * Map::OnDisplayResize
+ */
+
+void Map::OnDisplayResize() {
+  // Notify every tile of the display resize
+  size_t radius = tiles.size() / 2;
+  for( Tile* tile : GetTilesInRange(GetTile({0, 0}), radius) ) {
+    tile->OnDisplayResize();
+  }
+}

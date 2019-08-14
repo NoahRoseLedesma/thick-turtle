@@ -42,6 +42,16 @@ bool Tile::CanBeMovedTo() const {
 }
 
 /*
+ * Tile::OnDisplayResize
+ */
+void Tile::OnDisplayResize() {
+  // Regenerate this shape
+  sf::Vector2f worldPosition = map->GetGameObject()->AxialToPixel(*position);
+  generateHex(this, worldPosition.x, worldPosition.y,
+              map->GetGameObject()->GetTileRadius());
+}
+
+/*
  * DebugTile
  */
 

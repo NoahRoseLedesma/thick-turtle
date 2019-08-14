@@ -71,6 +71,10 @@ void Game::Run() {
       if( event.type == sf::Event::Closed ) {
         window->close();
       }
+      if( event.type == sf::Event::Resized ) {
+        // Invoke the handler for this event
+        OnDisplayResize();
+      }
     }
     window->clear();
     Think();
@@ -89,13 +93,15 @@ void Game::Think() {
  * Game::AxialToPixel
  */
 sf::Vector2f Game::AxialToPixel(const AxialCoordinate& coordinate) const {
-  AxialCoordinate transformed = {coordinate.q + (signed)mapRadius,
-                                 coordinate.r + (signed)mapRadius};
-  float x = GetTileRadius() * (1.5 * (float)transformed.q) +
-            (float)GetWindowHeight()/2;
-  float y = GetTileRadius() * (((ROOT3 / 2) * transformed.q)
-                               + (ROOT3 * transformed.r));
-  return {x, y};
+  // Determine the origin of the centroid hexagon
+  // This should always be at the center of the display
+  float xCenter = GetWindowWidth() / 2.; 
+  float yCenter = GetWindowHeight() / 2.;
+  // Determine the pixel offset from the centroid from the given position
+  float deltaX = GetTileRadius() * (1.5 * coordinate.q);
+  float deltaY = GetTileRadius() * (ROOT3/2. * coordinate.q
+                                     + ROOT3 * coordinate.r);
+  return {xCenter + deltaX, yCenter + deltaY};
 }
 
 sf::Vector2f Game::AxialToPixel(const AxialCoordinate&& coordinate) const {
@@ -110,12 +116,30 @@ AxialCoordinate Game::PixelToAxial(size_t x, size_t y) const {
   return {q, r};
 }
 
+/*
+ * Game::GetTileRadius
+ */
 size_t Game::GetTileRadius() const {
   // TODO: Determine this programatically
   return 50;
 }
+
 /*
- * Game::InitrenderTexture
+ * Game::OnDisplayResize
+ */
+void Game::OnDisplayResize() {
+  // Update the window's view as not to have SFML automatically stretch
+  // the drawn graphics
+  sf::FloatRect visibleArea = {0, 0,
+                              (float)GetWindowWidth(),
+                              (float)GetWindowHeight()};
+  window->setView(sf::View(visibleArea));
+  // Update the game map of this event
+  map->OnDisplayResize();
+}
+
+/*
+ * Game::InitRenderTexture
  */
 void Game::InitRenderTexture() {
   renderTexture.create(50, 50);
