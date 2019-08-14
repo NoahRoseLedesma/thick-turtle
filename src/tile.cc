@@ -11,14 +11,16 @@
  */
 Tile::Tile(const Map* const map, const AxialCoordinate&& position):
     map(map), position(new AxialCoordinate(position)) {
-    sf::Vector2f l_coord = AxialToPixel(position);
-    generateHex(this, l_coord.x, l_coord.y, HEX_RADIUS);
+    sf::Vector2f l_coord = map->GetGameObject()->AxialToPixel(position);
+    generateHex(this, l_coord.x, l_coord.y,
+                map->GetGameObject()->GetTileRadius());
 }
 
 Tile::Tile(const Map* const map, const AxialCoordinate& position):
     map(map), position(new AxialCoordinate(position)) {
-    sf::Vector2f l_coord = AxialToPixel(position);
-    generateHex(this, l_coord.x, l_coord.y, HEX_RADIUS);
+    sf::Vector2f l_coord = map->GetGameObject()->AxialToPixel(position);
+    generateHex(this, l_coord.x, l_coord.y,
+                map->GetGameObject()->GetTileRadius());
 }
 /*
  * ~Tile
@@ -37,6 +39,16 @@ bool Tile::CanBeMovedTo() const {
      * 2) Allows for piece placement (s.t. a water tile would fail here)
      */
     return true;
+}
+
+/*
+ * Tile::OnDisplayResize
+ */
+void Tile::OnDisplayResize() {
+  // Regenerate this shape
+  sf::Vector2f worldPosition = map->GetGameObject()->AxialToPixel(*position);
+  generateHex(this, worldPosition.x, worldPosition.y,
+              map->GetGameObject()->GetTileRadius());
 }
 
 /*
@@ -66,5 +78,3 @@ DebugTile::DebugTile(const Map* const map, const AxialCoordinate& position):
   texture = renderTexture.getTexture();
   setTexture(&texture);
 }
-
-

@@ -25,13 +25,6 @@
 #include "tile.h"
 
 class Game;
-
-// This defines the distance from center to side of
-// any of the tiles
-#define HEX_RADIUS 50
-#define SCREEN_HEIGHT 600
-#define SCREEN_WIDTH 800
-
 class Tile;
 
 // Coordinate types and associated utilities
@@ -95,6 +88,10 @@ class Map : public sf::Drawable {
     virtual void draw( sf::RenderTarget& target, sf::RenderStates states)
                        const;
 
+    /*
+     * Invoked when the display changes size
+     */
+    void OnDisplayResize();
  private:
     // Represent the map using a 2D matrix
     // This approach is simple to implement but will have space overhead
@@ -109,9 +106,3 @@ class Map : public sf::Drawable {
  public:
     const std::vector<std::vector<Tile *>> &getTiles() const;
 };
-/*
- * Set of utility functions to convert between q-r and x-y planes
- */
-sf::Vector2f AxialToPixel(const AxialCoordinate& p_coordinate);
-sf::Vector2f AxialToPixel(const AxialCoordinate&& p_coordinate);
-AxialCoordinate PixelToAxial(size_t x, size_t y);
