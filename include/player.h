@@ -9,6 +9,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 #include "piece.h"
 #include "tile.h"
@@ -27,6 +28,7 @@ class Player {
  private:
     std::string m_name;
     std::map<const Tile*, const Piece*> m_pieces;
+    std::vector<const Tile*> m_controlled_tiles;
 };
 
 
