@@ -7,6 +7,7 @@
 
 class Map;
 class AxialCoordinate;
+class Camera;
 
 class Game {
  public:
@@ -59,7 +60,7 @@ class Game {
   /*
    * Game map object
    */
-  Map* map;
+  Map* map = nullptr;
   size_t mapRadius;
 
   /*
@@ -67,7 +68,12 @@ class Game {
    * Meaning that if we were to use an instance, a window could appear
    * before initilization has completed.
    */
-  sf::RenderWindow* window;
+  sf::RenderWindow* window = nullptr;
+
+  /*
+   * The camera controlling the world view
+   */
+  Camera* camera = nullptr;
 
   /*
    * Mathematical constants
