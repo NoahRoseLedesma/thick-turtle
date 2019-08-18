@@ -94,6 +94,7 @@ void Game::Run() {
  */
 void Game::Think() {
   window->draw(*map);
+  window->draw(*camera);
 }
 
 /*

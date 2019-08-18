@@ -5,12 +5,13 @@
 #pragma once
 
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
 
 namespace sf {
   class RenderWindow;
 }
 
-class Camera {
+class Camera : public sf::Drawable {
  public:
   Camera(sf::RenderWindow* window);
 
@@ -18,11 +19,6 @@ class Camera {
    * Process some player input event and adjust the camera
    */
   void Think( sf::Event& event );
-  
-  /*
-   * Attempt to adjust the zoom factor of the world view
-   */
-  void OnZoomEvent( sf::Event::MouseWheelScrollEvent& event );
 
   /*
    * Reapply camera adjustments after the world view has been reset by an
@@ -30,6 +26,11 @@ class Camera {
    */
   void OnViewReset();
 
+  /*
+   * Draws camera related components
+   */
+  virtual void draw(sf::RenderTarget& target, sf::RenderStates states)
+                    const override;
  private:
   /*
    * Configuration constants
@@ -45,7 +46,30 @@ class Camera {
   // initilized. This should be relative to the native zoom of the view.
   float currentZoom = 1.;
 
+  // Enabled when the view is panning
+  bool currentlyPanning = false;
+  // The position of the mouse when panning began
+  sf::Vector2i panInteractionOrigin;
+  // The sprite used to represent the pan origin
+  sf::CircleShape panOriginIndicator;
+
   /*
    * Methods
    */
+  
+  /*
+   * Attempt to adjust the zoom factor of the world view
+   */
+  void OnZoomEvent( sf::Event::MouseWheelScrollEvent& event );
+
+  /*
+   * Enable/Disable panning
+   */
+  void StartPanning(sf::Event::MouseButtonEvent& event);
+  void StopPanning() { currentlyPanning = false; }
+
+  /*
+   * Process a mouse movement event to pan the view if panning is enabled
+   */
+  void OnPanEvent(sf::Event::MouseMoveEvent& event);
 };
