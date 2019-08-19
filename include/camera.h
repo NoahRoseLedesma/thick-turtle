@@ -48,10 +48,8 @@ class Camera : public sf::Drawable {
 
   // Enabled when the view is panning
   bool currentlyPanning = false;
-  // The position of the mouse when panning began
-  sf::Vector2i panInteractionOrigin;
-  // The sprite used to represent the pan origin
-  sf::CircleShape panOriginIndicator;
+  // The last position of the mouse
+  sf::Vector2i lastMousePosition;
 
   /*
    * Methods

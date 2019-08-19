@@ -56,30 +56,24 @@ void Camera::OnViewReset() {
 void Camera::OnPanEvent(sf::Event::MouseMoveEvent& event) {
   if( !currentlyPanning )
     return;
-  // Start with the absolute position of the mouse
-  sf::Vector2i mousePosition = {event.x, event.y};
-  // Find the position relative to the pan event origin
-  mousePosition = panInteractionOrigin - mousePosition;
-  // Translate the world view by this vector
+
+  // Calculate the change in mouse position
+  sf::Vector2i deltaMousePosition(event.x, event.y);
+  deltaMousePosition -= lastMousePosition;
+
+  // Shift the view using the delta
   sf::View view = window->getView();
-  view.move((float)-mousePosition.x, (float)-mousePosition.y);
+  view.move((float)-deltaMousePosition.x, (float)-deltaMousePosition.y);
   window->setView(view);
-  // Move the interaction origin vector to keep the same relative distance
-  // between that and the mouse position between frames
-  panInteractionOrigin.x -= (float)mousePosition.x;
-  panInteractionOrigin.y -= (float)mousePosition.y;
-  // Update the indicator sprite
-  panOriginIndicator.setPosition(panInteractionOrigin.x, panInteractionOrigin.y);
+
+  // Set the last mouse position to be the mouse position in this frame
+  lastMousePosition = {event.x, event.y};
 }
 
 void Camera::StartPanning(sf::Event::MouseButtonEvent& event) {
   currentlyPanning = true;
-  panInteractionOrigin = {event.x, event.y};
-  panOriginIndicator.setPosition(event.x, event.y);
+  lastMousePosition = {event.x, event.y};
 }
 
-void Camera::draw(sf::RenderTarget& target, sf::RenderStates) const {
-  if( currentlyPanning ) {
-    target.draw(panOriginIndicator);
-  }
-}
+// Currently unused. May be helpful in the future
+void Camera::draw(sf::RenderTarget&, sf::RenderStates) const {}
