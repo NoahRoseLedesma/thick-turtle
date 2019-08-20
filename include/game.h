@@ -16,8 +16,8 @@ class Game {
   /*
    * Construct a map with the given radius and make this the active game map.
    */
-  void InitMap( size_t radius );
-  void InitWindow( size_t desiredWidth, size_t desiredHeight );
+  void InitMap(size_t radius);
+  void InitWindow(size_t desiredWidth, size_t desiredHeight);
 
   size_t GetWindowHeight() const;
   size_t GetWindowWidth() const;
@@ -55,7 +55,6 @@ class Game {
    * The primary game loop. Draw to the screen and perform game logic
    */
   void Think();
-  
   /*
    * Game map object
    */

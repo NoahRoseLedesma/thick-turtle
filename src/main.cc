@@ -9,7 +9,7 @@
 
 int main() {
   Game game;
-  game.InitWindow( 800, 600 );
+  game.InitWindow(800, 600);
   game.InitRenderTexture();
   game.InitMap(4);
   game.Run();

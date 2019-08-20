@@ -52,8 +52,8 @@ class Map : public sf::Drawable {
   * Create a map in the shape of a hexagon with the specified radius.
   */
     explicit Map(size_t radius,
-                 std::function<Tile*(Map*,AxialCoordinate&&)> initilizer,
-		 Game* gameObject);
+                 std::function<Tile*(Map*, AxialCoordinate&&)> initilizer,
+                 Game* gameObject);
     /*
     * Get a tile in the map from a coordinate.
     * If there is no tile at the specified coordinate, this returns nullptr.
@@ -85,13 +85,14 @@ class Map : public sf::Drawable {
     /*
      * Draw the map to the specified render target by drawing all of it's tiles
      */
-    virtual void draw( sf::RenderTarget& target, sf::RenderStates states)
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states)
                        const;
 
     /*
      * Invoked when the display changes size
      */
     void OnDisplayResize();
+
  private:
     // Represent the map using a 2D matrix
     // This approach is simple to implement but will have space overhead

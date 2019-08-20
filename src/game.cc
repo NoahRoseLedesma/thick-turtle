@@ -12,10 +12,10 @@
  * Game::~Game
  */
 Game::~Game() {
-  if(map)
+  if (map)
     delete map;
-  if(window) {
-    if(window->isOpen()) {
+  if (window) {
+    if (window->isOpen()) {
       window->close();
     }
     delete window;
@@ -33,7 +33,7 @@ Game::Game() {
 /*
  * Game::InitMap
  */
-void Game::InitMap( size_t radius ) {
+void Game::InitMap(size_t radius ) {
   auto DebugTileProducer = [](Map* map, AxialCoordinate&& coord) -> Tile* {
     return new DebugTile(map, coord);
   };
@@ -45,7 +45,7 @@ void Game::InitMap( size_t radius ) {
 /*
  * Game::InitWindow
  */
-void Game::InitWindow( size_t desiredWidth, size_t desiredHeight ) {
+void Game::InitWindow(size_t desiredWidth, size_t desiredHeight ) {
   window = new sf::RenderWindow(sf::VideoMode(desiredWidth, desiredHeight),
                                 "Thick Turtle");
 }
@@ -65,13 +65,13 @@ size_t Game::GetWindowWidth() const {
  * Game::Run
  */
 void Game::Run() {
-  while( window->isOpen() ) {
+  while ( window->isOpen() ) {
     sf::Event event;
-    while( window->pollEvent(event) ) {
-      if( event.type == sf::Event::Closed ) {
+    while ( window->pollEvent(event) ) {
+      if ( event.type == sf::Event::Closed ) {
         window->close();
       }
-      if( event.type == sf::Event::Resized ) {
+      if ( event.type == sf::Event::Resized ) {
         // Invoke the handler for this event
         OnDisplayResize();
       }
@@ -95,7 +95,7 @@ void Game::Think() {
 sf::Vector2f Game::AxialToPixel(const AxialCoordinate& coordinate) const {
   // Determine the origin of the centroid hexagon
   // This should always be at the center of the display
-  float xCenter = GetWindowWidth() / 2.; 
+  float xCenter = GetWindowWidth() / 2.;
   float yCenter = GetWindowHeight() / 2.;
   // Determine the pixel offset from the centroid from the given position
   float deltaX = GetTileRadius() * (1.5 * coordinate.q);
@@ -110,9 +110,11 @@ sf::Vector2f Game::AxialToPixel(const AxialCoordinate&& coordinate) const {
 }
 
 AxialCoordinate Game::PixelToAxial(size_t x, size_t y) const {
-  int q = (2/3) * (float)x / (float)GetTileRadius();
-  int r = (-1/3) * (float)x + (float)ROOT3/3 *
-                     (float)y / (float)GetTileRadius();
+  int q = static_cast<float>(2/3) * static_cast<float>(x) /
+          static_cast<float>(GetTileRadius());
+  int r = static_cast<float>(-1/3) *
+          static_cast<float>(x) + static_cast<float>(ROOT3/3) *
+          static_cast<float>(y) / static_cast<float>(GetTileRadius());
   return {q, r};
 }
 
@@ -131,8 +133,8 @@ void Game::OnDisplayResize() {
   // Update the window's view as not to have SFML automatically stretch
   // the drawn graphics
   sf::FloatRect visibleArea = {0, 0,
-                              (float)GetWindowWidth(),
-                              (float)GetWindowHeight()};
+                               static_cast<float>(GetWindowWidth()),
+                               static_cast<float>(GetWindowHeight())};
   window->setView(sf::View(visibleArea));
   // Update the game map of this event
   map->OnDisplayResize();

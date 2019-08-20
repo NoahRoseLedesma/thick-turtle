@@ -8,13 +8,16 @@
 #include "player.h"
 #include <SFML/Window/Event.hpp>
 
+
+
 class InputController {
  public:
     InputController(Game* p_game, Player* p_player);
     ~InputController();
-    AxialCoordinate GetTileClickedOn(sf::Event::MouseButtonEvent& event);
+    AxialCoordinate GetTileClickedOn(sf::Event::MouseButtonEvent &event);
  private:
     Game* m_current_game;
+    // we may not actually need to have this, but I thought it may be useful
     Player* m_current_player;
 };
 

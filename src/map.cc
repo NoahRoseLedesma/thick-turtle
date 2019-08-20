@@ -36,11 +36,10 @@ AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
  */
 
 Map::Map(size_t radius,
-         std::function<Tile*(Map*,AxialCoordinate&&)> initilizer,
+         std::function<Tile*(Map*, AxialCoordinate&&)> initilizer,
          Game* game):
          tiles(radius * 2 + 1), game(game) {
-
-  for( auto& column : tiles ) {
+  for ( auto& column : tiles ) {
     column.resize(2 * radius + 1);
   }
 
@@ -48,9 +47,9 @@ Map::Map(size_t radius,
     for ( int y = std::max(-(signed)radius, -x-(signed)radius);
               y <= std::min((signed)radius, -x+(signed)radius);
               y++ ) {
-      tiles[y + radius][x + radius] = initilizer(this, {x, y}); 
+      tiles[y + radius][x + radius] = initilizer(this, {x, y});
     }
-  } 
+  }
 }
 
 /*
@@ -135,9 +134,9 @@ const std::vector<std::vector<Tile *>> &Map::getTiles() const {
 /*
  * Map::draw
  */
-void Map::draw( sf::RenderTarget& target, sf::RenderStates ) const {
+void Map::draw(sf::RenderTarget& target, sf::RenderStates) const {
   size_t radius = tiles.size() / 2;
-  for( auto* tile : GetTilesInRange( GetTile({0, 0}), radius ) ) {
+  for ( auto* tile : GetTilesInRange(GetTile({0, 0}), radius ) ) {
     target.draw(*tile);
   }
 }
@@ -149,7 +148,7 @@ void Map::draw( sf::RenderTarget& target, sf::RenderStates ) const {
 void Map::OnDisplayResize() {
   // Notify every tile of the display resize
   size_t radius = tiles.size() / 2;
-  for( Tile* tile : GetTilesInRange(GetTile({0, 0}), radius) ) {
+  for ( Tile* tile : GetTilesInRange(GetTile({0, 0}), radius) ) {
     tile->OnDisplayResize();
   }
 }
