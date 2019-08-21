@@ -4,7 +4,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 Camera::Camera(sf::RenderWindow* window): window(window) {
-  panOriginIndicator.setRadius(8);
   panOriginIndicator.setFillColor(sf::Color::White);
 }
 
