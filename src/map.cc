@@ -128,10 +128,6 @@ bool Map::IsCoordinateInBounds(const AxialCoordinate&& coord) const {
   return IsCoordinateInBounds(bind);
 }
 
-const std::vector<std::vector<Tile *>> &Map::getTiles() const {
-    return tiles;
-}
-
 /*
  * Map::draw
  */
