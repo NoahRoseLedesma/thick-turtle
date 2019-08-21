@@ -39,39 +39,3 @@ void generateHex(sf::ConvexShape *hex, double x, double y, double r) {
     hex->setOutlineThickness(5);
 }
 
-/*
- * Rounds floating point Axial Coordinate Values to
- * the appropiate int values
- */
-AxialCoordinate RoundAxialCoordinate(float q, float r) {
-    // Algorhthm can be found at
-    // https://www.redblobgames.com/grids/hexagons/#rounding
-
-    /*First convert to cubic coordinates
-     * var x = hex.q
-     * var z = hex.r
-     * var y = -x-z
-     */
-    double l_x = q, l_z = r, l_y = -l_x - l_z;
-
-    // Round each value to nearest integer
-    int rx = round(l_x);
-    int ry = round(l_y);
-    int rz = round(l_z);
-
-    // Find the differences
-    int dif_x = abs(rx - l_x);
-    int dif_y = abs(ry - l_y);
-    int dif_z = abs(rz - l_z);
-
-    if (dif_x > dif_y && dif_x > dif_z) {
-        rx = -ry-rz;
-    }
-    else if (dif_y > dif_z) {
-        ry = -rx-rz;
-    }
-    else {
-        rz = -rx-ry;
-    }
-    return AxialCoordinate(rx, rz);
-}

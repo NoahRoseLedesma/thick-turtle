@@ -32,6 +32,46 @@ AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
 }
 
 /*
+ * Constructor in the case where q and r are calculated
+ * and floats from the calculation are present
+ */
+AxialCoordinate::AxialCoordinate(float q, float r) {
+    /*
+     * Algorhthm can be found at
+     * https://www.redblobgames.com/grids/hexagons/#rounding
+     */
+
+    /*
+     * Convert to cubic coordinates bearing in mind
+     * that x+y+z = 0 and letting x=q and z=r
+     */
+    double l_x = q, l_z = r, l_y = -l_x - l_z;
+
+    // Round each value to nearest integer
+    int rx = round(l_x);
+    int ry = round(l_y);
+    int rz = round(l_z);
+
+    // Find the differences between rounded and actual value
+    int dif_x = abs(rx - l_x);
+    int dif_y = abs(ry - l_y);
+    int dif_z = abs(rz - l_z);
+
+    if (dif_x > dif_y && dif_x > dif_z) {
+        rx = -ry-rz;
+    }
+    else if (dif_y > dif_z) {
+        ry = -rx-rz;
+    }
+    else {
+        rz = -rx-ry;
+    }
+
+    this->q = rx;
+    this->r = rz;
+}
+
+/*
  * Map
  */
 

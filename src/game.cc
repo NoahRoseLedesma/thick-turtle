@@ -126,7 +126,7 @@ AxialCoordinate Game::PixelToAxial(size_t x, size_t y) const {
 
     float q = (2./3. * l_x) / this->GetTileRadius();
     float r = ((-1./3. * l_x)  +  (ROOT3/3. * l_y)) / this->GetTileRadius();
-    return RoundAxialCoordinate(q, r);
+    return AxialCoordinate(q, r);
 }
 
 /*
