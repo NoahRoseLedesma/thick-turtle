@@ -22,4 +22,4 @@ bool VectorContains(const std::vector<T> &p_search_target, const T &element);
 
 void generateHex(sf::ConvexShape *hex, double x, double y, double r);
 
-AxialCoordinate RoundAxialCoordinate(double q, double r);
+AxialCoordinate RoundAxialCoordinate(float q, float r);

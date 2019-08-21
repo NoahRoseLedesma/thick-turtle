@@ -2,7 +2,6 @@
 
 #include <functional>
 #include <inputcontroller.h>
-#include <iostream>
 #include <cmath>
 #include "map.h"
 #include "tile.h"
@@ -30,7 +29,7 @@ Game::~Game() {
  */
 Game::Game() {
   // Create debug resources
-  //debugFont.loadFromFile("assets/fonts/FiraCode-Regular.ttf");
+  debugFont.loadFromFile("assets/fonts/FiraCode-Regular.ttf");
 }
 
 /*
@@ -81,7 +80,6 @@ void Game::Run() {
       else if (event.type == sf::Event::MouseButtonPressed) {
           InputController controller(this);
           AxialCoordinate l_tile_clicked = controller.GetTileClickedOn(event.mouseButton);
-          std::cout << l_tile_clicked.q << ", " << l_tile_clicked.r << std::endl;
           this->map->GetTile(l_tile_clicked)->setFillColor(sf::Color::Yellow);
       }
     }
@@ -123,11 +121,11 @@ AxialCoordinate Game::PixelToAxial(size_t x, size_t y) const {
      * var q = ( 2./3 * point.x                        ) / size
      * var r = (-1./3 * point.x  +  sqrt(3)/3 * point.y) / size
      */
-    double l_x = x - this->GetWindowWidth()/2.;
-    double l_y = y - this->GetWindowHeight()/2.;
+    float l_x = x - this->GetWindowWidth()/2.;
+    float l_y = y - this->GetWindowHeight()/2.;
 
-    double q = (2./3. * l_x) / this->GetTileRadius();
-    double r = ((-1./3. * l_x)  +  (ROOT3/3. * l_y)) / this->GetTileRadius();
+    float q = (2./3. * l_x) / this->GetTileRadius();
+    float r = ((-1./3. * l_x)  +  (ROOT3/3. * l_y)) / this->GetTileRadius();
     return RoundAxialCoordinate(q, r);
 }
 

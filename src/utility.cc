@@ -43,7 +43,7 @@ void generateHex(sf::ConvexShape *hex, double x, double y, double r) {
  * Rounds floating point Axial Coordinate Values to
  * the appropiate int values
  */
-AxialCoordinate RoundAxialCoordinate(double q, double r) {
+AxialCoordinate RoundAxialCoordinate(float q, float r) {
     // Algorhthm can be found at
     // https://www.redblobgames.com/grids/hexagons/#rounding
 
