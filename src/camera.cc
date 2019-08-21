@@ -3,9 +3,7 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-Camera::Camera(sf::RenderWindow* window): window(window) {
-  panOriginIndicator.setFillColor(sf::Color::White);
-}
+Camera::Camera(sf::RenderWindow* window): window(window) {}
 
 void Camera::Think( sf::Event& event ) {
   if(event.type == sf::Event::EventType::MouseWheelScrolled) {
