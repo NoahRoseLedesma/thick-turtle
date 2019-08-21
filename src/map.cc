@@ -54,6 +54,19 @@ Map::Map(size_t radius,
 }
 
 /*
+ * Map::~Map
+ */
+
+Map::~Map() {
+  for(auto row : tiles) {
+    for(Tile* tile : row) {
+      if(tile)
+        delete tile;
+    }
+  }
+}
+
+/*
  * Map::GetTile
  */
 

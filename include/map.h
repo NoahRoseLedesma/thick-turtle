@@ -51,9 +51,11 @@ class Map : public sf::Drawable {
   /*
    * Create a map in the shape of a hexagon with the specified radius.
    */
-    explicit Map(size_t radius,
-                 std::function<Tile*(Map*,AxialCoordinate&&)> initilizer,
-		 Game* gameObject);
+  explicit Map(size_t radius,
+               std::function<Tile*(Map*,AxialCoordinate&&)> initilizer,
+               Game* gameObject);
+  ~Map();
+
   /*
    * Get a tile in the map from a coordinate.
    * If there is no tile at the specified coordinate, this returns nullptr.
