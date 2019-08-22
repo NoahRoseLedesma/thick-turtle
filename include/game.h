@@ -11,6 +11,7 @@
 #include "inputcontroller.h"
 #include "map.h"
 #include "tile.h"
+#include "camera.h"
 
 class Map;
 class AxialCoordinate;

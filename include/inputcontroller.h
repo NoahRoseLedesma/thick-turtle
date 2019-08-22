@@ -8,7 +8,8 @@
 #include "player.h"
 #include <SFML/Window/Event.hpp>
 
-
+class Game;
+class Player;
 
 class InputController {
  public:

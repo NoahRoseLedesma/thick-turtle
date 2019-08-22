@@ -11,6 +11,7 @@
 #include "tile.h"
 #include "utility.h"
 
+class Tile;
 
 class Piece {
  public:
