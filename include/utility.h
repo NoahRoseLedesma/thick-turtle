@@ -8,6 +8,12 @@
 #include <vector>
 #include <SFML/Graphics/ConvexShape.hpp>
 #include "map.h"
+#include "cmath"
+
+class AxialCoordinate;
+
+using std::round;
+using std::abs;
 
 size_t HexNumbers(const size_t n);
 

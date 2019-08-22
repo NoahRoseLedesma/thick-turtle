@@ -23,6 +23,7 @@
 #include <functional>
 #include "utility.h"
 #include "tile.h"
+#include "game.h"
 
 class Game;
 class Tile;
@@ -34,7 +35,10 @@ class AxialCoordinate {
  public:
   AxialCoordinate(CoordComponentType q, CoordComponentType r);
   AxialCoordinate(const AxialCoordinate&& copy);
-  AxialCoordinate(const AxialCoordinate& copy);
+
+    AxialCoordinate(float pixel_x, float pixel_y, Game *game);
+
+    AxialCoordinate(const AxialCoordinate& copy);
 
   AxialCoordinate operator+(const AxialCoordinate&& rhs) const;
   AxialCoordinate operator+(const AxialCoordinate& rhs) const;
@@ -78,6 +82,7 @@ class Map : public sf::Drawable {
    bool IsCoordinateInBounds(const AxialCoordinate* const coord) const;
    bool IsCoordinateInBounds(const AxialCoordinate& coord) const;
    bool IsCoordinateInBounds(const AxialCoordinate&& coord) const;
+
 
   /*
    * Get the game object

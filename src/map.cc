@@ -32,15 +32,59 @@ AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
 }
 
 /*
+ * Constructor in the case where q and r are calculated
+ * and floats from the calculation are present
+ */
+AxialCoordinate::AxialCoordinate(float pixel_x, float pixel_y, Game *game) {
+    /*
+    * var q = ( 2./3 * point.x                        ) / size
+    * var r = (-1./3 * point.x  +  sqrt(3)/3 * point.y) / size
+    */
+    float l_x = pixel_x - game->GetWindowWidth()/2.;
+    float l_y = pixel_y - game->GetWindowHeight()/2.;
+
+    float l_q = (2./3. * l_x) / game->GetTileRadius();
+    float l_r = ((-1./3. * l_x)  +  (Game::ROOT3/3. * l_y))
+            / game->GetTileRadius();
+    /*
+     * Convert to cubic coordinates bearing in mind
+     * that x+y+z = 0 and letting x=q and z=r
+     */
+    l_x = l_q;
+    float l_z = l_r;
+    l_y = -l_x - l_z;
+
+    // Round each value to nearest integer
+    int rx = round(l_x);
+    int ry = round(l_y);
+    int rz = round(l_z);
+
+    // Find the differences between rounded and actual value
+    int dif_x = abs(rx - l_x);
+    int dif_y = abs(ry - l_y);
+    int dif_z = abs(rz - l_z);
+
+    if (dif_x > dif_y && dif_x > dif_z) {
+        rx = -ry-rz;
+    } else if (dif_y > dif_z) {
+        ry = -rx-rz;
+    } else {
+        rz = -rx-ry;
+    }
+
+    this->q = rx;
+    this->r = rz;
+}
+
+/*
  * Map
  */
 
 Map::Map(size_t radius,
-         std::function<Tile*(Map*,AxialCoordinate&&)> initilizer,
+         std::function<Tile*(Map*, AxialCoordinate&&)> initilizer,
          Game* game):
          tiles(radius * 2 + 1), game(game) {
-
-  for( auto& column : tiles ) {
+  for ( auto& column : tiles ) {
     column.resize(2 * radius + 1);
   }
 
@@ -48,9 +92,9 @@ Map::Map(size_t radius,
     for ( int y = std::max(-(signed)radius, -x-(signed)radius);
               y <= std::min((signed)radius, -x+(signed)radius);
               y++ ) {
-      tiles[y + radius][x + radius] = initilizer(this, {x, y}); 
+      tiles[y + radius][x + radius] = initilizer(this, {x, y});
     }
-  } 
+  }
 }
 
 /*
@@ -144,9 +188,9 @@ bool Map::IsCoordinateInBounds(const AxialCoordinate&& coord) const {
 /*
  * Map::draw
  */
-void Map::draw( sf::RenderTarget& target, sf::RenderStates ) const {
+void Map::draw(sf::RenderTarget& target, sf::RenderStates) const {
   size_t radius = tiles.size() / 2;
-  for( auto* tile : GetTilesInRange( GetTile({0, 0}), radius ) ) {
+  for ( auto* tile : GetTilesInRange(GetTile({0, 0}), radius ) ) {
     target.draw(*tile);
   }
 }
@@ -158,7 +202,7 @@ void Map::draw( sf::RenderTarget& target, sf::RenderStates ) const {
 void Map::OnDisplayResize() {
   // Notify every tile of the display resize
   size_t radius = tiles.size() / 2;
-  for( Tile* tile : GetTilesInRange(GetTile({0, 0}), radius) ) {
+  for ( Tile* tile : GetTilesInRange(GetTile({0, 0}), radius) ) {
     tile->OnDisplayResize();
   }
 }

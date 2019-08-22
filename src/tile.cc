@@ -63,7 +63,7 @@ DebugTile::DebugTile(const Map* const map, const AxialCoordinate& position):
   std::stringstream ss;
   ss << "q=" << position.q << "\nr=" << position.r;
   // Create a drawable representation of this text
-  sf::Text text( ss.str(), map->GetGameObject()->GetDebugFont());
+  sf::Text text(ss.str(), map->GetGameObject()->GetDebugFont());
   text.setPosition(10, 10);
   text.setCharacterSize(12);
   text.setFillColor(sf::Color::White);
@@ -71,8 +71,8 @@ DebugTile::DebugTile(const Map* const map, const AxialCoordinate& position):
   // Get a render texture to draw this text to
   sf::RenderTexture& renderTexture = map->GetGameObject()->GetRenderTexture();
   renderTexture.clear(sf::Color::Blue);
-  // Draw the text to the render target 
-  renderTexture.draw(text); 
+  // Draw the text to the render target
+  renderTexture.draw(text);
   // Create a texture from the render target and apply it to this tile
   renderTexture.display();
   texture = renderTexture.getTexture();

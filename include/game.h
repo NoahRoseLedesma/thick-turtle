@@ -3,7 +3,14 @@
  */
 #pragma once
 
+#include <cmath>
+#include <functional>
+
 #include <SFML/Graphics.hpp>
+
+#include "inputcontroller.h"
+#include "map.h"
+#include "tile.h"
 
 class Map;
 class AxialCoordinate;
@@ -17,8 +24,8 @@ class Game {
   /*
    * Construct a map with the given radius and make this the active game map.
    */
-  void InitMap( size_t radius );
-  void InitWindow( size_t desiredWidth, size_t desiredHeight );
+  void InitMap(size_t radius);
+  void InitWindow(size_t desiredWidth, size_t desiredHeight);
 
   size_t GetWindowHeight() const;
   size_t GetWindowWidth() const;
@@ -33,7 +40,6 @@ class Game {
    */
   sf::Vector2f AxialToPixel(const AxialCoordinate& coordinate) const;
   sf::Vector2f AxialToPixel(const AxialCoordinate&& coordinate) const;
-  AxialCoordinate PixelToAxial(size_t x, size_t y) const;
 
   /*
    * Gets the world size of each tile based on the current dimentions
@@ -46,6 +52,11 @@ class Game {
    */
   void OnDisplayResize();
 
+  /*
+   * Mathematical constants
+   */
+  static constexpr float ROOT3 = 1.73205081;
+
   // Debug resources
   const sf::Font& GetDebugFont() const { return debugFont; }
   void InitRenderTexture();
@@ -56,7 +67,6 @@ class Game {
    * The primary game loop. Draw to the screen and perform game logic
    */
   void Think();
-  
   /*
    * Game map object
    */
@@ -74,11 +84,6 @@ class Game {
    * The camera controlling the world view
    */
   Camera* camera = nullptr;
-
-  /*
-   * Mathematical constants
-   */
-  static constexpr float ROOT3 = 1.73205081;
 
   /*
    * A font resource which can be used for debugging purposes.
