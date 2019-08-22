@@ -1,5 +1,6 @@
 #include "game.h"
 
+
 /*
  * Game Object
  */
@@ -16,6 +17,8 @@ Game::~Game() {
     }
     delete window;
   }
+  if(camera)
+    delete camera;
 }
 
 /*
@@ -44,6 +47,7 @@ void Game::InitMap(size_t radius ) {
 void Game::InitWindow(size_t desiredWidth, size_t desiredHeight ) {
   window = new sf::RenderWindow(sf::VideoMode(desiredWidth, desiredHeight),
                                 "Thick Turtle");
+  camera = new Camera(window);
 }
 
 /*
@@ -63,8 +67,12 @@ size_t Game::GetWindowWidth() const {
 void Game::Run() {
   while ( window->isOpen() ) {
     sf::Event event;
-    while ( window->pollEvent(event) ) {
-      if ( event.type == sf::Event::Closed ) {
+
+    while( window->pollEvent(event) ) {
+      // Pass the event to the camera
+      camera->Think(event);
+
+      if( event.type == sf::Event::Closed ) {
         window->close();
       } else if ( event.type == sf::Event::Resized ) {
         // Invoke the handler for this event
@@ -87,6 +95,7 @@ void Game::Run() {
  */
 void Game::Think() {
   window->draw(*map);
+  window->draw(*camera);
 }
 
 /*
@@ -129,6 +138,8 @@ void Game::OnDisplayResize() {
   window->setView(sf::View(visibleArea));
   // Update the game map of this event
   map->OnDisplayResize();
+  // Reapply camera adjustments
+  camera->OnViewReset();
 }
 
 /*

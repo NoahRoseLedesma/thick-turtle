@@ -98,6 +98,19 @@ Map::Map(size_t radius,
 }
 
 /*
+ * Map::~Map
+ */
+
+Map::~Map() {
+  for(auto row : tiles) {
+    for(Tile* tile : row) {
+      if(tile)
+        delete tile;
+    }
+  }
+}
+
+/*
  * Map::GetTile
  */
 
@@ -170,10 +183,6 @@ bool Map::IsCoordinateInBounds(const AxialCoordinate& coord) const {
 bool Map::IsCoordinateInBounds(const AxialCoordinate&& coord) const {
   AxialCoordinate bind = coord;
   return IsCoordinateInBounds(bind);
-}
-
-const std::vector<std::vector<Tile *>> &Map::getTiles() const {
-    return tiles;
 }
 
 /*
