@@ -74,3 +74,7 @@ void Camera::StartPanning(sf::Event::MouseButtonEvent& event) {
 
 // Currently unused. May be helpful in the future
 void Camera::draw(sf::RenderTarget&, sf::RenderStates) const {}
+
+float Camera::GetCurrentZoom() const {
+    return this->currentZoom;
+}

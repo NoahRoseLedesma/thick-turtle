@@ -5,6 +5,8 @@
 
 #include <cmath>
 #include <functional>
+// only for debugging purposes
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 

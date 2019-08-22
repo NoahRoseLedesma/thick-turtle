@@ -122,8 +122,7 @@ sf::Vector2f Game::AxialToPixel(const AxialCoordinate&& coordinate) const {
  * Game::GetTileRadius
  */
 size_t Game::GetTileRadius() const {
-  // TODO(Noah): Determine this programatically
-  return 50;
+  return 50. / camera->GetCurrentZoom();
 }
 
 /*
