@@ -35,17 +35,23 @@ AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
  * Constructor in the case where q and r are calculated
  * and floats from the calculation are present
  */
-AxialCoordinate::AxialCoordinate(float q, float r) {
+AxialCoordinate::AxialCoordinate(float pixel_x, float pixel_y, Game *game) {
     /*
-     * Algorhthm can be found at
-     * https://www.redblobgames.com/grids/hexagons/#rounding
-     */
+    * var q = ( 2./3 * point.x                        ) / size
+    * var r = (-1./3 * point.x  +  sqrt(3)/3 * point.y) / size
+    */
+    float l_x = pixel_x - game->GetWindowWidth()/2.;
+    float l_y = pixel_y - game->GetWindowHeight()/2.;
 
+    float l_q = (2./3. * l_x) / game->GetTileRadius();
+    float l_r = ((-1./3. * l_x)  +  (Game::ROOT3/3. * l_y)) / game->GetTileRadius();
     /*
      * Convert to cubic coordinates bearing in mind
      * that x+y+z = 0 and letting x=q and z=r
      */
-    double l_x = q, l_z = r, l_y = -l_x - l_z;
+    l_x = l_q;
+    float l_z = l_r;
+    l_y = -l_x - l_z;
 
     // Round each value to nearest integer
     int rx = round(l_x);

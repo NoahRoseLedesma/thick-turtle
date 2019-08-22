@@ -14,7 +14,7 @@ InputController::~InputController() {
 
 AxialCoordinate InputController::GetTileClickedOn(
         sf::Event::MouseButtonEvent &event) {
-    return m_current_game->PixelToAxial(event.x, event.y);
+    return AxialCoordinate(event.x, event.y, this->m_current_game);
 }
 
 void InputController::DebugEventClick(sf::Event::MouseButtonEvent &event) {

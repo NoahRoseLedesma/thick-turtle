@@ -23,6 +23,7 @@
 #include <functional>
 #include "utility.h"
 #include "tile.h"
+#include "game.h"
 
 class Game;
 class Tile;
@@ -35,7 +36,7 @@ class AxialCoordinate {
   AxialCoordinate(CoordComponentType q, CoordComponentType r);
   AxialCoordinate(const AxialCoordinate&& copy);
 
-    AxialCoordinate(float q, float r);
+    AxialCoordinate(float pixel_x, float pixel_y, Game *game);
 
     AxialCoordinate(const AxialCoordinate& copy);
 

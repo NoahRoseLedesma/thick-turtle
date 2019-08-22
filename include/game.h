@@ -32,7 +32,6 @@ class Game {
    */
   sf::Vector2f AxialToPixel(const AxialCoordinate& coordinate) const;
   sf::Vector2f AxialToPixel(const AxialCoordinate&& coordinate) const;
-  AxialCoordinate PixelToAxial(size_t x, size_t y) const;
 
   /*
    * Gets the world size of each tile based on the current dimentions
@@ -44,6 +43,11 @@ class Game {
    * Handle the resizing of the main window
    */
   void OnDisplayResize();
+
+  /*
+   * Mathematical constants
+   */
+  static constexpr float ROOT3 = 1.73205081;
 
   // Debug resources
   const sf::Font& GetDebugFont() const { return debugFont; }
@@ -67,11 +71,6 @@ class Game {
    * before initilization has completed.
    */
   sf::RenderWindow* window;
-
-  /*
-   * Mathematical constants
-   */
-  static constexpr float ROOT3 = 1.73205081;
 
   /*
    * A font resource which can be used for debugging purposes.
