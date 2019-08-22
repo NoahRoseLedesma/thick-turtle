@@ -3,7 +3,14 @@
  */
 #pragma once
 
+#include <cmath>
+#include <functional>
+
 #include <SFML/Graphics.hpp>
+
+#include "inputcontroller.h"
+#include "map.h"
+#include "tile.h"
 
 class Map;
 class AxialCoordinate;

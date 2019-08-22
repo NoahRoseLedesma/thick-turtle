@@ -44,7 +44,8 @@ AxialCoordinate::AxialCoordinate(float pixel_x, float pixel_y, Game *game) {
     float l_y = pixel_y - game->GetWindowHeight()/2.;
 
     float l_q = (2./3. * l_x) / game->GetTileRadius();
-    float l_r = ((-1./3. * l_x)  +  (Game::ROOT3/3. * l_y)) / game->GetTileRadius();
+    float l_r = ((-1./3. * l_x)  +  (Game::ROOT3/3. * l_y))
+            / game->GetTileRadius();
     /*
      * Convert to cubic coordinates bearing in mind
      * that x+y+z = 0 and letting x=q and z=r
@@ -65,11 +66,9 @@ AxialCoordinate::AxialCoordinate(float pixel_x, float pixel_y, Game *game) {
 
     if (dif_x > dif_y && dif_x > dif_z) {
         rx = -ry-rz;
-    }
-    else if (dif_y > dif_z) {
+    } else if (dif_y > dif_z) {
         ry = -rx-rz;
-    }
-    else {
+    } else {
         rz = -rx-ry;
     }
 

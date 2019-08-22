@@ -1,11 +1,5 @@
 #include "game.h"
 
-#include <functional>
-#include <inputcontroller.h>
-#include <cmath>
-#include "map.h"
-#include "tile.h"
-
 /*
  * Game Object
  */
@@ -72,14 +66,13 @@ void Game::Run() {
     while ( window->pollEvent(event) ) {
       if ( event.type == sf::Event::Closed ) {
         window->close();
-      }
-      else if ( event.type == sf::Event::Resized ) {
+      } else if ( event.type == sf::Event::Resized ) {
         // Invoke the handler for this event
         OnDisplayResize();
-      }
-      else if (event.type == sf::Event::MouseButtonPressed) {
+      } else if (event.type == sf::Event::MouseButtonPressed) {
           InputController controller(this);
-          AxialCoordinate l_tile_clicked = controller.GetTileClickedOn(event.mouseButton);
+          AxialCoordinate l_tile_clicked =
+                  controller.GetTileClickedOn(event.mouseButton);
           this->map->GetTile(l_tile_clicked)->setFillColor(sf::Color::Yellow);
       }
     }
@@ -120,7 +113,7 @@ sf::Vector2f Game::AxialToPixel(const AxialCoordinate&& coordinate) const {
  * Game::GetTileRadius
  */
 size_t Game::GetTileRadius() const {
-  // TODO: Determine this programatically
+  // TODO(Noah): Determine this programatically
   return 50;
 }
 

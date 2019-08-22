@@ -13,10 +13,11 @@ InputController::~InputController() {
 }
 
 AxialCoordinate InputController::GetTileClickedOn(
-        sf::Event::MouseButtonEvent &event) {
+        const sf::Event::MouseButtonEvent &event) {
     return AxialCoordinate(event.x, event.y, this->m_current_game);
 }
 
-void InputController::DebugEventClick(sf::Event::MouseButtonEvent &event) {
+void InputController::DebugEventClick(
+        const sf::Event::MouseButtonEvent &event) {
     std::cout << "mouse cliked";
 }

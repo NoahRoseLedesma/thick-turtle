@@ -12,10 +12,10 @@
 
 class InputController {
  public:
-    InputController(Game *p_game);
+    explicit InputController(Game *p_game);
     ~InputController();
-    AxialCoordinate GetTileClickedOn(sf::Event::MouseButtonEvent &event);
-    void DebugEventClick(sf::Event::MouseButtonEvent &event);
+    AxialCoordinate GetTileClickedOn(const sf::Event::MouseButtonEvent &event);
+    void DebugEventClick(const sf::Event::MouseButtonEvent &event);
  private:
     Game* m_current_game;
     // we may not actually need to have this, but I thought it may be useful
