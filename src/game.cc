@@ -76,7 +76,8 @@ void Game::Run() {
       } else if ( event.type == sf::Event::Resized ) {
         // Invoke the handler for this event
         OnDisplayResize();
-      } else if (event.type == sf::Event::MouseButtonPressed) {
+      } else if (event.type == sf::Event::MouseButtonPressed &&
+                 event.mouseButton.button == sf::Mouse::Left) {
           InputController controller(this);
           AxialCoordinate l_tile_clicked =
                   controller.GetTileClickedOn(event.mouseButton);

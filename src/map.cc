@@ -213,7 +213,6 @@ void Map::OnDisplayResize() {
 void Map::ShiftCenter(int32_t delta_x, int32_t delta_y) {
     this->center_coordinate.x += delta_x;
     this->center_coordinate.y += delta_y;
-    std::cout << center_coordinate.x << ", " << center_coordinate.y << std::endl;
 }
 
 sf::Vector2f Map::GetCenter() {
