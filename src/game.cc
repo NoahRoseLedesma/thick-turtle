@@ -33,8 +33,8 @@ Game::Game() {
  * Game::InitMap
  */
 void Game::InitMap(size_t radius ) {
-  auto DebugTileProducer = [](Map* map, AxialCoordinate&& coord) -> Tile* {
-    return new DebugTile(map, coord);
+  auto DebugTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
+    return new DebugTile(p_map, coord);
   };
 
   mapRadius = radius;
@@ -47,7 +47,6 @@ void Game::InitMap(size_t radius ) {
 void Game::InitWindow(size_t desiredWidth, size_t desiredHeight ) {
   window = new sf::RenderWindow(sf::VideoMode(desiredWidth, desiredHeight),
                                 "Thick Turtle");
-  camera = new Camera(window);
 }
 
 /*
@@ -122,7 +121,8 @@ sf::Vector2f Game::AxialToPixel(const AxialCoordinate&& coordinate) const {
  * Game::GetTileRadius
  */
 size_t Game::GetTileRadius() const {
-  return 50. / camera->GetCurrentZoom();
+    if (camera) return 50. / camera->GetCurrentZoom();
+    else return 50;
 }
 
 /*
@@ -146,4 +146,12 @@ void Game::OnDisplayResize() {
  */
 void Game::InitRenderTexture() {
   renderTexture.create(50, 50);
+}
+
+void Game::InitCamera() {
+    this->camera = new Camera(this->window, this->map);
+}
+
+sf::Vector2f Game::GetMapCenter() const {
+    return this->map->GetCenter();
 }

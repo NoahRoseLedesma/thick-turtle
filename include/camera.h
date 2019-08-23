@@ -7,13 +7,17 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
+#include "map.h"
+
+class Map;
+
 namespace sf {
   class RenderWindow;
 }
 
 class Camera : public sf::Drawable {
  public:
-  Camera(sf::RenderWindow* window);
+  Camera(sf::RenderWindow *window, Map *map);
 
   /*
    * Process some player input event and adjust the camera
@@ -54,6 +58,10 @@ class Camera : public sf::Drawable {
 
   // Enabled when the view is panning
   bool currentlyPanning = false;
+
+  // The map of the game
+  Map* map;
+
   // The last position of the mouse
   sf::Vector2i lastMousePosition;
 

@@ -40,8 +40,8 @@ AxialCoordinate::AxialCoordinate(float pixel_x, float pixel_y, Game *game) {
     * var q = ( 2./3 * point.x                        ) / size
     * var r = (-1./3 * point.x  +  sqrt(3)/3 * point.y) / size
     */
-    float l_x = pixel_x - game->GetWindowWidth()/2.;
-    float l_y = pixel_y - game->GetWindowHeight()/2.;
+    float l_x = pixel_x - game->GetMapCenter().x;
+    float l_y = pixel_y - game->GetMapCenter().y;
 
     float l_q = (2./3. * l_x) / game->GetTileRadius();
     float l_r = ((-1./3. * l_x)  +  (Game::ROOT3/3. * l_y))
@@ -95,6 +95,9 @@ Map::Map(size_t radius,
       tiles[y + radius][x + radius] = initilizer(this, {x, y});
     }
   }
+
+  this->center_coordinate = sf::Vector2f(game->GetWindowWidth() / 2,
+          game->GetWindowHeight() / 2);
 }
 
 /*
@@ -205,4 +208,14 @@ void Map::OnDisplayResize() {
   for ( Tile* tile : GetTilesInRange(GetTile({0, 0}), radius) ) {
     tile->OnDisplayResize();
   }
+}
+
+void Map::ShiftCenter(int32_t delta_x, int32_t delta_y) {
+    this->center_coordinate.x += delta_x;
+    this->center_coordinate.y += delta_y;
+    std::cout << center_coordinate.x << ", " << center_coordinate.y << std::endl;
+}
+
+sf::Vector2f Map::GetCenter() {
+    return this->center_coordinate;
 }
