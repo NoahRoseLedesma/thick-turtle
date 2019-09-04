@@ -109,6 +109,11 @@ class Map : public sf::Drawable {
    * Get the center of the map
    */
   sf::Vector2f GetCenter();
+
+  /*
+   * Reset the center
+   */
+  void ResetCenter();
  private:
   // Represent the map using a 2D matrix
   // This approach is simple to implement but will have space overhead

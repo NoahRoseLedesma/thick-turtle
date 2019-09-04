@@ -140,6 +140,8 @@ void Game::OnDisplayResize() {
   map->OnDisplayResize();
   // Reapply camera adjustments
   camera->OnViewReset();
+  // Reset center
+  this->map->ResetCenter();
 }
 
 /*

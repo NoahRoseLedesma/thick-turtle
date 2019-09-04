@@ -218,3 +218,9 @@ void Map::ShiftCenter(int32_t delta_x, int32_t delta_y) {
 sf::Vector2f Map::GetCenter() {
     return this->center_coordinate;
 }
+
+void Map::ResetCenter() {
+    this->center_coordinate.x = this->game->GetWindowWidth() / 2;
+    this->center_coordinate.y = this->game->GetWindowHeight() / 2;
+}
+
