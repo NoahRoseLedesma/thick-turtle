@@ -99,6 +99,21 @@ class Map : public sf::Drawable {
    * Invoked when the display changes size
    */
   void OnDisplayResize();
+
+  /*
+   * Set the center of the map
+   */
+  void ShiftCenter(int32_t x, int32_t y);
+
+  /*
+   * Get the center of the map
+   */
+  sf::Vector2f GetCenter();
+
+  /*
+   * Reset the center
+   */
+  void ResetCenter();
  private:
   // Represent the map using a 2D matrix
   // This approach is simple to implement but will have space overhead
@@ -109,4 +124,7 @@ class Map : public sf::Drawable {
 
   // The game which this map belongs to
   Game* game;
+
+  // The x-y pixel location of the center of the map
+  sf::Vector2f center_coordinate;
 };

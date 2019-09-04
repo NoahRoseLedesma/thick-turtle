@@ -12,6 +12,7 @@ int main() {
   game.InitWindow(800, 600);
   game.InitRenderTexture();
   game.InitMap(4);
+  game.InitCamera();
   game.Run();
   return 0;
 }

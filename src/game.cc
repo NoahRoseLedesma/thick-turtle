@@ -33,8 +33,8 @@ Game::Game() {
  * Game::InitMap
  */
 void Game::InitMap(size_t radius ) {
-  auto DebugTileProducer = [](Map* map, AxialCoordinate&& coord) -> Tile* {
-    return new DebugTile(map, coord);
+  auto DebugTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
+    return new DebugTile(p_map, coord);
   };
 
   mapRadius = radius;
@@ -47,7 +47,6 @@ void Game::InitMap(size_t radius ) {
 void Game::InitWindow(size_t desiredWidth, size_t desiredHeight ) {
   window = new sf::RenderWindow(sf::VideoMode(desiredWidth, desiredHeight),
                                 "Thick Turtle");
-  camera = new Camera(window);
 }
 
 /*
@@ -77,7 +76,8 @@ void Game::Run() {
       } else if ( event.type == sf::Event::Resized ) {
         // Invoke the handler for this event
         OnDisplayResize();
-      } else if (event.type == sf::Event::MouseButtonPressed) {
+      } else if (event.type == sf::Event::MouseButtonPressed &&
+                 event.mouseButton.button == sf::Mouse::Left) {
           InputController controller(this);
           AxialCoordinate l_tile_clicked =
                   controller.GetTileClickedOn(event.mouseButton);
@@ -122,8 +122,8 @@ sf::Vector2f Game::AxialToPixel(const AxialCoordinate&& coordinate) const {
  * Game::GetTileRadius
  */
 size_t Game::GetTileRadius() const {
-  // TODO(Noah): Determine this programatically
-  return 50;
+    if (camera) return 50. / camera->GetCurrentZoom();
+    else return 50;
 }
 
 /*
@@ -140,6 +140,8 @@ void Game::OnDisplayResize() {
   map->OnDisplayResize();
   // Reapply camera adjustments
   camera->OnViewReset();
+  // Reset center
+  this->map->ResetCenter();
 }
 
 /*
@@ -147,4 +149,12 @@ void Game::OnDisplayResize() {
  */
 void Game::InitRenderTexture() {
   renderTexture.create(50, 50);
+}
+
+void Game::InitCamera() {
+    this->camera = new Camera(this->window, this->map);
+}
+
+sf::Vector2f Game::GetMapCenter() const {
+    return this->map->GetCenter();
 }

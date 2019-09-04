@@ -5,6 +5,8 @@
 
 #include <cmath>
 #include <functional>
+// only for debugging purposes
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
@@ -27,9 +29,12 @@ class Game {
    */
   void InitMap(size_t radius);
   void InitWindow(size_t desiredWidth, size_t desiredHeight);
+  void InitCamera();
 
   size_t GetWindowHeight() const;
   size_t GetWindowWidth() const;
+
+  sf::Vector2f GetMapCenter() const;
 
   /*
    * Trap the main thread into running the game loop

@@ -3,7 +3,7 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-Camera::Camera(sf::RenderWindow* window): window(window) {}
+Camera::Camera(sf::RenderWindow *window, Map *map) : window(window), map(map) {}
 
 void Camera::Think( sf::Event& event ) {
   if(event.type == sf::Event::EventType::MouseWheelScrolled) {
@@ -63,6 +63,9 @@ void Camera::OnPanEvent(sf::Event::MouseMoveEvent& event) {
   view.move((float)-deltaMousePosition.x, (float)-deltaMousePosition.y);
   window->setView(view);
 
+  // Shift the center coordinate
+  this->map->ShiftCenter(deltaMousePosition.x, deltaMousePosition.y);
+
   // Set the last mouse position to be the mouse position in this frame
   lastMousePosition = {event.x, event.y};
 }
@@ -74,3 +77,7 @@ void Camera::StartPanning(sf::Event::MouseButtonEvent& event) {
 
 // Currently unused. May be helpful in the future
 void Camera::draw(sf::RenderTarget&, sf::RenderStates) const {}
+
+float Camera::GetCurrentZoom() const {
+    return this->currentZoom;
+}

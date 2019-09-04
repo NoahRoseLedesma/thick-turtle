@@ -19,5 +19,5 @@ AxialCoordinate InputController::GetTileClickedOn(
 
 void InputController::DebugEventClick(
         const sf::Event::MouseButtonEvent &event) {
-    std::cout << "mouse cliked";
+    std::cout << "x: " << event.x << ", y: " << event.y << std::endl;
 }
