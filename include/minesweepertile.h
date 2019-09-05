@@ -15,11 +15,13 @@ class MinesweeperTile : public Tile {
     MinesweeperTile(const Map* const map, const AxialCoordinate& position, bool is_mine);
 
     void ToggleFlagged() { is_flagged = !is_flagged; }
+    void FindNumNearbyMines();
 
  private:
     bool is_covered = true;
     bool is_flagged = false;
     bool is_mine;
+    unsigned int num_nearby_mines = 0;
 };
 
 

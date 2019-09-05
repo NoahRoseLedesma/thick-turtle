@@ -14,3 +14,12 @@ MinesweeperTile::MinesweeperTile(const Map *const map, const AxialCoordinate &po
 
 }
 
+void MinesweeperTile::FindNumNearbyMines() {
+    auto immediate_tiles = this->map->GetTilesInRange(this, 1);
+    for (const auto& tile : immediate_tiles) {
+        if(tile == nullptr) continue;
+        auto temp = dynamic_cast<MinesweeperTile*>(tile);
+        if (temp->is_mine) num_nearby_mines++;
+    }
+}
+

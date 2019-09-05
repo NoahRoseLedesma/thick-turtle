@@ -39,7 +39,7 @@ void Game::InitMap(size_t radius ) {
   };*/
 
   auto MinesweeperTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
-      int dist = std::rand() % 8;
+      int dist = std::rand() % 3;
       auto tile =new MinesweeperTile(p_map, coord, dist == 0);
       tile->setFillColor(sf::Color(192,192,192));
       return tile;
@@ -47,6 +47,11 @@ void Game::InitMap(size_t radius ) {
 
   mapRadius = radius;
   map = new Map(mapRadius, MinesweeperTileProducer, this);
+
+  auto l_game_tiles = map->GetTilesInRange(map->GetTile(AxialCoordinate(0, 0)), radius);
+  for (const auto& tile: l_game_tiles) {
+      dynamic_cast<MinesweeperTile*>(tile)->FindNumNearbyMines();
+  }
 }
 
 /*
