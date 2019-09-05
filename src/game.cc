@@ -27,7 +27,7 @@ Game::~Game() {
  */
 Game::Game() {
   // Create debug resources
-  debugFont.loadFromFile("assets/fonts/FiraCode-Regular.ttf");
+  debugFont.loadFromFile("../bin/assets/fonts/FiraCode-Regular.ttf");
 }
 
 /*
@@ -41,7 +41,6 @@ void Game::InitMap(size_t radius ) {
   auto MinesweeperTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
       int dist = std::rand() % 3;
       auto tile =new MinesweeperTile(p_map, coord, dist == 0);
-      tile->setFillColor(sf::Color(192,192,192));
       return tile;
   };
 
@@ -50,7 +49,8 @@ void Game::InitMap(size_t radius ) {
 
   auto l_game_tiles = map->GetTilesInRange(map->GetTile(AxialCoordinate(0, 0)), radius);
   for (const auto& tile: l_game_tiles) {
-      dynamic_cast<MinesweeperTile*>(tile)->FindNumNearbyMines();
+      auto derived_tile = dynamic_cast<MinesweeperTile *>(tile);
+      derived_tile->FindNumNearbyMines();
   }
 }
 
@@ -58,10 +58,9 @@ void Game::InitMap(size_t radius ) {
  * Game::InitWindow
  */
 void Game::InitWindow(size_t desiredWidth, size_t desiredHeight ) {
-  sf::ContextSettings settings;
-  settings.antialiasingLevel = 30;
+
   window = new sf::RenderWindow(sf::VideoMode(desiredWidth, desiredHeight),
-                                "Thick Turtle", sf::Style::Default, settings);
+                                "Thick Turtle");
 }
 
 /*
@@ -137,7 +136,7 @@ sf::Vector2f Game::AxialToPixel(const AxialCoordinate&& coordinate) const {
  * Game::GetTileRadius
  */
 size_t Game::GetTileRadius() const {
-    if (camera) return 50. / camera->GetCurrentZoom();
+    if (camera) return 50.f / camera->GetCurrentZoom();
     else return 50;
 }
 

@@ -2,6 +2,8 @@
 
 #include <cmath>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <minesweepertile.h>
+
 /*
  * Axial Coordinate
  */
@@ -194,7 +196,17 @@ bool Map::IsCoordinateInBounds(const AxialCoordinate&& coord) const {
 void Map::draw(sf::RenderTarget& target, sf::RenderStates) const {
   size_t radius = tiles.size() / 2;
   for ( auto* tile : GetTilesInRange(GetTile({0, 0}), radius ) ) {
-    target.draw(*tile);
+      sf::RenderTexture texture;
+      auto derived_tile = dynamic_cast<MinesweeperTile*>(tile);
+      auto text = new sf::Text(std::to_string(derived_tile->GetNumNearbyTiles()), this->game->GetDebugFont());
+      text->setFillColor(sf::Color::Red);
+      text->setCharacterSize(22);
+      auto coord = this->game->AxialToPixel(*tile->GetPosition());
+      text->setPosition(coord.x,coord.y+5);
+
+      derived_tile->setTexture(&texture.getTexture());
+      target.draw(*tile);
+      target.draw(*text);
   }
 }
 

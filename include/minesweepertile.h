@@ -16,6 +16,9 @@ class MinesweeperTile : public Tile {
 
     void ToggleFlagged() { is_flagged = !is_flagged; }
     void FindNumNearbyMines();
+    // Return false if the tile is mined
+    bool RevealTile();
+    unsigned int GetNumNearbyTiles() { return num_nearby_mines; }
 
  private:
     bool is_covered = true;

@@ -23,3 +23,12 @@ void MinesweeperTile::FindNumNearbyMines() {
     }
 }
 
+/*bool MinesweeperTile::RevealTile() {
+    if (is_mine) return true;
+    switch (num_nearby_mines) {
+        case 0:
+            is_covered = false;
+        case 1:
+    }
+}*/
+
