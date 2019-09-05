@@ -35,7 +35,7 @@ void generateHex(sf::ConvexShape *hex, double x, double y, double r) {
       hex->setPoint(i, sf::Vector2f(x + r * std::cos(angle),
                                     y + r * std::sin(angle)));
     }
-    hex->setOutlineColor(sf::Color::Red);
-    hex->setOutlineThickness(5);
+    hex->setOutlineColor(sf::Color::Black);
+    hex->setOutlineThickness(3);
 }
 

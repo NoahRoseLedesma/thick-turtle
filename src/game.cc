@@ -1,4 +1,5 @@
 #include "game.h"
+#include "minesweepertile.h"
 
 
 /*
@@ -33,20 +34,29 @@ Game::Game() {
  * Game::InitMap
  */
 void Game::InitMap(size_t radius ) {
-  auto DebugTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
+  /*auto DebugTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
     return new DebugTile(p_map, coord);
+  };*/
+
+  auto MinesweeperTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
+      int dist = std::rand() % 8;
+      auto tile =new MinesweeperTile(p_map, coord, dist == 0);
+      tile->setFillColor(sf::Color(192,192,192));
+      return tile;
   };
 
   mapRadius = radius;
-  map = new Map(mapRadius, DebugTileProducer, this);
+  map = new Map(mapRadius, MinesweeperTileProducer, this);
 }
 
 /*
  * Game::InitWindow
  */
 void Game::InitWindow(size_t desiredWidth, size_t desiredHeight ) {
+  sf::ContextSettings settings;
+  settings.antialiasingLevel = 30;
   window = new sf::RenderWindow(sf::VideoMode(desiredWidth, desiredHeight),
-                                "Thick Turtle");
+                                "Thick Turtle", sf::Style::Default, settings);
 }
 
 /*
