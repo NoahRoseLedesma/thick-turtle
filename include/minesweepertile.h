@@ -14,6 +14,9 @@ class MinesweeperTile : public Tile {
     MinesweeperTile(const Map* const map, const AxialCoordinate&& position, bool is_mine);
     MinesweeperTile(const Map* const map, const AxialCoordinate& position, bool is_mine);
 
+    // Returns false if game is over;
+    bool Think();
+
     void ToggleFlagged() { is_flagged = !is_flagged; }
     void FindNumNearbyMines();
     // Return false if the tile is mined

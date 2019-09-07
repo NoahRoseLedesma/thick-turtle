@@ -19,6 +19,13 @@ class Map;
 class AxialCoordinate;
 class Camera;
 
+enum TextureType {
+    Covered,
+    Uncovered,
+    Flagged,
+    Mined
+};
+
 class Game {
  public:
   Game();
@@ -65,8 +72,8 @@ class Game {
 
   // Debug resources
   const sf::Font& GetDebugFont() const { return debugFont; }
-  void InitRenderTexture();
-  sf::RenderTexture& GetRenderTexture() const { return renderTexture; }
+
+  const sf::Texture& GetTexture(TextureType desired_texture) const;
 
  private:
   /*
@@ -97,7 +104,7 @@ class Game {
   sf::Font debugFont;
 
   /*
-   * A shared render texture resource used for debugging purposes.
+   * Textures that describe the state of a tile
    */
-  mutable sf::RenderTexture renderTexture;
+  sf::Texture covered, uncovered, flagged, mined;
 };

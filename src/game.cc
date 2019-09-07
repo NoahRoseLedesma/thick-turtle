@@ -28,6 +28,16 @@ Game::~Game() {
 Game::Game() {
   // Create debug resources
   debugFont.loadFromFile("../bin/assets/fonts/FiraCode-Regular.ttf");
+
+  auto LoadATexture = [] (const std::string& file_name, sf::Texture& texture) -> void {
+      texture.create(200,200);
+      texture.loadFromFile("../bin/assets/textures/" + file_name);
+  };
+
+  LoadATexture("CoveredTile.png", this->covered);
+  LoadATexture("UncoveredTile.png", this->uncovered);
+  LoadATexture("FlaggedTile.png", this->flagged);
+
 }
 
 /*
@@ -158,12 +168,6 @@ void Game::OnDisplayResize() {
   this->map->ResetCenter();
 }
 
-/*
- * Game::InitRenderTexture
- */
-void Game::InitRenderTexture() {
-  renderTexture.create(50, 50);
-}
 
 void Game::InitCamera() {
     this->camera = new Camera(this->window, this->map);
@@ -171,4 +175,17 @@ void Game::InitCamera() {
 
 sf::Vector2f Game::GetMapCenter() const {
     return this->map->GetCenter();
+}
+
+const sf::Texture &Game::GetTexture(TextureType desired_texture) {
+    switch (desired_texture) {
+        case Covered:
+            return this->covered;
+        case Uncovered:
+            return this->uncovered;
+        case Flagged:
+            return this->flagged;
+        default:
+            return this->covered;
+    }
 }

@@ -204,16 +204,6 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates) const {
       text->setCharacterSize(22);
       text->setPosition(16,9);
 
-      // Get a render texture to draw this text to
-      sf::RenderTexture& renderTexture = this->GetGameObject()->GetRenderTexture();
-      // Draw the text to the render target
-      renderTexture.clear(sf::Color(198,0,tile->GetPosition()->r * 150));
-      renderTexture.draw(*text);
-      // Create a texture from the render target and apply it to this tile
-      renderTexture.display();
-
-      derived_tile->setTexture(&renderTexture.getTexture());
-
       target.draw(*derived_tile);
   }
 }
