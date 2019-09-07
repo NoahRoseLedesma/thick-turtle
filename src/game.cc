@@ -118,11 +118,11 @@ void Game::Think() {
 sf::Vector2f Game::AxialToPixel(const AxialCoordinate& coordinate) const {
   // Determine the origin of the centroid hexagon
   // This should always be at the center of the display
-  float xCenter = GetWindowWidth() / 2.;
-  float yCenter = GetWindowHeight() / 2.;
+  float xCenter = GetWindowWidth() / 2.f;
+  float yCenter = GetWindowHeight() / 2.f;
   // Determine the pixel offset from the centroid from the given position
   float deltaX = GetTileRadius() * (1.5 * coordinate.q);
-  float deltaY = GetTileRadius() * (ROOT3/2. * coordinate.q
+  float deltaY = GetTileRadius() * (ROOT3/2.f * coordinate.q
                                      + ROOT3 * coordinate.r);
   return {xCenter + deltaX, yCenter + deltaY};
 }

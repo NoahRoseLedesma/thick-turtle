@@ -196,17 +196,25 @@ bool Map::IsCoordinateInBounds(const AxialCoordinate&& coord) const {
 void Map::draw(sf::RenderTarget& target, sf::RenderStates) const {
   size_t radius = tiles.size() / 2;
   for ( auto* tile : GetTilesInRange(GetTile({0, 0}), radius ) ) {
-      sf::RenderTexture texture;
+
       auto derived_tile = dynamic_cast<MinesweeperTile*>(tile);
       auto text = new sf::Text(std::to_string(derived_tile->GetNumNearbyTiles()), this->game->GetDebugFont());
-      text->setFillColor(sf::Color::Red);
-      text->setCharacterSize(22);
-      auto coord = this->game->AxialToPixel(*tile->GetPosition());
-      text->setPosition(coord.x,coord.y+5);
 
-      derived_tile->setTexture(&texture.getTexture());
-      target.draw(*tile);
-      target.draw(*text);
+      text->setFillColor(sf::Color::Black);
+      text->setCharacterSize(22);
+      text->setPosition(16,9);
+
+      // Get a render texture to draw this text to
+      sf::RenderTexture& renderTexture = this->GetGameObject()->GetRenderTexture();
+      // Draw the text to the render target
+      renderTexture.clear(sf::Color(198,0,tile->GetPosition()->r * 150));
+      renderTexture.draw(*text);
+      // Create a texture from the render target and apply it to this tile
+      renderTexture.display();
+
+      derived_tile->setTexture(&renderTexture.getTexture());
+
+      target.draw(*derived_tile);
   }
 }
 
