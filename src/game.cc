@@ -40,6 +40,7 @@ Game::Game() {
   LoadATexture("UncoveredTile.png", this->uncovered);
   LoadATexture("FlaggedTile.png", this->flagged);
   LoadATexture("MinedTile.png", this->mined);
+  LoadATexture("ErrorTexture.jpg", this->error);
 
 }
 
@@ -194,7 +195,9 @@ const sf::Texture * Game::GetTexture(TextureType desired_texture) const {
             return &this->uncovered;
         case Flagged:
             return &this->flagged;
+        case Mined:
+            return &this->mined;
         default:
-            return &this->covered;
+            return &this->error;
     }
 }

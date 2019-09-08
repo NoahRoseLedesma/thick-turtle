@@ -24,7 +24,8 @@ enum TextureType {
     Covered,
     Uncovered,
     Flagged,
-    Mined
+    Mined,
+    Error
 };
 
 class Game {
@@ -107,5 +108,5 @@ class Game {
   /*
    * Textures that describe the state of a tile
    */
-  sf::Texture covered, uncovered, flagged, mined;
+  sf::Texture covered, uncovered, flagged, mined, error;
 };
