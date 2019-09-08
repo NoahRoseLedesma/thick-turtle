@@ -39,6 +39,7 @@ class Game {
   void InitMap(size_t radius);
   void InitWindow(size_t desiredWidth, size_t desiredHeight);
   void InitCamera();
+  void Endgame();
 
   size_t GetWindowHeight() const;
   size_t GetWindowWidth() const;
