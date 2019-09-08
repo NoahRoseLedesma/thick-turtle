@@ -23,7 +23,7 @@ void MinesweeperTile::FindNumNearbyMines() {
     }
 }
 
-bool MinesweeperTile::Think() {
+void MinesweeperTile::Think() {
 
     // Lambda to make my life easier changing textures
     auto SetTileTexture = [this] (TextureType type) -> void {
@@ -32,10 +32,34 @@ bool MinesweeperTile::Think() {
 
     if (this->is_mine) {
         SetTileTexture(Mined);
-        return false;
+
     } else {
-        SetTileTexture(Uncovered);
-        return true;
+        switch (num_nearby_mines) {
+            case 0:
+                SetTileTexture(Uncovered);
+                break;
+            case 1:
+                SetTileTexture(One);
+                break;
+            case 2:
+                SetTileTexture(Two);
+                break;
+            case 3:
+                SetTileTexture(Three);
+                break;
+            case 4:
+                SetTileTexture(Four);
+                break;
+            case 5:
+                SetTileTexture(Five);
+                break;
+            case 6:
+                SetTileTexture(Six);
+                break;
+            default:
+                SetTileTexture(Error);
+                break;
+        }
     }
 }
 

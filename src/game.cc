@@ -41,6 +41,13 @@ Game::Game() {
   LoadATexture("FlaggedTile.png", this->flagged);
   LoadATexture("MinedTile.png", this->mined);
   LoadATexture("ErrorTexture.jpg", this->error);
+  LoadATexture("One.png", this->one);
+  LoadATexture("Two.png", this->two);
+  LoadATexture("Three.png", this->three);
+  LoadATexture("Four.png", this->four);
+  LoadATexture("Five.png", this->five);
+  LoadATexture("Six.png", this->six);
+
 
 }
 
@@ -197,6 +204,18 @@ const sf::Texture * Game::GetTexture(TextureType desired_texture) const {
             return &this->flagged;
         case Mined:
             return &this->mined;
+        case One:
+            return &this->one;
+        case Two:
+            return &this->two;
+        case Three:
+            return &this->three;
+        case Four:
+            return &this->four;
+        case Five:
+            return &this->five;
+        case Six:
+            return &this->six;
         default:
             return &this->error;
     }

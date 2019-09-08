@@ -21,11 +21,11 @@ class AxialCoordinate;
 class Camera;
 
 enum TextureType {
-    Covered,
-    Uncovered,
+    Covered, Uncovered,
     Flagged,
     Mined,
-    Error
+    Error,
+    One, Two, Three, Four, Five, Six
 };
 
 class Game {
@@ -108,5 +108,6 @@ class Game {
   /*
    * Textures that describe the state of a tile
    */
-  sf::Texture covered, uncovered, flagged, mined, error;
+  sf::Texture covered, uncovered, flagged, mined, error,
+                one, two, three, four, five, six;
 };
