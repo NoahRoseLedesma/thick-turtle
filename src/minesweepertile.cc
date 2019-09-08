@@ -25,7 +25,7 @@ void MinesweeperTile::FindNumNearbyMines() {
 
 bool MinesweeperTile::Think() {
     if (this->is_mine) {
-        this->setFillColor(sf::Color::Red);
+        this->setTexture(this->map->GetGameObject()->GetTexture(Mined));
         return false;
     } else {
         this->setTexture(this->map->GetGameObject()->GetTexture(Uncovered));

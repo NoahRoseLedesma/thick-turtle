@@ -38,6 +38,7 @@ Game::Game() {
   LoadATexture("CoveredTile.png", this->covered);
   LoadATexture("UncoveredTile.png", this->uncovered);
   LoadATexture("FlaggedTile.png", this->flagged);
+  LoadATexture("MinedTile.png", this->mined);
 
 }
 
