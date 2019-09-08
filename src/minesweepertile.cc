@@ -37,6 +37,5 @@ bool MinesweeperTile::Think() {
         SetTileTexture(Uncovered);
         return true;
     }
-
 }
 
