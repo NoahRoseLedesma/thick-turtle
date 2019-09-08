@@ -30,6 +30,7 @@ Game::Game() {
   // Create debug resources
   debugFont.loadFromFile("../bin/assets/fonts/FiraCode-Regular.ttf");
 
+  // Yes, I am in fact this lazy
   auto LoadATexture = [] (const std::string& file_name, sf::Texture& texture) -> void {
       texture.create(200,200);
       texture.loadFromFile("../bin/assets/textures/" + file_name);

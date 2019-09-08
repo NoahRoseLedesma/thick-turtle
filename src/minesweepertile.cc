@@ -24,11 +24,17 @@ void MinesweeperTile::FindNumNearbyMines() {
 }
 
 bool MinesweeperTile::Think() {
+
+    // Lambda to make my life easier changing textures
+    auto SetTileTexture = [this] (TextureType type) -> void {
+        this->setTexture(this->map->GetGameObject()->GetTexture(type));
+    };
+
     if (this->is_mine) {
-        this->setTexture(this->map->GetGameObject()->GetTexture(Mined));
+        SetTileTexture(Mined);
         return false;
     } else {
-        this->setTexture(this->map->GetGameObject()->GetTexture(Uncovered));
+        SetTileTexture(Uncovered);
         return true;
     }
 
