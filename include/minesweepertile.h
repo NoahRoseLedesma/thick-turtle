@@ -28,7 +28,6 @@ class MinesweeperTile : public Tile {
     bool is_flagged = false;
     bool is_mine;
     unsigned int num_nearby_mines = 0;
-    sf::Texture m_texture;
 };
 
 

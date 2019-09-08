@@ -7,6 +7,7 @@
 #include <functional>
 // only for debugging purposes
 #include <iostream>
+#include <chrono>
 
 #include <SFML/Graphics.hpp>
 
@@ -73,7 +74,7 @@ class Game {
   // Debug resources
   const sf::Font& GetDebugFont() const { return debugFont; }
 
-  const sf::Texture& GetTexture(TextureType desired_texture) const;
+  const sf::Texture * GetTexture(TextureType desired_texture) const;
 
  private:
   /*

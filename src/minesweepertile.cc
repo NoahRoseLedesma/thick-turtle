@@ -6,12 +6,12 @@
 
 MinesweeperTile::MinesweeperTile(const Map *const map, const AxialCoordinate &&position, bool is_mine)
     :Tile(map, position), is_mine(is_mine) {
-
+    this->setTexture(map->GetGameObject()->GetTexture(Covered));
 }
 
 MinesweeperTile::MinesweeperTile(const Map *const map, const AxialCoordinate &position, bool is_mine)
     :Tile(map, position), is_mine(is_mine) {
-
+    this->setTexture(map->GetGameObject()->GetTexture(Covered));
 }
 
 void MinesweeperTile::FindNumNearbyMines() {
@@ -25,12 +25,11 @@ void MinesweeperTile::FindNumNearbyMines() {
 
 bool MinesweeperTile::Think() {
     if (this->is_mine) {
+        this->setFillColor(sf::Color::Red);
         return false;
-    } else if (this->is_flagged || !this->is_covered) {
-        return true;
     } else {
-
-
+        this->setTexture(this->map->GetGameObject()->GetTexture(Uncovered));
+        return true;
     }
 
 }

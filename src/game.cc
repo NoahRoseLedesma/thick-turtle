@@ -1,3 +1,4 @@
+#include <random>
 #include "game.h"
 #include "minesweepertile.h"
 
@@ -49,8 +50,9 @@ void Game::InitMap(size_t radius ) {
   };*/
 
   auto MinesweeperTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
-      int dist = std::rand() % 3;
-      auto tile =new MinesweeperTile(p_map, coord, dist == 0);
+      unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+      std::mt19937 rng(seed);
+      auto tile = new MinesweeperTile(p_map, coord, rng() % 3 == 0);
       return tile;
   };
 
@@ -105,7 +107,12 @@ void Game::Run() {
           InputController controller(this);
           AxialCoordinate l_tile_clicked =
                   controller.GetTileClickedOn(event.mouseButton);
-          this->map->GetTile(l_tile_clicked)->setFillColor(sf::Color::Yellow);
+
+          //only continue if the tile is in bounds
+          if (map->IsCoordinateInBounds(l_tile_clicked)) {
+              Tile* l_tile = this->map->GetTile(l_tile_clicked);
+              dynamic_cast<MinesweeperTile*>(l_tile)->Think();
+          }
       }
     }
     window->clear();
@@ -177,15 +184,15 @@ sf::Vector2f Game::GetMapCenter() const {
     return this->map->GetCenter();
 }
 
-const sf::Texture &Game::GetTexture(TextureType desired_texture) {
+const sf::Texture * Game::GetTexture(TextureType desired_texture) const {
     switch (desired_texture) {
         case Covered:
-            return this->covered;
+            return &this->covered;
         case Uncovered:
-            return this->uncovered;
+            return &this->uncovered;
         case Flagged:
-            return this->flagged;
+            return &this->flagged;
         default:
-            return this->covered;
+            return &this->covered;
     }
 }

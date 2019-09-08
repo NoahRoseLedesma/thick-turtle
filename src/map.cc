@@ -198,12 +198,6 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates) const {
   for ( auto* tile : GetTilesInRange(GetTile({0, 0}), radius ) ) {
 
       auto derived_tile = dynamic_cast<MinesweeperTile*>(tile);
-      auto text = new sf::Text(std::to_string(derived_tile->GetNumNearbyTiles()), this->game->GetDebugFont());
-
-      text->setFillColor(sf::Color::Black);
-      text->setCharacterSize(22);
-      text->setPosition(16,9);
-
       target.draw(*derived_tile);
   }
 }
