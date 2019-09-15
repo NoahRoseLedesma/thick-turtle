@@ -25,6 +25,7 @@ enum TextureType {
     Flagged,
     Mined,
     Error,
+    Win,
     One, Two, Three, Four, Five, Six
 };
 
@@ -39,7 +40,7 @@ class Game {
   void InitMap(size_t radius);
   void InitWindow(size_t desiredWidth, size_t desiredHeight);
   void InitCamera();
-  void Endgame();
+  void Endgame(bool IsWin);
 
   size_t GetWindowHeight() const;
   size_t GetWindowWidth() const;
@@ -111,6 +112,6 @@ class Game {
   /*
    * Textures that describe the state of a tile
    */
-  sf::Texture covered, uncovered, flagged, mined, error,
+  sf::Texture covered, uncovered, flagged, mined, error, win,
                 one, two, three, four, five, six;
 };

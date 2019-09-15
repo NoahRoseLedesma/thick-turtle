@@ -41,6 +41,7 @@ Game::Game() {
   LoadATexture("UncoveredTile.png", this->uncovered);
   LoadATexture("FlaggedTile.png", this->flagged);
   LoadATexture("MinedTile.png", this->mined);
+  LoadATexture("SmileyFace.png", this->win);
   LoadATexture("ErrorTexture.jpg", this->error);
   LoadATexture("One.png", this->one);
   LoadATexture("Two.png", this->two);
@@ -126,8 +127,8 @@ void Game::Run() {
 
                     // Only continue if the tile is in bounds
                     if (map->IsCoordinateInBounds(l_tile_clicked)) {
-                        Tile* l_tile = this->map->GetTile(l_tile_clicked);
-                        dynamic_cast<MinesweeperTile*>(l_tile)->Think();
+                        auto l_tile = dynamic_cast<MinesweeperTile*>(this->map->GetTile(l_tile_clicked));
+                        l_tile->Think();
                     }
                 }
                 break;
@@ -217,6 +218,8 @@ const sf::Texture * Game::GetTexture(TextureType desired_texture) const {
             return &this->flagged;
         case Mined:
             return &this->mined;
+        case Win:
+            return &this->win;
         case One:
             return &this->one;
         case Two:
@@ -237,7 +240,7 @@ const sf::Texture * Game::GetTexture(TextureType desired_texture) const {
 /*
  * This method happens in a snap
  */
-void Game::Endgame() {
+void Game::Endgame(bool IsWin) {
 
 }
 

@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <minesweepertile.h>
 
+//region Constructors
 /*
  * Axial Coordinate
  */
@@ -16,22 +17,6 @@ AxialCoordinate::AxialCoordinate(const AxialCoordinate&& copy):
 
 AxialCoordinate::AxialCoordinate(const AxialCoordinate& copy):
     q(copy.q), r(copy.r) {}
-
-/*
- * AxialCoordinate::operator+
- */
-
-AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate&& rhs) const {
-  return {q + rhs.q, r + rhs.r};
-}
-
-AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate& rhs) const {
-  return {q + rhs.q, r + rhs.r};
-}
-
-AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
-  return {q + rhs->q, r + rhs->r};
-}
 
 /*
  * Constructor in the case where q and r are calculated
@@ -47,7 +32,7 @@ AxialCoordinate::AxialCoordinate(float pixel_x, float pixel_y, Game *game) {
 
     float l_q = (2.f/3.f * l_x) / game->GetTileRadius();
     float l_r = ((-1.f/3.f * l_x)  +  (Game::ROOT3/3.f * l_y))
-            / game->GetTileRadius();
+                / game->GetTileRadius();
     /*
      * Convert to cubic coordinates bearing in mind
      * that x+y+z = 0 and letting x=q and z=r
@@ -77,6 +62,26 @@ AxialCoordinate::AxialCoordinate(float pixel_x, float pixel_y, Game *game) {
     this->q = rx;
     this->r = rz;
 }
+//endregion
+
+//region operator+ overloads
+/*
+ * AxialCoordinate::operator+
+ */
+
+AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate&& rhs) const {
+  return {q + rhs.q, r + rhs.r};
+}
+
+AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate& rhs) const {
+  return {q + rhs.q, r + rhs.r};
+}
+
+AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
+  return {q + rhs->q, r + rhs->r};
+}
+//endregion
+
 
 /*
  * Map
@@ -115,6 +120,8 @@ Map::~Map() {
   }
 }
 
+//region GetTile
+
 /*
  * Map::GetTile
  */
@@ -148,6 +155,8 @@ Tile* Map::GetTile(const AxialCoordinate&& coord) {
   AxialCoordinate bind = coord;
   return GetTile(bind);
 }
+
+//endregion
 
 /*
  * Map::GetTilesInRange
@@ -196,9 +205,10 @@ bool Map::IsCoordinateInBounds(const AxialCoordinate&& coord) const {
 void Map::draw(sf::RenderTarget& target, sf::RenderStates) const {
   size_t radius = tiles.size() / 2;
   for ( auto* tile : GetTilesInRange(GetTile({0, 0}), radius ) ) {
-
-      auto derived_tile = dynamic_cast<MinesweeperTile*>(tile);
+    if (tile != nullptr) {
+      auto derived_tile = dynamic_cast<MinesweeperTile *>(tile);
       target.draw(*derived_tile);
+    }
   }
 }
 
@@ -224,7 +234,7 @@ sf::Vector2f Map::GetCenter() {
 }
 
 void Map::ResetCenter() {
-    this->center_coordinate.x = this->game->GetWindowWidth() / 2;
-    this->center_coordinate.y = this->game->GetWindowHeight() / 2;
+    this->center_coordinate.x = (this->game->GetWindowWidth() / 2.f);
+    this->center_coordinate.y = (this->game->GetWindowHeight() / 2.f);
 }
 
