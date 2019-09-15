@@ -42,11 +42,11 @@ AxialCoordinate::AxialCoordinate(float pixel_x, float pixel_y, Game *game) {
     * var q = ( 2./3 * point.x                        ) / size
     * var r = (-1./3 * point.x  +  sqrt(3)/3 * point.y) / size
     */
-    float l_x = pixel_x - game->GetMapCenter().x;
-    float l_y = pixel_y - game->GetMapCenter().y;
+    float l_x = pixel_x  - game->GetMapCenter().x;
+    float l_y = pixel_y  - game->GetMapCenter().y;
 
-    float l_q = (2./3. * l_x) / game->GetTileRadius();
-    float l_r = ((-1./3. * l_x)  +  (Game::ROOT3/3. * l_y))
+    float l_q = (2.f/3.f * l_x) / game->GetTileRadius();
+    float l_r = ((-1.f/3.f * l_x)  +  (Game::ROOT3/3.f * l_y))
             / game->GetTileRadius();
     /*
      * Convert to cubic coordinates bearing in mind
@@ -62,9 +62,9 @@ AxialCoordinate::AxialCoordinate(float pixel_x, float pixel_y, Game *game) {
     int rz = round(l_z);
 
     // Find the differences between rounded and actual value
-    int dif_x = abs(rx - l_x);
-    int dif_y = abs(ry - l_y);
-    int dif_z = abs(rz - l_z);
+    float dif_x = abs(rx - l_x);
+    float dif_y = abs(ry - l_y);
+    float dif_z = abs(rz - l_z);
 
     if (dif_x > dif_y && dif_x > dif_z) {
         rx = -ry-rz;

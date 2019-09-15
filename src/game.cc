@@ -122,6 +122,8 @@ void Game::Run() {
                     AxialCoordinate l_tile_clicked =
                           controller.GetTileClickedOn(event.mouseButton);
 
+                    std::cout << l_tile_clicked.q << ", " << l_tile_clicked.r << " | Zoom: " << this->GetZoom() << std::endl;
+
                     // Only continue if the tile is in bounds
                     if (map->IsCoordinateInBounds(l_tile_clicked)) {
                         Tile* l_tile = this->map->GetTile(l_tile_clicked);
@@ -171,7 +173,7 @@ sf::Vector2f Game::AxialToPixel(const AxialCoordinate&& coordinate) const {
  * Game::GetTileRadius
  */
 size_t Game::GetTileRadius() const {
-    if (camera) return 50.f / camera->GetCurrentZoom();
+    if (camera) return std::ceil(50.f / camera->GetCurrentZoom());
     else return 50;
 }
 
@@ -237,4 +239,8 @@ const sf::Texture * Game::GetTexture(TextureType desired_texture) const {
  */
 void Game::Endgame() {
 
+}
+
+const float Game::GetZoom() {
+    return this->camera->GetCurrentZoom();
 }

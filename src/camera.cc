@@ -60,7 +60,7 @@ void Camera::OnPanEvent(sf::Event::MouseMoveEvent& event) {
 
   // Shift the view using the delta
   sf::View view = window->getView();
-  view.move((float)-deltaMousePosition.x, (float)-deltaMousePosition.y);
+  view.move((float)-deltaMousePosition.x * currentZoom, (float)-deltaMousePosition.y * currentZoom);
   window->setView(view);
 
   // Shift the center coordinate

@@ -78,6 +78,8 @@ class Game {
 
   const sf::Texture * GetTexture(TextureType desired_texture) const;
 
+  const float GetZoom();
+
  private:
   /*
    * The primary game loop. Draw to the screen and perform game logic
