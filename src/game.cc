@@ -60,15 +60,17 @@ void Game::InitMap(size_t radius ) {
   /*auto DebugTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
     return new DebugTile(p_map, coord);
   };*/
+  unsigned int l_num_mines_copy = this->number_of_mines;
 
-  auto MinesweeperTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
+  auto MinesweeperTileProducer = [&l_num_mines_copy](Map* p_map, AxialCoordinate&& coord) -> Tile* {
       unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
       std::mt19937 rng(seed);
-      auto tile = new MinesweeperTile(p_map, coord, rng() % 3 == 0);
+      auto tile = new MinesweeperTile(p_map, coord, rng() % 3 == 0 && l_num_mines_copy-->0);
       return tile;
   };
 
   mapRadius = radius;
+  number_of_mines = 5 * radius;
   map = new Map(mapRadius, MinesweeperTileProducer, this);
 
   auto l_game_tiles = map->GetTilesInRange(map->GetTile(AxialCoordinate(0, 0)), radius);
@@ -129,6 +131,10 @@ void Game::Run() {
                     if (map->IsCoordinateInBounds(l_tile_clicked)) {
                         auto l_tile = dynamic_cast<MinesweeperTile*>(this->map->GetTile(l_tile_clicked));
                         l_tile->Think();
+                        if (l_tile->GetIsMine()) {
+                            this->Endgame(false);
+                            return;
+                        }
                     }
                 }
                 break;
@@ -220,6 +226,8 @@ const sf::Texture * Game::GetTexture(TextureType desired_texture) const {
             return &this->mined;
         case Win:
             return &this->win;
+        case Loss:
+            return &this->loss;
         case One:
             return &this->one;
         case Two:
@@ -232,6 +240,7 @@ const sf::Texture * Game::GetTexture(TextureType desired_texture) const {
             return &this->five;
         case Six:
             return &this->six;
+        case Error:
         default:
             return &this->error;
     }
@@ -239,11 +248,27 @@ const sf::Texture * Game::GetTexture(TextureType desired_texture) const {
 
 /*
  * This method happens in a snap
+ * Pass in true for a win and false for a loss
  */
-void Game::Endgame(bool IsWin) {
-
+void Game::Endgame(bool p_is_win) {
+    p_is_win ? this->SetAllTiles(Win) : this->SetAllTiles(Error);
+    window->clear();
+    Think();
+    window->display();
 }
+
 
 const float Game::GetZoom() {
     return this->camera->GetCurrentZoom();
+}
+
+/*
+ * Sets all tiles on the board to the desired texture
+ * Used when the game is won or lost
+ */
+void Game::SetAllTiles(TextureType desired_texture) {
+    auto l_tiles = this->map->GetTilesInRange(this->map->GetTile({0,0}), this->mapRadius);
+    for (auto tile : l_tiles) {
+        dynamic_cast<MinesweeperTile*>(tile)->setTexture(this->GetTexture(desired_texture));
+    }
 }

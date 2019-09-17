@@ -25,7 +25,7 @@ enum TextureType {
     Flagged,
     Mined,
     Error,
-    Win,
+    Win, Loss,
     One, Two, Three, Four, Five, Six
 };
 
@@ -51,6 +51,11 @@ class Game {
    * Trap the main thread into running the game loop
    */
   void Run();
+
+  /*
+   * Method for chaning the texture of all tiles on the board
+   */
+  void SetAllTiles(TextureType desired_texture);
 
   /*
    * Methods for converting between hex coordinates to world coordinates (pixel)
@@ -112,6 +117,8 @@ class Game {
   /*
    * Textures that describe the state of a tile
    */
-  sf::Texture covered, uncovered, flagged, mined, error, win,
+  sf::Texture covered, uncovered, flagged, mined, error, win, loss,
                 one, two, three, four, five, six;
+
+  unsigned int number_of_mines;
 };
