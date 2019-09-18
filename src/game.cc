@@ -42,6 +42,7 @@ Game::Game() {
   LoadATexture("FlaggedTile.png", this->flagged);
   LoadATexture("MinedTile.png", this->mined);
   LoadATexture("SmileyFace.png", this->win);
+  LoadATexture("SadFace.png", this->loss);
   LoadATexture("ErrorTexture.jpg", this->error);
   LoadATexture("One.png", this->one);
   LoadATexture("Two.png", this->two);
@@ -65,7 +66,7 @@ void Game::InitMap(size_t radius ) {
   auto MinesweeperTileProducer = [&l_num_mines_copy](Map* p_map, AxialCoordinate&& coord) -> Tile* {
       unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
       std::mt19937 rng(seed);
-      auto tile = new MinesweeperTile(p_map, coord, rng() % 3 == 0 && l_num_mines_copy-->0);
+      auto tile = new MinesweeperTile(p_map, coord, rng() % 4 == 0 && l_num_mines_copy-->0);
       return tile;
   };
 
@@ -106,6 +107,7 @@ size_t Game::GetWindowWidth() const {
 void Game::Run() {
     while ( window->isOpen() ) {
     sf::Event event;
+    //unsigned int number_of_non_mines = HexNumbers(mapRadius) - number_of_mines;
 
     while( window->pollEvent(event) ) {
         // Pass the event to the camera
@@ -131,10 +133,6 @@ void Game::Run() {
                     if (map->IsCoordinateInBounds(l_tile_clicked)) {
                         auto l_tile = dynamic_cast<MinesweeperTile*>(this->map->GetTile(l_tile_clicked));
                         l_tile->Think();
-                        if (l_tile->GetIsMine()) {
-                            this->Endgame(false);
-                            return;
-                        }
                     }
                 }
                 break;
@@ -251,7 +249,7 @@ const sf::Texture * Game::GetTexture(TextureType desired_texture) const {
  * Pass in true for a win and false for a loss
  */
 void Game::Endgame(bool p_is_win) {
-    p_is_win ? this->SetAllTiles(Win) : this->SetAllTiles(Error);
+    p_is_win ? this->SetAllTiles(Win) : this->SetAllTiles(Loss);
     window->clear();
     Think();
     window->display();

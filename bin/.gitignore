@@ -1,3 +1,4 @@
 # Ignore build files
 obj/
 thick_turtle 
+CMakeCache.txt

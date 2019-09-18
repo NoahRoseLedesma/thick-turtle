@@ -25,11 +25,6 @@ void MinesweeperTile::FindNumNearbyMines() {
 
 void MinesweeperTile::Think() {
 
-    // Lambda to make my life easier changing textures
-    auto SetTileTexture = [this] (TextureType type) -> void {
-        this->setTexture(this->map->GetGameObject()->GetTexture(type));
-    };
-
     if (this->is_mine) {
         SetTileTexture(Mined);
 
@@ -60,6 +55,30 @@ void MinesweeperTile::Think() {
                 SetTileTexture(Error);
                 break;
         }
+        this->RevealTilesIfBlank();
     }
+}
+
+void MinesweeperTile::RevealTilesIfBlank() {
+
+    if (!this->map->IsCoordinateInBounds(this->position) || this->is_mine) {
+        return;
+    }
+    auto tiles = this->map->GetTilesInRange(map->GetTile(this->position), 1);
+    for (auto iter_tile : tiles) {
+        if (iter_tile == nullptr) continue;
+
+        auto l_mine_tile = dynamic_cast<MinesweeperTile*>(iter_tile);
+
+        if (l_mine_tile->IsEmpty() && !l_mine_tile->is_mine) {
+            l_mine_tile->SetTileTexture(Uncovered);
+        }
+
+        l_mine_tile->RevealTilesIfBlank();
+    }
+}
+
+void MinesweeperTile::SetTileTexture(TextureType type) {
+    this->setTexture(this->map->GetGameObject()->GetTexture(type));
 }
 

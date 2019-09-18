@@ -174,7 +174,7 @@ std::vector<Tile*> Map::GetTilesInRange(const Tile* const source,
              y <= std::min((signed)radius, -x+(signed)radius);
              y++ ) {
       l_tiles[tileVectorIndex++] = this->GetTile(*sourcePosition +
-            AxialCoordinate({ .q = x , .r = y }));
+            AxialCoordinate(x , y));
     }
   }
   return l_tiles;
