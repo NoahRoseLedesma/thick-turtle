@@ -74,7 +74,7 @@ void Game::InitMap(size_t radius ) {
   number_of_mines = 5 * radius;
   map = new Map(mapRadius, MinesweeperTileProducer, this);
 
-  auto l_game_tiles = map->GetTilesInRange(map->GetTile(AxialCoordinate(0, 0)), radius);
+  auto l_game_tiles = map->GetTilesInRange(map->GetTile(AxialCoordinate(0, 0)), mapRadius);
   for (const auto& tile: l_game_tiles) {
       auto derived_tile = dynamic_cast<MinesweeperTile *>(tile);
       derived_tile->FindNumNearbyMines();

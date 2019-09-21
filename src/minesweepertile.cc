@@ -18,8 +18,9 @@ void MinesweeperTile::FindNumNearbyMines() {
     auto immediate_tiles = this->map->GetTilesInRange(this, 1);
     for (const auto& tile : immediate_tiles) {
         if(tile == nullptr) continue;
-        auto temp = dynamic_cast<MinesweeperTile*>(tile);
-        if (temp->is_mine) num_nearby_mines++;
+        if (dynamic_cast<MinesweeperTile*>(tile)->is_mine){
+            num_nearby_mines++;
+        }
     }
 }
 
@@ -27,11 +28,15 @@ void MinesweeperTile::Think() {
 
     if (this->is_mine) {
         SetTileTexture(Mined);
-
+    }
+    else if (!map->IsCoordinateInBounds(this->position)) {
+        return;
     } else {
+
         switch (num_nearby_mines) {
             case 0:
                 SetTileTexture(Uncovered);
+                this->RevealTilesIfBlank();
                 break;
             case 1:
                 SetTileTexture(One);
@@ -55,26 +60,26 @@ void MinesweeperTile::Think() {
                 SetTileTexture(Error);
                 break;
         }
-        this->RevealTilesIfBlank();
+
     }
 }
 
 void MinesweeperTile::RevealTilesIfBlank() {
-
-    if (!this->map->IsCoordinateInBounds(this->position) || this->is_mine) {
-        return;
-    }
+    MinesweeperTile* l_tile;
     auto tiles = this->map->GetTilesInRange(map->GetTile(this->position), 1);
     for (auto iter_tile : tiles) {
-        if (iter_tile == nullptr) continue;
+        l_tile = dynamic_cast<MinesweeperTile*>(iter_tile);
 
-        auto l_mine_tile = dynamic_cast<MinesweeperTile*>(iter_tile);
+        if (iter_tile == nullptr || l_tile->has_been_visited) continue;
 
-        if (l_mine_tile->IsEmpty() && !l_mine_tile->is_mine) {
-            l_mine_tile->SetTileTexture(Uncovered);
+        l_tile->has_been_visited = true;
+
+        if (l_tile->num_nearby_mines == 0) {
+            this->SetTileTexture(Uncovered);
+            l_tile->RevealTilesIfBlank();
         }
+        l_tile->Think();
 
-        l_mine_tile->RevealTilesIfBlank();
     }
 }
 

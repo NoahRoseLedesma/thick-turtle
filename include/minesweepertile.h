@@ -22,6 +22,7 @@ class MinesweeperTile : public Tile {
     void RevealTilesIfBlank();
     // Return false if the tile is mined
     bool IsTile() { return is_mine; }
+    //Problem here
     bool IsEmpty() { return num_nearby_mines == 0; }
     unsigned int GetNumNearbyTiles() { return num_nearby_mines; }
 
@@ -32,6 +33,7 @@ class MinesweeperTile : public Tile {
     bool is_covered = true;
     bool is_flagged = false;
     bool is_mine;
+    bool has_been_visited = false;
     unsigned int num_nearby_mines = 0;
 };
 
