@@ -33,6 +33,7 @@ void MinesweeperTile::Think() {
     else if (!map->IsCoordinateInBounds(this->position)) {
         return;
     } else {
+        has_been_visited = true;
         is_covered = false;
         switch (num_nearby_mines) {
             case 0:
@@ -80,6 +81,7 @@ void MinesweeperTile::RevealTilesIfBlank() {
         if (iter_tile == nullptr || l_tile->has_been_visited || this == l_tile) continue;
 
         l_tile->has_been_visited = true;
+        l_tile->setFillColor(sf::Color::Red);
 
         if (l_tile->num_nearby_mines == 0) {
             this->SetTileTexture(Uncovered);
