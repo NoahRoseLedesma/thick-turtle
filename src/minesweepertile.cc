@@ -4,13 +4,13 @@
 
 #include "minesweepertile.h"
 
-MinesweeperTile::MinesweeperTile(const Map *const map, const AxialCoordinate &&position, bool is_mine)
-    :Tile(map, position), is_mine(is_mine) {
+MinesweeperTile::MinesweeperTile(Map* map, const AxialCoordinate &&position, bool is_mine)
+    :Tile(map, position), is_mine(is_mine), map(map) {
     this->setTexture(map->GetGameObject()->GetTexture(Covered));
 }
 
-MinesweeperTile::MinesweeperTile(const Map *const map, const AxialCoordinate &position, bool is_mine)
-    :Tile(map, position), is_mine(is_mine) {
+MinesweeperTile::MinesweeperTile(Map * map, const AxialCoordinate &position, bool is_mine)
+    :Tile(map, position), is_mine(is_mine), map(map) {
     this->setTexture(map->GetGameObject()->GetTexture(Covered));
 }
 
@@ -19,13 +19,13 @@ void MinesweeperTile::FindNumNearbyMines() {
     for (const auto& tile : immediate_tiles) {
         if(tile == nullptr) continue;
         if (dynamic_cast<MinesweeperTile*>(tile)->is_mine){
+            dynamic_cast<MinesweeperTile*>(tile)->setFillColor(sf::Color::Yellow);
             num_nearby_mines++;
         }
     }
 }
 
 void MinesweeperTile::Think() {
-
     if (this->is_mine) {
         is_covered = false;
         SetTileTexture(Mined);
@@ -40,21 +40,27 @@ void MinesweeperTile::Think() {
                 this->RevealTilesIfBlank();
                 break;
             case 1:
+                map->DecrementNumNonMinedTiles();
                 SetTileTexture(One);
                 break;
             case 2:
+                map->DecrementNumNonMinedTiles();
                 SetTileTexture(Two);
                 break;
             case 3:
+                map->DecrementNumNonMinedTiles();
                 SetTileTexture(Three);
                 break;
             case 4:
+                map->DecrementNumNonMinedTiles();
                 SetTileTexture(Four);
                 break;
             case 5:
+                map->DecrementNumNonMinedTiles();
                 SetTileTexture(Five);
                 break;
             case 6:
+                map->DecrementNumNonMinedTiles();
                 SetTileTexture(Six);
                 break;
             default:
@@ -71,14 +77,16 @@ void MinesweeperTile::RevealTilesIfBlank() {
     for (auto iter_tile : tiles) {
         l_tile = dynamic_cast<MinesweeperTile*>(iter_tile);
 
-        if (iter_tile == nullptr || l_tile->has_been_visited) continue;
+        if (iter_tile == nullptr || l_tile->has_been_visited || this == l_tile) continue;
 
         l_tile->has_been_visited = true;
 
         if (l_tile->num_nearby_mines == 0) {
             this->SetTileTexture(Uncovered);
             l_tile->RevealTilesIfBlank();
+
         }
+
         l_tile->Think();
 
     }

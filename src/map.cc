@@ -90,7 +90,8 @@ AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate* rhs) const {
 Map::Map(size_t radius,
          std::function<Tile*(Map*, AxialCoordinate&&)> initilizer,
          Game* game):
-         tiles(radius * 2 + 1), game(game) {
+         tiles(radius * 2 + 1), game(game),
+         num_non_mined_tiles(HexNumbers(radius) - game->GetNumMines()) {
   for ( auto& column : tiles ) {
     column.resize(2 * radius + 1);
   }

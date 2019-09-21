@@ -114,6 +114,9 @@ class Map : public sf::Drawable {
    * Reset the center
    */
   void ResetCenter();
+
+  inline int GetNumNonMinedTiles() { return num_non_mined_tiles; }
+  inline void DecrementNumNonMinedTiles() { num_non_mined_tiles--; }
  private:
   // Represent the map using a 2D matrix
   // This approach is simple to implement but will have space overhead
@@ -127,4 +130,7 @@ class Map : public sf::Drawable {
 
   // The x-y pixel location of the center of the map
   sf::Vector2f center_coordinate;
+
+  // The number of non mined tiles on the board
+  int num_non_mined_tiles;
 };

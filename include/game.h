@@ -86,6 +86,8 @@ class Game {
 
   const float GetZoom();
 
+  const size_t GetNumMines() { return number_of_mines; }
+
  private:
   /*
    * The primary game loop. Draw to the screen and perform game logic

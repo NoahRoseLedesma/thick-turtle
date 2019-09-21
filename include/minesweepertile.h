@@ -11,8 +11,8 @@
 class MinesweeperTile : public Tile {
 
  public:
-    MinesweeperTile(const Map* const map, const AxialCoordinate&& position, bool is_mine);
-    MinesweeperTile(const Map* const map, const AxialCoordinate& position, bool is_mine);
+    MinesweeperTile(Map* map, const AxialCoordinate&& position, bool is_mine);
+    MinesweeperTile(Map* map, const AxialCoordinate& position, bool is_mine);
 
     void Think();
 
@@ -24,6 +24,7 @@ class MinesweeperTile : public Tile {
     inline bool IsEmpty() { return num_nearby_mines == 0; }
     inline bool IsFlagged() { return is_flagged; }
     inline bool IsCovered() { return is_covered; }
+    inline bool HasBeenVisited() { return has_been_visited; }
     inline unsigned int GetNumNearbyTiles() { return num_nearby_mines; }
 
  protected:
@@ -35,6 +36,7 @@ class MinesweeperTile : public Tile {
     bool is_mine;
     bool has_been_visited = false;
     unsigned int num_nearby_mines = 0;
+    Map* map;
 };
 
 

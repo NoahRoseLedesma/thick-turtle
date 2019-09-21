@@ -63,11 +63,13 @@ void Game::InitMap(size_t radius ) {
   };*/
   unsigned int l_num_mines_copy = this->number_of_mines;
 
-  auto MinesweeperTileProducer = [&l_num_mines_copy](Map* p_map, AxialCoordinate&& coord) -> Tile* {
+  auto MinesweeperTileProducer = [&](Map* p_map, AxialCoordinate&& coord) -> Tile* {
       unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
       std::mt19937 rng(seed);
       auto tile = new MinesweeperTile(p_map, coord, rng() % 4 == 0 && l_num_mines_copy-->0);
       return tile;
+ /*     if (coord.q == 0) return new MinesweeperTile(p_map, coord, true);
+      return new MinesweeperTile(p_map, coord, false);*/
   };
 
   mapRadius = radius;
@@ -126,8 +128,6 @@ void Game::Run() {
                 AxialCoordinate l_tile_clicked =
                         controller.GetTileClickedOn(event.mouseButton);
 
-                std::cout << l_tile_clicked.q << ", " << l_tile_clicked.r << " | Zoom: " << this->GetZoom()
-                          << std::endl;
                 if (!map->IsCoordinateInBounds(l_tile_clicked)) break;
 
                 auto l_minesweeper_tile = dynamic_cast<MinesweeperTile *>(this->map->GetTile(l_tile_clicked));
@@ -138,15 +138,27 @@ void Game::Run() {
 
                     l_minesweeper_tile->Think();
 
-                } else if (event.mouseButton.button == sf::Mouse::Right) {
+                    if(l_minesweeper_tile->IsMine()) {
+                        SetAllTiles(Loss);
+                    }
+                    else {
+                        if (map->GetNumNonMinedTiles() <= 0) {
+                            SetAllTiles(Win);
+                        }
+                    }
+
+                } else if (event.mouseButton.button == sf::Mouse::Right &&
+                    l_minesweeper_tile->IsCovered()) {
                     l_minesweeper_tile->ToggleFlagged();
                 }
+                std::cout << map->GetNumNonMinedTiles() << std::endl;
                 break;
             }
             default:
                 break;
         }
     }
+
     window->clear();
     Think();
     window->display();
