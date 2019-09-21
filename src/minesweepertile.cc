@@ -27,12 +27,13 @@ void MinesweeperTile::FindNumNearbyMines() {
 void MinesweeperTile::Think() {
 
     if (this->is_mine) {
+        is_covered = false;
         SetTileTexture(Mined);
     }
     else if (!map->IsCoordinateInBounds(this->position)) {
         return;
     } else {
-
+        is_covered = false;
         switch (num_nearby_mines) {
             case 0:
                 SetTileTexture(Uncovered);
@@ -85,5 +86,10 @@ void MinesweeperTile::RevealTilesIfBlank() {
 
 void MinesweeperTile::SetTileTexture(TextureType type) {
     this->setTexture(this->map->GetGameObject()->GetTexture(type));
+}
+
+void MinesweeperTile::ToggleFlagged() {
+    is_flagged = !is_flagged;
+    is_flagged ? SetTileTexture(Flagged) : SetTileTexture(Covered);
 }
 

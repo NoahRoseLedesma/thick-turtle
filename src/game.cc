@@ -121,21 +121,28 @@ void Game::Run() {
                 // Invoke the handler for this event
                 OnDisplayResize();
                 break;
-            case sf::Event::MouseButtonPressed:
-                if(event.mouseButton.button == sf::Mouse::Left) {
-                    InputController controller(this);
-                    AxialCoordinate l_tile_clicked =
-                          controller.GetTileClickedOn(event.mouseButton);
+            case sf::Event::MouseButtonPressed: {
+                InputController controller(this);
+                AxialCoordinate l_tile_clicked =
+                        controller.GetTileClickedOn(event.mouseButton);
 
-                    std::cout << l_tile_clicked.q << ", " << l_tile_clicked.r << " | Zoom: " << this->GetZoom() << std::endl;
+                std::cout << l_tile_clicked.q << ", " << l_tile_clicked.r << " | Zoom: " << this->GetZoom()
+                          << std::endl;
+                if (!map->IsCoordinateInBounds(l_tile_clicked)) break;
 
-                    // Only continue if the tile is in bounds
-                    if (map->IsCoordinateInBounds(l_tile_clicked)) {
-                        auto l_tile = dynamic_cast<MinesweeperTile*>(this->map->GetTile(l_tile_clicked));
-                        l_tile->Think();
-                    }
+                auto l_minesweeper_tile = dynamic_cast<MinesweeperTile *>(this->map->GetTile(l_tile_clicked));
+
+                if (event.mouseButton.button == sf::Mouse::Left &&
+                    l_minesweeper_tile->IsCovered() &&
+                    !l_minesweeper_tile->IsFlagged()) {
+
+                    l_minesweeper_tile->Think();
+
+                } else if (event.mouseButton.button == sf::Mouse::Right) {
+                    l_minesweeper_tile->ToggleFlagged();
                 }
                 break;
+            }
             default:
                 break;
         }

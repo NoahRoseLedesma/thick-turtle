@@ -14,17 +14,17 @@ class MinesweeperTile : public Tile {
     MinesweeperTile(const Map* const map, const AxialCoordinate&& position, bool is_mine);
     MinesweeperTile(const Map* const map, const AxialCoordinate& position, bool is_mine);
 
-    // Returns false if game is over;
     void Think();
 
-    void ToggleFlagged() { is_flagged = !is_flagged; }
+    void ToggleFlagged();
     void FindNumNearbyMines();
     void RevealTilesIfBlank();
-    // Return false if the tile is mined
-    bool IsTile() { return is_mine; }
-    //Problem here
-    bool IsEmpty() { return num_nearby_mines == 0; }
-    unsigned int GetNumNearbyTiles() { return num_nearby_mines; }
+
+    inline bool IsMine() { return is_mine; }
+    inline bool IsEmpty() { return num_nearby_mines == 0; }
+    inline bool IsFlagged() { return is_flagged; }
+    inline bool IsCovered() { return is_covered; }
+    inline unsigned int GetNumNearbyTiles() { return num_nearby_mines; }
 
  protected:
     void SetTileTexture(TextureType type);
