@@ -170,6 +170,10 @@ void Game::Run() {
                 std::cout << map->GetNumNonMinedTiles() << std::endl;
                 break;
             }
+            case sf::Event::KeyPressed:
+                if (event.key.code == sf::Keyboard::R) {
+                    this->Restart();
+                }
             default:
                 break;
         }
@@ -304,4 +308,10 @@ void Game::SetAllTiles(TextureType desired_texture) {
     for (auto tile : l_tiles) {
         dynamic_cast<MinesweeperTile*>(tile)->setTexture(this->GetTexture(desired_texture));
     }
+}
+
+void Game::Restart() {
+    this->InitMap(mapRadius);
+    this->InitCamera();
+    this->Run();
 }

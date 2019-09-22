@@ -88,6 +88,8 @@ class Game {
 
   const size_t GetNumMines() { return number_of_mines; }
 
+  void Restart();
+
  private:
   /*
    * The primary game loop. Draw to the screen and perform game logic
