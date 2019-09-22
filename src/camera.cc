@@ -12,12 +12,12 @@ void Camera::Think( sf::Event& event ) {
     OnPanEvent(event.mouseMove);
   } else if(event.type == sf::Event::EventType::MouseButtonPressed) {
     // Right click enables panning
-    if(event.mouseButton.button == sf::Mouse::Button::Right) {
+    if(event.mouseButton.button == sf::Mouse::Button::Middle) {
       StartPanning(event.mouseButton);
     }
   } else if(event.type == sf::Event::EventType::MouseButtonReleased) {
     // Right click disables panning]
-    if(event.mouseButton.button == sf::Mouse::Button::Right) {
+    if(event.mouseButton.button == sf::Mouse::Button::Middle) {
       StopPanning();
     }
   }
