@@ -146,6 +146,8 @@ void Game::Run() {
 
                 auto l_minesweeper_tile = dynamic_cast<MinesweeperTile *>(this->map->GetTile(l_tile_clicked));
 
+                if (l_minesweeper_tile == nullptr) break;
+
                 if (event.mouseButton.button == sf::Mouse::Left &&
                     l_minesweeper_tile->IsCovered() &&
                     !l_minesweeper_tile->IsFlagged()) {
