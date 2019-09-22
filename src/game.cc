@@ -61,26 +61,40 @@ void Game::InitMap(size_t radius ) {
   /*auto DebugTileProducer = [](Map* p_map, AxialCoordinate&& coord) -> Tile* {
     return new DebugTile(p_map, coord);
   };*/
-  unsigned int l_num_mines_copy = this->number_of_mines;
 
   auto MinesweeperTileProducer = [&](Map* p_map, AxialCoordinate&& coord) -> Tile* {
-      unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
-      std::mt19937 rng(seed);
-      auto tile = new MinesweeperTile(p_map, coord, rng() % 4 == 0 && l_num_mines_copy-->0);
-      return tile;
- /*     if (coord.q == 0) return new MinesweeperTile(p_map, coord, true);
-      return new MinesweeperTile(p_map, coord, false);*/
+      return new MinesweeperTile(p_map, coord, false);
   };
 
   mapRadius = radius;
-  number_of_mines = 5 * radius;
+  number_of_mines = radius * radius;
   map = new Map(mapRadius, MinesweeperTileProducer, this);
 
   auto l_game_tiles = map->GetTilesInRange(map->GetTile(AxialCoordinate(0, 0)), mapRadius);
+
+  std::random_device rd;
+  std::mt19937 rng(rd());
+  std::uniform_int_distribution<> dist(0, l_game_tiles.size() - 1);
+
+
+  auto l_num_mines_copy = number_of_mines;
+  while (l_num_mines_copy > 0) {
+      auto num = dist(rng);
+      auto l_tile = dynamic_cast<MinesweeperTile *>(l_game_tiles[num]);
+      if (l_tile->IsMine()) {
+          continue;
+      }
+      else {
+          l_tile->SetToMined();
+          l_num_mines_copy--;
+      }
+  }
+
   for (const auto& tile: l_game_tiles) {
       auto derived_tile = dynamic_cast<MinesweeperTile *>(tile);
       derived_tile->FindNumNearbyMines();
   }
+
 }
 
 /*

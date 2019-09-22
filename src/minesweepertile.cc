@@ -33,6 +33,7 @@ void MinesweeperTile::Think() {
     else if (!map->IsCoordinateInBounds(this->position)) {
         return;
     } else {
+        map->DecrementNumNonMinedTiles();
         has_been_visited = true;
         is_covered = false;
         switch (num_nearby_mines) {
@@ -41,27 +42,21 @@ void MinesweeperTile::Think() {
                 this->RevealTilesIfBlank();
                 break;
             case 1:
-                map->DecrementNumNonMinedTiles();
                 SetTileTexture(One);
                 break;
             case 2:
-                map->DecrementNumNonMinedTiles();
                 SetTileTexture(Two);
                 break;
             case 3:
-                map->DecrementNumNonMinedTiles();
                 SetTileTexture(Three);
                 break;
             case 4:
-                map->DecrementNumNonMinedTiles();
                 SetTileTexture(Four);
                 break;
             case 5:
-                map->DecrementNumNonMinedTiles();
                 SetTileTexture(Five);
                 break;
             case 6:
-                map->DecrementNumNonMinedTiles();
                 SetTileTexture(Six);
                 break;
             default:

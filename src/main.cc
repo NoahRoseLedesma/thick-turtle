@@ -10,7 +10,7 @@
 int main() {
   Game game;
   game.InitWindow(800, 600);
-  game.InitMap(4);
+  game.InitMap(10);
   game.InitCamera();
   game.Run();
   return 0;

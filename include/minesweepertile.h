@@ -27,6 +27,8 @@ class MinesweeperTile : public Tile {
     inline bool HasBeenVisited() { return has_been_visited; }
     inline unsigned int GetNumNearbyTiles() { return num_nearby_mines; }
 
+    void SetToMined() { this->is_mine = true; }
+
  protected:
     void SetTileTexture(TextureType type);
 
