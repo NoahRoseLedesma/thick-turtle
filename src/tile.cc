@@ -9,19 +9,20 @@
 /*
  * Tile
  */
-Tile::Tile(const Map* const map, const AxialCoordinate&& position):
-    map(map), position(new AxialCoordinate(position)) {
-    sf::Vector2f l_coord = map->GetGameObject()->AxialToPixel(position);
-    generateHex(this, l_coord.x, l_coord.y,
-                map->GetGameObject()->GetTileRadius());
+Tile::Tile(const Map *const map, const AxialCoordinate &&position) :
+  map(map), position(new AxialCoordinate(position)) {
+  sf::Vector2f l_coord = map->GetGameObject()->AxialToPixel(position);
+  generateHex(this, l_coord.x, l_coord.y,
+              map->GetGameObject()->GetTileRadius());
 }
 
-Tile::Tile(const Map* const map, const AxialCoordinate& position):
-    map(map), position(new AxialCoordinate(position)) {
-    sf::Vector2f l_coord = map->GetGameObject()->AxialToPixel(position);
-    generateHex(this, l_coord.x, l_coord.y,
-                map->GetGameObject()->GetTileRadius());
+Tile::Tile(const Map *const map, const AxialCoordinate &position) :
+  map(map), position(new AxialCoordinate(position)) {
+  sf::Vector2f l_coord = map->GetGameObject()->AxialToPixel(position);
+  generateHex(this, l_coord.x, l_coord.y,
+              map->GetGameObject()->GetTileRadius());
 }
+
 /*
  * ~Tile
  */
@@ -33,12 +34,12 @@ Tile::~Tile() {
  * Returns true if a piece could be moved to this tile
  */
 bool Tile::CanBeMovedTo() const {
-    /* TODO
-     * A tile can be moved to if it
-     * 1) Is not already occupied
-     * 2) Allows for piece placement (s.t. a water tile would fail here)
-     */
-    return true;
+  /* TODO
+   * A tile can be moved to if it
+   * 1) Is not already occupied
+   * 2) Allows for piece placement (s.t. a water tile would fail here)
+   */
+  return true;
 }
 
 /*
@@ -55,10 +56,11 @@ void Tile::OnDisplayResize() {
  * DebugTile
  */
 
-DebugTile::DebugTile(const Map* const map, const AxialCoordinate&& position):
-                     DebugTile(map, position) {}
-DebugTile::DebugTile(const Map* const map, const AxialCoordinate& position):
-                     Tile(map, position) {
+DebugTile::DebugTile(const Map *const map, const AxialCoordinate &&position) :
+  DebugTile(map, position) {}
+
+DebugTile::DebugTile(const Map *const map, const AxialCoordinate &position) :
+  Tile(map, position) {
   // Determine the debug text for this tile
   std::stringstream ss;
   ss << "q=" << position.q << "\nr=" << position.r;

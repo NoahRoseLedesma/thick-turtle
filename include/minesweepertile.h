@@ -10,35 +10,43 @@
 
 class MinesweeperTile : public Tile {
 
- public:
-    MinesweeperTile(Map* map, const AxialCoordinate&& position, bool is_mine);
-    MinesweeperTile(Map* map, const AxialCoordinate& position, bool is_mine);
+public:
+  MinesweeperTile(Map *map, const AxialCoordinate &&position, bool is_mine);
 
-    void Think();
+  MinesweeperTile(Map *map, const AxialCoordinate &position, bool is_mine);
 
-    void ToggleFlagged();
-    void FindNumNearbyMines();
-    void RevealTilesIfBlank();
+  void Think();
 
-    inline bool IsMine() { return is_mine; }
-    inline bool IsEmpty() { return num_nearby_mines == 0; }
-    inline bool IsFlagged() { return is_flagged; }
-    inline bool IsCovered() { return is_covered; }
-    inline bool HasBeenVisited() { return has_been_visited; }
-    inline unsigned int GetNumNearbyTiles() { return num_nearby_mines; }
+  void ToggleFlagged();
 
-    void SetToMined() { this->is_mine = true; }
+  void FindNumNearbyMines();
 
- protected:
-    void SetTileTexture(TextureType type);
+  void RevealTilesIfBlank();
 
- private:
-    bool is_covered = true;
-    bool is_flagged = false;
-    bool is_mine;
-    bool has_been_visited = false;
-    unsigned int num_nearby_mines = 0;
-    Map* map;
+  inline bool IsMine() { return is_mine; }
+
+  inline bool IsEmpty() { return num_nearby_mines == 0; }
+
+  inline bool IsFlagged() { return is_flagged; }
+
+  inline bool IsCovered() { return is_covered; }
+
+  inline bool HasBeenVisited() { return has_been_visited; }
+
+  inline unsigned int GetNumNearbyTiles() { return num_nearby_mines; }
+
+  void SetToMined() { this->is_mine = true; }
+
+protected:
+  void SetTileTexture(TextureType type);
+
+private:
+  bool is_covered = true;
+  bool is_flagged = false;
+  bool is_mine;
+  bool has_been_visited = false;
+  unsigned int num_nearby_mines = 0;
+  Map *map;
 };
 
 

@@ -16,13 +16,13 @@ namespace sf {
 }
 
 class Camera : public sf::Drawable {
- public:
+public:
   Camera(sf::RenderWindow *window, Map *map);
 
   /*
    * Process some player input event and adjust the camera
    */
-  void Think( sf::Event& event );
+  void Think(sf::Event &event);
 
   /*
    * Reapply camera adjustments after the world view has been reset by an
@@ -33,15 +33,15 @@ class Camera : public sf::Drawable {
   /*
    * Draws camera related components
    */
-  virtual void draw(sf::RenderTarget& target, sf::RenderStates states)
-                    const override;
+  virtual void draw(sf::RenderTarget &target, sf::RenderStates states)
+  const override;
 
   /*
    * Returns the current zoom
    */
   float GetCurrentZoom() const;
 
- private:
+private:
   /*
    * Configuration constants
    */
@@ -51,7 +51,7 @@ class Camera : public sf::Drawable {
   /*
    * Data members
    */
-  sf::RenderWindow* window;
+  sf::RenderWindow *window;
   // The current zoom factor relative to the zoom factor when the camera was
   // initilized. This should be relative to the native zoom of the view.
   float currentZoom;
@@ -60,7 +60,7 @@ class Camera : public sf::Drawable {
   bool currentlyPanning = false;
 
   // The map of the game
-  Map* map;
+  Map *map;
 
   // The last position of the mouse
   sf::Vector2i lastMousePosition;
@@ -68,20 +68,21 @@ class Camera : public sf::Drawable {
   /*
    * Methods
    */
-  
+
   /*
    * Attempt to adjust the zoom factor of the world view
    */
-  void OnZoomEvent( sf::Event::MouseWheelScrollEvent& event );
+  void OnZoomEvent(sf::Event::MouseWheelScrollEvent &event);
 
   /*
    * Enable/Disable panning
    */
-  void StartPanning(sf::Event::MouseButtonEvent& event);
+  void StartPanning(sf::Event::MouseButtonEvent &event);
+
   void StopPanning() { currentlyPanning = false; }
 
   /*
    * Process a mouse movement event to pan the view if panning is enabled
    */
-  void OnPanEvent(sf::Event::MouseMoveEvent& event);
+  void OnPanEvent(sf::Event::MouseMoveEvent &event);
 };
