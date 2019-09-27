@@ -7,7 +7,7 @@ Camera::Camera(sf::RenderWindow *window, Map *map) : window(window), map(map) {
   this->currentZoom = map->GetRadius() / 6.5;
 }
 
-void Camera::Think(sf::Event &event) {
+void Camera::Think(const sf::Event &event) {
   // Disable zooming for the time being. This will be done in a
   // seperate branch at a later time
   /*if(event.type == sf::Event::EventType::MouseWheelScrolled) {
@@ -28,7 +28,7 @@ void Camera::Think(sf::Event &event) {
   }
 }
 
-void Camera::OnZoomEvent(sf::Event::MouseWheelScrollEvent &event) {
+void Camera::OnZoomEvent(const sf::Event::MouseWheelScrollEvent &event) {
   float relativeZoomFactor = (-event.delta * 0.1) / currentZoom + 1;
 
   // If the zoom would push out of our limits, zoom to the limit.
@@ -63,7 +63,7 @@ void Camera::OnViewReset() {
   window->setView(view);
 }
 
-void Camera::OnPanEvent(sf::Event::MouseMoveEvent &event) {
+void Camera::OnPanEvent(const sf::Event::MouseMoveEvent &event) {
   if (!currentlyPanning)
     return;
 
@@ -73,7 +73,8 @@ void Camera::OnPanEvent(sf::Event::MouseMoveEvent &event) {
 
   // Shift the view using the delta
   sf::View view = window->getView();
-  view.move((float) -deltaMousePosition.x * currentZoom, (float) -deltaMousePosition.y * currentZoom);
+  view.move(static_cast<float>(-deltaMousePosition.x) * currentZoom,
+    static_cast<float>(-deltaMousePosition.y) * currentZoom);
   window->setView(view);
 
   // Shift the center coordinate
@@ -83,13 +84,10 @@ void Camera::OnPanEvent(sf::Event::MouseMoveEvent &event) {
   lastMousePosition = {event.x, event.y};
 }
 
-void Camera::StartPanning(sf::Event::MouseButtonEvent &event) {
+void Camera::StartPanning(const sf::Event::MouseButtonEvent &event) {
   currentlyPanning = true;
   lastMousePosition = {event.x, event.y};
 }
-
-// Currently unused. May be helpful in the future
-void Camera::draw(sf::RenderTarget &, sf::RenderStates) const {}
 
 float Camera::GetCurrentZoom() const {
   return this->currentZoom;

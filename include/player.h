@@ -21,7 +21,7 @@ class Piece;
 class Tile;
 
 class Player {
-public:
+ public:
   virtual void HandleUserInput(const PlayerInput &p_input) = 0;
 
   void AddPieces(const Piece *p_new_piece,
@@ -29,7 +29,7 @@ public:
 
   int GetNumTilesOccupied();
 
-private:
+ private:
   std::string m_name;
   std::map<const Tile *, const Piece *> m_pieces;
   std::vector<const Tile *> m_controlled_tiles;

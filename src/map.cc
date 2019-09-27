@@ -1,10 +1,8 @@
 #include "map.h"
-
 #include <cmath>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <minesweepertile.h>
+#include "minesweepertile.h"
 
-//region Constructors
 /*
  * Axial Coordinate
  */
@@ -62,9 +60,7 @@ AxialCoordinate::AxialCoordinate(float pixel_x, float pixel_y, Game *game) {
   this->q = rx;
   this->r = rz;
 }
-//endregion
 
-//region operator+ overloads
 /*
  * AxialCoordinate::operator+
  */
@@ -80,7 +76,6 @@ AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate &rhs) const {
 AxialCoordinate AxialCoordinate::operator+(const AxialCoordinate *rhs) const {
   return {q + rhs->q, r + rhs->r};
 }
-//endregion
 
 
 /*
@@ -122,8 +117,6 @@ Map::~Map() {
   }
 }
 
-//region GetTile
-
 /*
  * Map::GetTile
  */
@@ -157,8 +150,6 @@ Tile *Map::GetTile(const AxialCoordinate &&coord) {
   AxialCoordinate bind = coord;
   return GetTile(bind);
 }
-
-//endregion
 
 /*
  * Map::GetTilesInRange
@@ -205,8 +196,8 @@ bool Map::IsCoordinateInBounds(const AxialCoordinate &&coord) const {
  * Map::draw
  */
 void Map::draw(sf::RenderTarget &target, sf::RenderStates) const {
-  size_t radius = tiles.size() / 2;
-  for (auto *tile : GetTilesInRange(GetTile({0, 0}), radius)) {
+  size_t l_radius = tiles.size() / 2;
+  for (auto *tile : GetTilesInRange(GetTile({0, 0}), l_radius)) {
     if (tile != nullptr) {
       auto derived_tile = dynamic_cast<MinesweeperTile *>(tile);
       target.draw(*derived_tile);
@@ -221,8 +212,8 @@ void Map::draw(sf::RenderTarget &target, sf::RenderStates) const {
 
 void Map::OnDisplayResize() {
   // Notify every tile of the display resize
-  size_t radius = tiles.size() / 2;
-  for (Tile *tile : GetTilesInRange(GetTile({0, 0}), radius)) {
+  size_t l_radius = tiles.size() / 2;
+  for (Tile *tile : GetTilesInRange(GetTile({0, 0}), l_radius)) {
     tile->OnDisplayResize();
   }
 }

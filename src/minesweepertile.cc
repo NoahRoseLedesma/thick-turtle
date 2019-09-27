@@ -4,13 +4,13 @@
 
 #include "minesweepertile.h"
 
-MinesweeperTile::MinesweeperTile(Map *map, const AxialCoordinate &&position, bool is_mine)
-  : Tile(map, position), is_mine(is_mine), map(map) {
+MinesweeperTile::MinesweeperTile(Map *map, const AxialCoordinate &&position,
+  bool is_mine) : Tile(map, position), is_mine(is_mine), map(map) {
   this->setTexture(map->GetGameObject()->GetTexture(Covered));
 }
 
-MinesweeperTile::MinesweeperTile(Map *map, const AxialCoordinate &position, bool is_mine)
-  : Tile(map, position), is_mine(is_mine), map(map) {
+MinesweeperTile::MinesweeperTile(Map *map, const AxialCoordinate &position,
+  bool is_mine) : Tile(map, position), is_mine(is_mine), map(map) {
   this->setTexture(map->GetGameObject()->GetTexture(Covered));
 }
 
@@ -61,7 +61,6 @@ void MinesweeperTile::Think() {
         SetTileTexture(Error);
         break;
     }
-
   }
 }
 
@@ -71,18 +70,18 @@ void MinesweeperTile::RevealTilesIfBlank() {
   for (auto iter_tile : tiles) {
     l_tile = dynamic_cast<MinesweeperTile *>(iter_tile);
 
-    if (iter_tile == nullptr || l_tile->has_been_visited || this == l_tile) continue;
+    if (iter_tile == nullptr || l_tile->has_been_visited || this == l_tile) {
+      continue;
+    }
 
     l_tile->has_been_visited = true;
 
     if (l_tile->num_nearby_mines == 0) {
       this->SetTileTexture(Uncovered);
       l_tile->RevealTilesIfBlank();
-
     }
 
     l_tile->Think();
-
   }
 }
 

@@ -14,7 +14,7 @@
 class Tile;
 
 class Piece {
-public:
+ public:
   /*
    * Construct a piece and place it on the specified tile
    */
@@ -61,7 +61,7 @@ public:
    */
   virtual void Defend() = 0;
 
-protected:
+ protected:
   const Tile *m_tile;
   size_t m_hp;
   size_t m_movement_range;

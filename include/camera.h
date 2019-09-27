@@ -12,17 +12,17 @@
 class Map;
 
 namespace sf {
-  class RenderWindow;
+class RenderWindow;
 }
 
 class Camera : public sf::Drawable {
-public:
+ public:
   Camera(sf::RenderWindow *window, Map *map);
 
   /*
    * Process some player input event and adjust the camera
    */
-  void Think(sf::Event &event);
+  void Think(const sf::Event &event);
 
   /*
    * Reapply camera adjustments after the world view has been reset by an
@@ -31,17 +31,11 @@ public:
   void OnViewReset();
 
   /*
-   * Draws camera related components
-   */
-  virtual void draw(sf::RenderTarget &target, sf::RenderStates states)
-  const override;
-
-  /*
    * Returns the current zoom
    */
   float GetCurrentZoom() const;
 
-private:
+ private:
   /*
    * Configuration constants
    */
@@ -72,17 +66,17 @@ private:
   /*
    * Attempt to adjust the zoom factor of the world view
    */
-  void OnZoomEvent(sf::Event::MouseWheelScrollEvent &event);
+  void OnZoomEvent(const sf::Event::MouseWheelScrollEvent &event);
 
   /*
    * Enable/Disable panning
    */
-  void StartPanning(sf::Event::MouseButtonEvent &event);
+  void StartPanning(const sf::Event::MouseButtonEvent &event);
 
   void StopPanning() { currentlyPanning = false; }
 
   /*
    * Process a mouse movement event to pan the view if panning is enabled
    */
-  void OnPanEvent(sf::Event::MouseMoveEvent &event);
+  void OnPanEvent(const sf::Event::MouseMoveEvent &event);
 };

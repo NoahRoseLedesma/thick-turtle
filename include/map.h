@@ -18,7 +18,6 @@
  * This map will be using columns `q` as the X axis and rows `r` as the Z axis.
  */
 #pragma once
-
 #include <cstdint>
 #include <vector>
 #include <functional>
@@ -27,43 +26,38 @@
 #include "game.h"
 
 class Game;
-
 class Tile;
 
 // Coordinate types and associated utilities
 typedef int32_t CoordComponentType;
 
 class AxialCoordinate {
-public:
+ public:
   AxialCoordinate(CoordComponentType q, CoordComponentType r);
+  AxialCoordinate(const AxialCoordinate&& copy);
 
-  AxialCoordinate(const AxialCoordinate &&copy);
+    AxialCoordinate(float pixel_x, float pixel_y, Game *game);
 
-  AxialCoordinate(float pixel_x, float pixel_y, Game *game);
+    AxialCoordinate(const AxialCoordinate& copy);
 
-  AxialCoordinate(const AxialCoordinate &copy);
-
-  AxialCoordinate operator+(const AxialCoordinate &&rhs) const;
-
-  AxialCoordinate operator+(const AxialCoordinate &rhs) const;
-
-  AxialCoordinate operator+(const AxialCoordinate *rhs) const;
+  AxialCoordinate operator+(const AxialCoordinate&& rhs) const;
+  AxialCoordinate operator+(const AxialCoordinate& rhs) const;
+  AxialCoordinate operator+(const AxialCoordinate* rhs) const;
 
   CoordComponentType q, r;
-private:
+ private:
 };
 
 class CubicCoordinate;
 
 class Map : public sf::Drawable {
-public:
+ public:
   /*
    * Create a map in the shape of a hexagon with the specified radius.
    */
   explicit Map(size_t radius,
-               std::function<Tile *(Map *, AxialCoordinate &&)> initilizer,
-               Game *gameObject);
-
+               std::function<Tile*(Map*, AxialCoordinate&&)> initilizer,
+               Game* gameObject);
   ~Map();
 
   /*
@@ -72,43 +66,34 @@ public:
    * If the specified coordinate is invalid, this returns nullptr.
    * Otherwise, a pointer to the tile is returned.
    */
-  Tile *GetTile(const AxialCoordinate *const coord) const;
-
-  Tile *GetTile(const AxialCoordinate &coord) const;
-
-  Tile *GetTile(const AxialCoordinate &&coord) const;
-
-  Tile *GetTile(const AxialCoordinate *const coord);
-
-  Tile *GetTile(const AxialCoordinate &coord);
-
-  Tile *GetTile(const AxialCoordinate &&coord);
-
+  Tile* GetTile(const AxialCoordinate* const coord) const;
+  Tile* GetTile(const AxialCoordinate& coord) const;
+  Tile* GetTile(const AxialCoordinate&& coord) const;
+  Tile* GetTile(const AxialCoordinate* const coord);
+  Tile* GetTile(const AxialCoordinate& coord);
+  Tile* GetTile(const AxialCoordinate&& coord);
   /*
    * Get an unordered list of the tiles within a radius of a given tile.
    */
-  std::vector<Tile *> GetTilesInRange(const Tile *source, size_t radius) const;
-
+  std::vector<Tile*> GetTilesInRange(const Tile* source, size_t radius) const;
   /*
    * Returns true if the specified coordinate is within the bounds of the map
    */
-  bool IsCoordinateInBounds(const AxialCoordinate *const coord) const;
-
-  bool IsCoordinateInBounds(const AxialCoordinate &coord) const;
-
-  bool IsCoordinateInBounds(const AxialCoordinate &&coord) const;
+  bool IsCoordinateInBounds(const AxialCoordinate* const coord) const;
+  bool IsCoordinateInBounds(const AxialCoordinate& coord) const;
+  bool IsCoordinateInBounds(const AxialCoordinate&& coord) const;
 
 
   /*
    * Get the game object
    */
-  const Game *GetGameObject() const { return game; }
+  const Game* GetGameObject() const { return game; }
 
   /*
    * Draw the map to the specified render target by drawing all of it's tiles
    */
-  virtual void draw(sf::RenderTarget &target, sf::RenderStates states)
-  const;
+  virtual void draw(sf::RenderTarget& target, sf::RenderStates states)
+                      const;
 
   /*
    * Invoked when the display changes size
@@ -136,19 +121,18 @@ public:
   const size_t GetRadius() const { return this->radius; }
 
   inline int GetNumNonMinedTiles() { return num_non_mined_tiles; }
-
   inline void DecrementNumNonMinedTiles() { num_non_mined_tiles--; }
 
-private:
+ private:
   // Represent the map using a 2D matrix
   // This approach is simple to implement but will have space overhead
   // especially in the case of maps with distant 'islands' and empty space
   // between them. In this scenerio it may be better to use a hash table.
   // This vector is indexed by AxialCoordinates
-  std::vector<std::vector<Tile *>> tiles;
+  std::vector<std::vector<Tile*>> tiles;
 
   // The game which this map belongs to
-  Game *game;
+  Game* game;
 
   // The x-y pixel location of the center of the map
   sf::Vector2f center_coordinate;

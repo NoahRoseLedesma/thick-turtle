@@ -5,9 +5,6 @@
 
 #include <cmath>
 #include <functional>
-// only for debugging purposes
-#include <iostream>
-#include <chrono>
 
 #include <SFML/Graphics.hpp>
 
@@ -32,7 +29,7 @@ enum TextureType {
 };
 
 class Game {
-public:
+ public:
   Game();
 
   ~Game();
@@ -100,7 +97,7 @@ public:
 
   void Restart();
 
-private:
+ private:
   /*
    * The primary game loop. Draw to the screen and perform game logic
    */

@@ -15,27 +15,13 @@ find_package(SFML 2 COMPONENTS
         audio
         REQUIRED)
 
+aux_source_directory(include INCLUDE)
+aux_source_directory(src SRC)
+
 add_executable(thick-turtle
-        include/map.h
-        include/piece.h
-        include/player.h
-        include/tile.h
-        include/utility.h
-        include/game.h
-        include/camera.h
-        include/inputcontroller.h
-
-        src/map.cc
-        src/piece.cc
-        src/player.cc
-        src/tile.cc
-        src/utility.cc
-        src/game.cc
-        src/camera.cc
-        src/inputcontroller.cc
-
-        src/main.cc
-        src/minesweepertile.cc include/minesweepertile.h src/minesweepertile.cc include/minesweepertile.h)
+        ${INCLUDE}
+        ${SRC}
+        )
 
 if(SFML_FOUND)
     include_directories("/usr/include")

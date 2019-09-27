@@ -2,15 +2,12 @@
 // Created by stott on 9/4/19.
 //
 
-#ifndef THICK_TURTLE_MINESWEEPERTILE_H
-#define THICK_TURTLE_MINESWEEPERTILE_H
-
+#pragma once
 
 #include "map.h"
 
 class MinesweeperTile : public Tile {
-
-public:
+ public:
   MinesweeperTile(Map *map, const AxialCoordinate &&position, bool is_mine);
 
   MinesweeperTile(Map *map, const AxialCoordinate &position, bool is_mine);
@@ -37,10 +34,10 @@ public:
 
   void SetToMined() { this->is_mine = true; }
 
-protected:
+ protected:
   void SetTileTexture(TextureType type);
 
-private:
+ private:
   bool is_covered = true;
   bool is_flagged = false;
   bool is_mine;
@@ -48,6 +45,3 @@ private:
   unsigned int num_nearby_mines = 0;
   Map *map;
 };
-
-
-#endif //THICK_TURTLE_MINESWEEPERTILE_H

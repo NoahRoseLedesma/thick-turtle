@@ -15,7 +15,7 @@ class Map;
 class AxialCoordinate;
 
 class Tile : public sf::ConvexShape {
-public:
+ public:
   Tile(const Map *const map, const AxialCoordinate &&position);
 
   Tile(const Map *const map, const AxialCoordinate &position);
@@ -50,7 +50,7 @@ public:
    */
   void OnDisplayResize();
 
-protected:
+ protected:
   // The map of which this tile belongs to
   const Map *const map;
   // The position of this tile in the map.
@@ -58,14 +58,14 @@ protected:
 };
 
 class DebugTile : public Tile {
-public:
+ public:
   DebugTile(const Map *const map, const AxialCoordinate &&position);
 
   DebugTile(const Map *const map, const AxialCoordinate &position);
 
   // int GetMovementModifier() override { return movementBonus; }
 
-protected:
+ protected:
   static const int movementBonus = 4;
   sf::Texture texture;
 };

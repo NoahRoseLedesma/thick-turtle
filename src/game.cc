@@ -31,7 +31,8 @@ Game::Game() {
   debugFont.loadFromFile("../bin/assets/fonts/FiraCode-Regular.ttf");
 
   // Lambda function that deals with loading in the textures.
-  auto LoadATexture = [](const std::string &file_name, sf::Texture &texture) -> void {
+  auto LoadATexture =
+    [](const std::string &file_name, sf::Texture &texture) -> void {
     texture.create(200, 200);
     texture.loadFromFile("../bin/assets/textures/" + file_name);
   };
@@ -50,8 +51,6 @@ Game::Game() {
   LoadATexture("Four.png", this->four);
   LoadATexture("Five.png", this->five);
   LoadATexture("Six.png", this->six);
-
-
 }
 
 /*
@@ -62,7 +61,8 @@ void Game::InitMap(size_t radius) {
     return new DebugTile(p_map, coord);
   };*/
 
-  auto MinesweeperTileProducer = [&](Map *p_map, AxialCoordinate &&coord) -> Tile * {
+  auto MinesweeperTileProducer =
+    [&](Map *p_map, AxialCoordinate &&coord) -> Tile * {
     return new MinesweeperTile(p_map, coord, false);
   };
 
@@ -70,7 +70,8 @@ void Game::InitMap(size_t radius) {
   number_of_mines = std::floor(radius * radius * 0.75);
   map = new Map(mapRadius, MinesweeperTileProducer, this);
 
-  auto l_game_tiles = map->GetTilesInRange(map->GetTile(AxialCoordinate(0, 0)), mapRadius);
+  auto l_game_tiles = map->GetTilesInRange(map->GetTile(AxialCoordinate(0, 0)),
+    mapRadius);
 
   std::random_device rd;
   std::mt19937 rng(rd());
@@ -89,18 +90,16 @@ void Game::InitMap(size_t radius) {
     }
   }
 
-  for (const auto &tile: l_game_tiles) {
+  for (const auto &tile : l_game_tiles) {
     auto derived_tile = dynamic_cast<MinesweeperTile *>(tile);
     derived_tile->FindNumNearbyMines();
   }
-
 }
 
 /*
  * Game::InitWindow
  */
 void Game::InitWindow(size_t desiredWidth, size_t desiredHeight) {
-
   window = new sf::RenderWindow(sf::VideoMode(desiredWidth, desiredHeight),
                                 "Thick Turtle");
 }
@@ -123,7 +122,6 @@ size_t Game::GetWindowWidth() const {
 void Game::Run() {
   while (window->isOpen()) {
     sf::Event event;
-    //unsigned int number_of_non_mines = HexNumbers(mapRadius) - number_of_mines;
 
     while (window->pollEvent(event)) {
       // Pass the event to the camera
@@ -144,14 +142,14 @@ void Game::Run() {
 
           if (!map->IsCoordinateInBounds(l_tile_clicked)) break;
 
-          auto l_minesweeper_tile = dynamic_cast<MinesweeperTile *>(this->map->GetTile(l_tile_clicked));
+          auto l_minesweeper_tile = dynamic_cast<MinesweeperTile*>(
+            this->map->GetTile(l_tile_clicked));
 
           if (l_minesweeper_tile == nullptr) break;
 
           if (event.mouseButton.button == sf::Mouse::Left &&
               l_minesweeper_tile->IsCovered() &&
               !l_minesweeper_tile->IsFlagged()) {
-
             l_minesweeper_tile->Think();
 
             if (l_minesweeper_tile->IsMine()) {
@@ -215,8 +213,11 @@ sf::Vector2f Game::AxialToPixel(const AxialCoordinate &&coordinate) const {
  * Game::GetTileRadius
  */
 size_t Game::GetTileRadius() const {
-  if (camera) return std::ceil(5 * mapRadius / camera->GetCurrentZoom());
-  else return 10 * mapRadius;
+  if (camera) {
+    return std::ceil(5 * mapRadius / camera->GetCurrentZoom());
+  } else {
+    return 10 * mapRadius;
+  }
 }
 
 /*
@@ -302,9 +303,11 @@ const float Game::GetZoom() {
  * Used when the game is won or lost
  */
 void Game::SetAllTiles(TextureType desired_texture) {
-  auto l_tiles = this->map->GetTilesInRange(this->map->GetTile({0, 0}), this->mapRadius);
+  auto l_tiles = this->map->GetTilesInRange(this->map->GetTile({0, 0}),
+    this->mapRadius);
   for (auto tile : l_tiles) {
-    dynamic_cast<MinesweeperTile *>(tile)->setTexture(this->GetTexture(desired_texture));
+    dynamic_cast<MinesweeperTile *>(tile)->
+      setTexture(this->GetTexture(desired_texture));
   }
 }
 
