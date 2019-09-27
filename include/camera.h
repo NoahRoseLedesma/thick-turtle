@@ -31,6 +31,12 @@ class Camera : public sf::Drawable {
   void OnViewReset();
 
   /*
+   * Draws camera related components
+   */
+  void draw(sf::RenderTarget &target, sf::RenderStates states)
+  const override;
+
+  /*
    * Returns the current zoom
    */
   float GetCurrentZoom() const;

@@ -89,6 +89,9 @@ void Camera::StartPanning(const sf::Event::MouseButtonEvent &event) {
   lastMousePosition = {event.x, event.y};
 }
 
+// Currently unused. May be helpful in the future
+void Camera::draw(sf::RenderTarget &, sf::RenderStates) const {}
+
 float Camera::GetCurrentZoom() const {
   return this->currentZoom;
 }
