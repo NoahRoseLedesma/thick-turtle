@@ -167,7 +167,6 @@ void Game::Run() {
                     l_minesweeper_tile->IsCovered()) {
                     l_minesweeper_tile->ToggleFlagged();
                 }
-                std::cout << map->GetNumNonMinedTiles() << std::endl;
                 break;
             }
             case sf::Event::KeyPressed:

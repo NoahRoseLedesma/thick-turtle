@@ -6,17 +6,20 @@
 Camera::Camera(sf::RenderWindow *window, Map *map) : window(window), map(map) {}
 
 void Camera::Think( sf::Event& event ) {
-  if(event.type == sf::Event::EventType::MouseWheelScrolled) {
+  // Disable zooming for the time being. This will be done in a
+  // seperate branch at a later time
+  /*if(event.type == sf::Event::EventType::MouseWheelScrolled) {
     OnZoomEvent(event.mouseWheelScroll);
-  } else if(event.type == sf::Event::EventType::MouseMoved) {
+  }*/
+  if(event.type == sf::Event::EventType::MouseMoved) {
     OnPanEvent(event.mouseMove);
   } else if(event.type == sf::Event::EventType::MouseButtonPressed) {
-    // Right click enables panning
+    // Middle mouse button enables panning
     if(event.mouseButton.button == sf::Mouse::Button::Middle) {
       StartPanning(event.mouseButton);
     }
   } else if(event.type == sf::Event::EventType::MouseButtonReleased) {
-    // Right click disables panning]
+    // Middle mouse buton click disables panning
     if(event.mouseButton.button == sf::Mouse::Button::Middle) {
       StopPanning();
     }
@@ -38,6 +41,14 @@ void Camera::OnZoomEvent( sf::Event::MouseWheelScrollEvent& event ) {
   sf::View view = window->getView();
   view.zoom(relativeZoomFactor);
   window->setView(view);
+
+  auto l_mouse_event = sf::Event::MouseMoveEvent();
+  l_mouse_event.x = event.x;
+  l_mouse_event.y = event.y;
+
+  this->currentlyPanning = true;
+  this->OnPanEvent(l_mouse_event);
+    this->currentlyPanning = false;
 
   currentZoom *= relativeZoomFactor;
 }

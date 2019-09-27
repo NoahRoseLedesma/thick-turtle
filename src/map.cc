@@ -217,6 +217,7 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates) const {
  * Map::OnDisplayResize
  */
 
+
 void Map::OnDisplayResize() {
   // Notify every tile of the display resize
   size_t radius = tiles.size() / 2;
