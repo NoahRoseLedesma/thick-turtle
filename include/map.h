@@ -115,6 +115,11 @@ class Map : public sf::Drawable {
    */
   void ResetCenter();
 
+  /*
+   * Get the map radius
+   */
+  const size_t GetRadius() const { return this->radius; }
+
   inline int GetNumNonMinedTiles() { return num_non_mined_tiles; }
   inline void DecrementNumNonMinedTiles() { num_non_mined_tiles--; }
  private:
@@ -133,4 +138,7 @@ class Map : public sf::Drawable {
 
   // The number of non mined tiles on the board
   int num_non_mined_tiles;
+
+  // The number of hexagons from 0,0 to the edge of the map
+  unsigned int radius;
 };

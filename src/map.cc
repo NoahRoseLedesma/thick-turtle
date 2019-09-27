@@ -91,7 +91,8 @@ Map::Map(size_t radius,
          std::function<Tile*(Map*, AxialCoordinate&&)> initilizer,
          Game* game):
          tiles(radius * 2 + 1), game(game),
-         num_non_mined_tiles(HexNumbers(radius) - game->GetNumMines()) {
+         num_non_mined_tiles(HexNumbers(radius) - game->GetNumMines()),
+         radius(game->GetMapRadius()) {
   for ( auto& column : tiles ) {
     column.resize(2 * radius + 1);
   }

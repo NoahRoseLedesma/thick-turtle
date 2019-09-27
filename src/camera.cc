@@ -3,7 +3,9 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-Camera::Camera(sf::RenderWindow *window, Map *map) : window(window), map(map) {}
+Camera::Camera(sf::RenderWindow *window, Map *map) : window(window), map(map) {
+  this->currentZoom = map->GetRadius() / 6.5;
+}
 
 void Camera::Think( sf::Event& event ) {
   // Disable zooming for the time being. This will be done in a

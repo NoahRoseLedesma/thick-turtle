@@ -69,6 +69,8 @@ class Game {
    */
   size_t GetTileRadius() const;
 
+  size_t GetMapRadius() const { return this->mapRadius; }
+
   /*
    * Handle the resizing of the main window
    */

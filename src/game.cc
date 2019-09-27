@@ -30,7 +30,7 @@ Game::Game() {
   // Create debug resources
   debugFont.loadFromFile("../bin/assets/fonts/FiraCode-Regular.ttf");
 
-  // Yes, I am in fact this lazy
+  // Lambda function that deals with loading in the textures.
   auto LoadATexture = [] (const std::string& file_name, sf::Texture& texture) -> void {
       texture.create(200,200);
       texture.loadFromFile("../bin/assets/textures/" + file_name);
@@ -67,7 +67,7 @@ void Game::InitMap(size_t radius ) {
   };
 
   mapRadius = radius;
-  number_of_mines = radius * radius;
+  number_of_mines = std::floor(radius * radius * 0.75);
   map = new Map(mapRadius, MinesweeperTileProducer, this);
 
   auto l_game_tiles = map->GetTilesInRange(map->GetTile(AxialCoordinate(0, 0)), mapRadius);
@@ -216,8 +216,8 @@ sf::Vector2f Game::AxialToPixel(const AxialCoordinate&& coordinate) const {
  * Game::GetTileRadius
  */
 size_t Game::GetTileRadius() const {
-    if (camera) return std::ceil(50.f / camera->GetCurrentZoom());
-    else return 50;
+    if (camera) return std::ceil(5 * mapRadius / camera->GetCurrentZoom());
+    else return 10 * mapRadius;
 }
 
 /*

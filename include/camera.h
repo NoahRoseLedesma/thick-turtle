@@ -54,7 +54,7 @@ class Camera : public sf::Drawable {
   sf::RenderWindow* window;
   // The current zoom factor relative to the zoom factor when the camera was
   // initilized. This should be relative to the native zoom of the view.
-  float currentZoom = 1.;
+  float currentZoom;
 
   // Enabled when the view is panning
   bool currentlyPanning = false;
