@@ -214,9 +214,9 @@ sf::Vector2f Game::AxialToPixel(const AxialCoordinate &&coordinate) const {
  */
 size_t Game::GetTileRadius() const {
   if (camera) {
-    return std::ceil(5 * mapRadius / camera->GetCurrentZoom());
+    return std::ceil(1100.f / (5 * mapRadius));
   } else {
-    return 10 * mapRadius;
+    return 5 * mapRadius;
   }
 }
 

@@ -100,8 +100,8 @@ Map::Map(size_t radius,
     }
   }
 
-  this->center_coordinate = sf::Vector2f(game->GetWindowWidth() / 2,
-                                         game->GetWindowHeight() / 2);
+  this->center_coordinate = sf::Vector2f(game->GetWindowWidth() / 2.f,
+                                         game->GetWindowHeight() / 2.f);
 }
 
 /*

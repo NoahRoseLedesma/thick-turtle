@@ -4,7 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 Camera::Camera(sf::RenderWindow *window, Map *map) : window(window), map(map) {
-  this->currentZoom = map->GetRadius() / 6.5;
+  this->currentZoom = 1;
 }
 
 void Camera::Think(const sf::Event &event) {
